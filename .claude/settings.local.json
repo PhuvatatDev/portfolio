@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm:*)",
+      "Bash(npx:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(node:*)",
+      "Bash(powershell:*)",
+      "// === Context7 MCP (Documentation) ===",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__get-library-docs",
+      "// === Sequential Thinking MCP ===",
+      "mcp__sequential-thinking__sequentialthinking",
+      "// === Playwright MCP (Preview & Screenshots) ===",
+      "mcp__playwright__playwright_navigate",
+      "mcp__playwright__playwright_screenshot",
+      "mcp__playwright__playwright_get_visible_text",
+      "mcp__playwright__playwright_close",
+      "// === Web Resources ===",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:docs.astro.build)",
+      "WebFetch(domain:tailwindcss.com)",
+      "// === File System ===",
+      "Read(//c/Users/szent/Repositories/portfolio/**)",
+      "Write(//c/Users/szent/Repositories/portfolio/**)",
+      "Edit(//c/Users/szent/Repositories/portfolio/**)"
+    ],
+    "deny": [],
+    "ask": []
+  },
+  "enabledMcpjsonServers": [
+    "context7",
+    "sequential-thinking"
+  ],
+  "outputStyle": "default",
+  "spinnerTipsEnabled": false
+}
