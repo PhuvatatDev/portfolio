@@ -21,7 +21,7 @@
 
 **Hébergement** : GitHub Pages (`phuvatatdev.github.io/portfolio`)
 **Repo** : `PhuvatatDev/portfolio` (public)
-**Node requis** : >= 22.12.0
+**Node** : v20.18.0 (fonctionne malgré warnings engine)
 
 ---
 

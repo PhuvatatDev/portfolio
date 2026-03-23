@@ -3,20 +3,14 @@
 ## Objectif
 Site portfolio pro sur GitHub Pages pour chercher du travail (Flutter/Firebase + Web).
 
-## Prérequis
-- [ ] Upgrader Node.js vers v22+ (actuellement v20.18.0 — Astro 5 requiert >= 22.12.0)
-- [ ] `npm install` après upgrade Node
-
----
-
 ## Phase 1 — Fondations (Setup)
-**Statut** : ✅ En cours
+**Statut** : ✅ Terminé
 
 - [x] Créer structure projet (Astro + Tailwind + GSAP + TypeScript)
 - [x] `.claude/CLAUDE.md` + `ROADMAP.md`
 - [x] Repo GitHub (`PhuvatatDev/portfolio`)
 - [x] Premier commit
-- [ ] Upgrade Node 22 + `npm install`
+- [x] `npm install` (Node 20 compatible, warnings non bloquants)
 - [ ] Vérifier `npm run dev` fonctionne
 - [ ] GitHub Actions workflow pour déploiement Pages
 
