@@ -102,6 +102,35 @@ export function initScrollController() {
     },
   });
 
-  // Color transition disabled — full pistachio background
-  // Will be re-enabled later if needed
+  // --- Scroll progress bar ---
+  const progressBar = document.getElementById('scroll-progress');
+  if (progressBar) {
+    ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: true,
+      onUpdate: (self) => {
+        // Progress bar slides from left (0%) to right (80%)
+        progressBar.style.left = `${self.progress * 80}%`;
+      },
+    });
+  }
+
+  // --- Hero text fade out on scroll ---
+  const heroText = document.getElementById('hero-text');
+
+  if (heroText) {
+    gsap.to(heroText, {
+      opacity: 0,
+      y: -50,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: document.body,
+        start: 'top top',
+        end: '5% top',
+        scrub: true,
+      },
+    });
+  }
 }
