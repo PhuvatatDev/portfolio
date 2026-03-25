@@ -1,17 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,ts,tsx}'],
   theme: {
     extend: {
+      screens: {
+        'lg': '1180px',
+      },
       colors: {
-        primary: '#0F172A',    // Slate 900 — fond principal
-        accent: '#3B82F6',     // Blue 500 — liens, CTA
-        surface: '#1E293B',    // Slate 800 — cartes, sections
-        muted: '#94A3B8',      // Slate 400 — texte secondaire
+        'pistachio': '#B5C99A',
+        'pistachio-pale': '#E8EDDF',
+        'pistachio-deep': '#5C7A3A',
+        'charcoal': '#1A1A1A',
+        'charcoal-deep': '#1C1C1C',
+        'warm-gray': '#8A8A7A',
+        'cream': '#F5F3EF',
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        'serif': ['"DM Serif Display"', 'serif'],
+        'mono': ['"Chivo Mono"', 'monospace'],
       },
     },
   },

@@ -1,0 +1,111 @@
+---
+import { codeSnippets } from '../../data/code-snippets';
+
+// ============================================
+// Procedural Code Grid Generator
+// Adapted from MindTarot CalendarGrid.astro
+// ============================================
+// Dark cells styled as terminal windows with real Dart/Flutter code
+// Seeded PRNG — deterministic output, same grid every build
+
+function createRng(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 16807) % 2147483647;
+    return (s - 1) / 2147483646;
+  };
+}
+
+const CONFIG = {
+  columns: [1, 4, 3, 2, 3, 2],
+  cellHeightMin: 140,
+  cellHeightMax: 320,
+  targetCanvasHeight: 8000,
+  darkCellRatio: 0.08,
+  darkCellMinSpacing: 10,
+  seed: 42,
+};
+
+const gridTemplateColumns = CONFIG.columns.map(w => `${w}fr`).join(' ');
+
+interface Cell {
+  height: number;
+  isDark: boolean;
+  snippet?: string;
+}
+
+function generateColumn(colIndex: number): Cell[] {
+  const rng = createRng(CONFIG.seed + colIndex * 1000);
+  const cells: Cell[] = [];
+  let totalHeight = 0;
+  let lastDarkIdx = -CONFIG.darkCellMinSpacing;
+  let snippetPoolIdx = colIndex;
+
+  while (totalHeight < CONFIG.targetCanvasHeight) {
+    const height = Math.round(
+      CONFIG.cellHeightMin + rng() * (CONFIG.cellHeightMax - CONFIG.cellHeightMin)
+    );
+    const idx = cells.length;
+
+    const canBeDark = (idx - lastDarkIdx) >= CONFIG.darkCellMinSpacing;
+    const isDark = canBeDark && rng() < CONFIG.darkCellRatio * 2;
+    if (isDark) lastDarkIdx = idx;
+
+    let snippet: string | undefined;
+    if (isDark) {
+      snippet = codeSnippets[snippetPoolIdx % codeSnippets.length];
+      snippetPoolIdx += 3;
+    }
+
+    cells.push({ height, isDark, snippet });
+    totalHeight += height;
+  }
+
+  return cells;
+}
+
+const columns = CONFIG.columns.map((_, i) => generateColumn(i));
+---
+
+<div id="code-grid" class="fixed inset-x-0 top-0 pointer-events-none z-0">
+  <!-- Color overlay — transitions cream → pistachio via GSAP -->
+  <div id="grid-color-overlay" class="fixed inset-0" style="width: 100vw; height: 100vh; background-color: #B5C99A;"></div>
+
+  <!-- Scrollable canvas — translated by GSAP for parallax -->
+  <div
+    class="absolute inset-x-0 top-0 relative"
+    style={`display: grid; grid-template-columns: ${gridTemplateColumns};`}
+  >
+    {/* Vertical lines */}
+    {[8, 28, 48, 68, 85].map((pos) => (
+      <div
+        class="absolute top-0 z-10"
+        style={`left: ${pos}%; width: 1px; height: ${CONFIG.targetCanvasHeight}px; background-color: rgba(26, 26, 26, 0.06);`}
+      />
+    ))}
+
+    {columns.map((column) => (
+      <div class="flex flex-col">
+        {column.map((cell) => (
+          <div
+            class="relative shrink-0"
+            style={`height: ${cell.height}px;`}
+          >
+            {cell.isDark && cell.snippet && (
+              <div class="terminal-cell absolute inset-1 rounded-lg overflow-hidden flex flex-col" style="background-color: rgba(28, 28, 28, 0.35);">
+                {/* Terminal title bar with 3 dots */}
+                <div class="flex items-center gap-1.5 px-3 py-2 shrink-0" style="background-color: rgba(42, 42, 42, 0.4);">
+                  <div class="w-2 h-2 rounded-full" style="background-color: rgba(255, 95, 87, 0.35);"></div>
+                  <div class="w-2 h-2 rounded-full" style="background-color: rgba(254, 188, 46, 0.35);"></div>
+                  <div class="w-2 h-2 rounded-full" style="background-color: rgba(40, 200, 64, 0.35);"></div>
+                </div>
+                {/* Code content — clipped, never overflows */}
+                <pre class="flex-1 overflow-hidden px-3 py-2 m-0 text-xs leading-relaxed font-mono" style="color: rgba(181, 201, 154, 0.5); white-space: pre; tab-size: 2;">{cell.snippet}</pre>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    ))}
+  </div>
+</div>

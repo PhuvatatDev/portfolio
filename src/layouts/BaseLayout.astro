@@ -1,0 +1,61 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Phuvatat — Flutter Developer',
+  description = 'I build products from architecture to deployment. Flutter, Firebase, Clean Architecture.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+
+    <!-- Fonts: DM Serif Display (headings) + Chivo Mono (everything else) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;700&family=DM+Serif+Display&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="PhuvatatDev" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <title>{title}</title>
+  </head>
+  <body>
+    <!-- Landscape overlay: Lottie animation -->
+    <div id="landscape-overlay">
+      <dotlottie-wc
+        src="/portfolio/animations/rotate-phone.lottie"
+        autoplay
+        loop
+        style="width: 180px; height: 180px;"
+      ></dotlottie-wc>
+    </div>
+    <script>
+      import '@lottiefiles/dotlottie-wc';
+    </script>
+
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>

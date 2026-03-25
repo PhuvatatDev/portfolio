@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  font-family: 'Chivo Mono', monospace;
+  background-color: #F5F3EF;
+}
+
+/* ============================================
+   LANDSCAPE OVERLAY — mobile only
+   Shows a "rotate your phone" icon when landscape
+   ============================================ */
+#landscape-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background-color: #1a1a1a;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (orientation: landscape) and (max-height: 500px) {
+  #landscape-overlay {
+    display: flex;
+  }
+}
+
+/* ============================================
+   MOBILE RESPONSIVE (< 1180px)
+   Desktop styles untouched — mobile overrides only
+   ============================================ */
+@media (max-width: 1179px) {
+  /* Code grid: shorter cells on mobile */
+  #code-grid .shrink-0 {
+    max-height: 100px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  #code-grid span {
+    font-size: 0.55rem !important;
+    letter-spacing: 0.05em !important;
+  }
+}
