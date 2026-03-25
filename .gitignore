@@ -20,3 +20,9 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Claude working docs
+.claude/
+
+# Reference code (MindTarot private repo)
+_reference/
