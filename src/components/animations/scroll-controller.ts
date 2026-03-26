@@ -9,6 +9,7 @@
  * 4. Illustration compression (responsive)
  * 5. Illustration convergence → cream process card
  * 6. Process card + illustrations exit up
+ * 6b. Header slides up (makes room for phone)
  * 7. Phone rise from bottom
  * 8. Phone shift left
  * 9. Showcase panel slide in from right
@@ -220,6 +221,24 @@ export function initScrollController() {
   }
 
   // ============================================
+  // 6b. Header fades out as phone rises
+  // ============================================
+  const siteHeader = document.getElementById('site-header');
+
+  if (siteHeader && phoneShowcase) {
+    gsap.to(siteHeader, {
+      y: '-5vw',
+      ease: 'none',
+      scrollTrigger: {
+        trigger: phoneShowcase,
+        start: 'top 60%',
+        end: 'top 30%',
+        scrub: true,
+      },
+    });
+  }
+
+  // ============================================
   // 7. Phone rise from bottom
   // ============================================
   const phoneContainer = document.getElementById('phone-container');
@@ -245,7 +264,7 @@ export function initScrollController() {
     // 8. Phone shifts left (after rise completes)
     // ============================================
     gsap.to(phoneContainer, {
-      left: '32%',
+      left: '28%',
       ease: 'none',
       scrollTrigger: {
         trigger: phoneShowcase,
