@@ -200,7 +200,7 @@ export function initScrollController() {
       trigger: phoneShowcase,
       start: 'top bottom',
       onEnter: () => convergenceTriggers.forEach(t => t?.disable(false)),
-      onLeaveBack: () => convergenceTriggers.forEach(t => t?.enable(false)),
+      onLeaveBack: () => convergenceTriggers.forEach(t => t?.enable(false, false)),
     });
 
     // Card + illustrations slide up together as one unit
@@ -237,7 +237,6 @@ export function initScrollController() {
           start: 'top 60%',
           end: 'top top',
           scrub: true,
-          invalidateOnRefresh: true,
         },
       }
     );
