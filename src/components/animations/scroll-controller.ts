@@ -213,8 +213,9 @@ export function initScrollController() {
 
     const badges = document.querySelectorAll('.process-badges');
 
-    // --- Step 1: Illustrations converge FIRST (scroll drives movement) ---
-    // Arrow functions → evaluated at creation & on invalidateOnRefresh
+    // --- Step 1: Illustrations converge (starts early — as you leave Hero) ---
+    // 'top 60%' = animation starts when myWork top is at 60% of viewport (still in Hero)
+    // 'top top' = animation ends when myWork top reaches viewport top
     pairs.forEach(({ illus, slot }) => {
       gsap.to(illus, {
         x: () => {
@@ -233,22 +234,22 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: myWorkSection,
-          start: 'top top',
-          end: '45% top',
+          start: 'top 60%',
+          end: 'top top',
           scrub: true,
           invalidateOnRefresh: true,
         },
       });
     });
 
-    // --- Step 2: Card fades in WHILE illustrations are converging (mid-way) ---
+    // --- Step 2: Card fades in (slightly after convergence starts) ---
     gsap.to(processCard, {
       opacity: 1,
       ease: 'none',
       scrollTrigger: {
         trigger: myWorkSection,
-        start: '15% top',
-        end: '35% top',
+        start: 'top 30%',
+        end: 'top top',
         scrub: true,
       },
     });
@@ -260,8 +261,8 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: myWorkSection,
-          start: '55% top',
-          end: '67% top',
+          start: '10% top',
+          end: '20% top',
           scrub: true,
         },
       });
