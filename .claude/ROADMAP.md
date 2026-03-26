@@ -58,6 +58,12 @@ Site portfolio pro avec scroll animé (pattern MindTarot) sur GitHub Pages.
 - [x] Cartes cliquables → vue détaillée dans le même container (taille fixe)
 - [x] `feature-panel.ts` module séparé pour la logique d'interaction
 - [x] Store badges (Google Play actif, Apple Store grisé)
+- [x] Header slide-up quand phone arrive (-5vw)
+- [x] Responsive desktop phone+panel (22vw phone, calc panel, tested 1180-1920px)
+- [x] Fix scroll jump on scroll-back (refresh cascade fix)
+- [x] Clean Architecture : skeleton vérifié depuis repo MindTarot, couleurs layers, vrai DrawCubit
+- [ ] **Contenu cartes** : passer les 7 cartes restantes (AI, Security, Auth, Payments, State, Chat, i18n)
+- [ ] **Contenu détails** : texte + code vérifiés depuis repo MindTarot pour chaque carte
 - [ ] Vidéo screen recording dans le phone (en attente de l'asset)
 - [ ] QR codes stores (en bas du panel)
 

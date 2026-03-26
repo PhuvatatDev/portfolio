@@ -29,18 +29,21 @@ import FeatureCard from '../ui/FeatureCard.astro';
         <div class="grid grid-cols-3 gap-3">
 
           <!-- Row 1 -->
-          <FeatureCard title="Clean Architecture" description="Feature-first structure. Each module fully isolated." featureId="clean-arch" colSpan={2}>
-            <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.6;">lib/features/draw/
-├── data/
+          <FeatureCard title="Clean Architecture" description="Each feature is independent. Easy to maintain, easy to test, easy to scale." featureId="clean-arch" colSpan={2}>
+            <pre class="font-mono bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.6; color: #8A8A7A;" set:html={`lib/features/draw/
+├── <span style="color:#5C7A3A;font-weight:600">data/</span>
 │   ├── datasources/
-│   └── repositories/
-├── domain/
+│   ├── models/
+│   ├── repositories/
+│   └── services/
+├── <span style="color:#C4841D;font-weight:600">domain/</span>
 │   ├── entities/
-│   ├── usecases/
-│   └── repositories/
-└── presentation/
-    ├── cubits/
-    └── widgets/</pre>
+│   ├── repositories/
+│   └── usecases/
+└── <span style="color:#1A1A1A;font-weight:600">presentation/</span>
+    ├── cubit/
+    ├── pages/
+    └── widgets/`} />
           </FeatureCard>
 
           <FeatureCard title="AI Integration" description="Context-aware readings via Cloud Functions." featureId="ai">
@@ -137,7 +140,7 @@ emit(DrawComplete(result));</pre>
         <div class="feature-detail hidden" data-detail="clean-arch">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Clean Architecture</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Every feature is a self-contained module with three layers. Dependencies flow inward — presentation depends on domain, domain depends on nothing.
+            Three layers per feature: data, domain, presentation. Each one has a clear role. When something breaks, you know exactly where to look. Debugging stays fast because nothing is tangled. The clean separation also makes AI-assisted development efficient — each file has one responsibility, so the AI works with precise, scoped context.
           </p>
           <div class="grid grid-cols-3 gap-2 mb-4">
             <div class="bg-charcoal/5 rounded p-3">
@@ -153,14 +156,23 @@ emit(DrawComplete(result));</pre>
               <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Cubits, pages, widgets. State management and UI. Depends only on domain.</p>
             </div>
           </div>
-          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-3" style="font-size: clamp(0.6rem, 0.65vw, 0.7rem); line-height: 1.6;" set:html={`class GetDrawInterpretation implements UseCase&lt;Interpretation, DrawParams&gt; {
-  final DrawRepository repository;
+          <pre class="font-mono bg-charcoal/5 rounded p-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawCubit</span> <span style="color:#5C7A3A">extends</span> <span style="color:#C4841D">Cubit</span>&lt;<span style="color:#C4841D">DrawState</span>&gt; {
+  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawCardsUseCase</span> _drawCards;
+  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">SaveDrawUseCase</span> _saveDraw;
+  <span style="color:#8A8A7A">// ... 7 more injected use cases</span>
 
-  GetDrawInterpretation(this.repository);
+  <span style="color:#C4841D">Future</span>&lt;<span style="color:#5C7A3A">void</span>&gt; <span style="color:#1A1A1A">drawCards</span>() <span style="color:#5C7A3A">async</span> {
+    emit(<span style="color:#C4841D">DrawDrawingCards</span>(_currentConfig!));
 
-  @override
-  Future&lt;Interpretation&gt; call(DrawParams params) {
-    return repository.getInterpretation(params);
+    <span style="color:#5C7A3A">try</span> {
+      <span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span> _drawCards.execute(_currentConfig!);
+      emit(<span style="color:#C4841D">DrawCardsDrawn</span>(
+        config: _currentConfig!,
+        drawResult: result,
+      ));
+    } <span style="color:#5C7A3A">on</span> <span style="color:#C4841D">AppException</span> <span style="color:#5C7A3A">catch</span> (e) {
+      emit(<span style="color:#C4841D">DrawError</span>(e.getUserMessage()));
+    }
   }
 }`} />
         </div>
