@@ -1,37 +1,38 @@
 ---
 import FeatureCard from '../ui/FeatureCard.astro';
 // Phone Showcase — MindTarot featured project
-// Phone fixed left + cream panel fixed right with Stytch-style feature grid
-// Section height provides scroll distance for animations
+// Phone fixed left + cream panel fixed right
+// Grid view (default) → click card → detail view (expanded)
 ---
 
 <section id="phone-showcase" class="relative z-10" style="height: 300vh;">
 
-  <!-- Showcase panel — fixed, right of phone, fades in via GSAP -->
   <div id="showcase-panel" class="fixed z-20 opacity-0 pointer-events-none"
-       style="left: 42%; top: 50%; transform: translateY(-50%); width: 50vw; max-width: 700px; max-height: 88vh; overflow-y: auto;">
-    <div style="background: #F5F3EF; border-radius: 1rem; padding: clamp(1.2rem, 1.8vw, 1.8rem);">
+       style="left: 42%; top: 55%; transform: translateY(-50%); width: 50vw; max-width: 700px; height: 80vh; max-height: 750px;">
+    <div class="showcase-inner" style="background: #F5F3EF; border-radius: 1rem; padding: clamp(1.2rem, 1.8vw, 1.8rem); height: 100%; overflow-y: auto;">
 
-      <!-- Header -->
-      <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
-        [ featured project ]
-      </p>
-      <h2 class="font-serif font-bold text-charcoal mb-1" style="font-size: clamp(1.4rem, 1.8vw, 2rem);">
-        MindTarot
-      </h2>
-      <p class="font-mono text-charcoal/50 mb-5" style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
-        Built from scratch to store, live in production.
-      </p>
+      <!-- ========== GRID VIEW (default) ========== -->
+      <div id="feature-grid-view">
 
-      <!-- Feature grid — 3 columns, Stytch style -->
-      <div class="grid grid-cols-3 gap-3">
+        <!-- Header -->
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
+          [ featured project ]
+        </p>
+        <h2 class="font-serif font-bold text-charcoal mb-1" style="font-size: clamp(1.4rem, 1.8vw, 2rem);">
+          MindTarot
+        </h2>
+        <p class="font-mono text-charcoal/50 mb-5" style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+          Built from scratch to store, live in production.
+        </p>
 
-        <!-- Row 1: Clean Architecture (wide) + AI Integration -->
-        <FeatureCard title="Clean Architecture" description="Feature-first structure. Each module fully isolated." colSpan={2}>
-          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.6;">lib/features/draw/
+        <!-- Feature grid — 3 columns -->
+        <div class="grid grid-cols-3 gap-3">
+
+          <!-- Row 1 -->
+          <FeatureCard title="Clean Architecture" description="Feature-first structure. Each module fully isolated." featureId="clean-arch" colSpan={2}>
+            <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.6;">lib/features/draw/
 ├── data/
 │   ├── datasources/
-│   ├── models/
 │   └── repositories/
 ├── domain/
 │   ├── entities/
@@ -39,89 +40,324 @@ import FeatureCard from '../ui/FeatureCard.astro';
 │   └── repositories/
 └── presentation/
     ├── cubits/
-    ├── pages/
     └── widgets/</pre>
-        </FeatureCard>
+          </FeatureCard>
 
-        <FeatureCard title="AI Integration" description="Context-aware readings via Cloud Functions.">
-          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">User Intent</div>
-            <div class="text-charcoal/20 text-center text-xs">↓</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Cloud Function</div>
-            <div class="text-charcoal/20 text-center text-xs">↓</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Gemini 2.5 Flash</div>
-            <div class="text-charcoal/20 text-center text-xs">↓</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Personalized Reading</div>
-          </div>
-        </FeatureCard>
+          <FeatureCard title="AI Integration" description="Context-aware readings via Cloud Functions." featureId="ai">
+            <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">User Intent</div>
+              <div class="text-charcoal/20 text-center text-xs">↓</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Cloud Function</div>
+              <div class="text-charcoal/20 text-center text-xs">↓</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Gemini 2.5 Flash</div>
+              <div class="text-charcoal/20 text-center text-xs">↓</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Personalized Reading</div>
+            </div>
+          </FeatureCard>
 
-        <!-- Row 2: Security + Auth + Payment -->
-        <FeatureCard title="Security" description="Defense in depth. Multi-layer pipeline.">
-          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">CF Validation</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Firestore Rules</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Rate Limiting</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">GDPR</div>
-          </div>
-        </FeatureCard>
+          <!-- Row 2 -->
+          <FeatureCard title="Security" description="Defense in depth. Multi-layer pipeline." featureId="security">
+            <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">CF Validation</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Firestore Rules</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Rate Limiting</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">GDPR</div>
+            </div>
+          </FeatureCard>
 
-        <FeatureCard title="Authentication" description="Multi-provider sign-in.">
-          <div class="flex flex-col gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">✉ Email / Password</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">G Google Sign-In</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60"> Apple Sign-In</div>
-          </div>
-        </FeatureCard>
+          <FeatureCard title="Authentication" description="Multi-provider sign-in." featureId="auth">
+            <div class="flex flex-col gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">✉ Email / Password</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">G Google Sign-In</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60"> Apple Sign-In</div>
+            </div>
+          </FeatureCard>
 
-        <FeatureCard title="Payments" description="RevenueCat subscription.">
-          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Purchase</div>
-            <div class="text-charcoal/20 text-center text-xs">↓</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server Verify</div>
-            <div class="text-charcoal/20 text-center text-xs">↓</div>
-            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Entitlement</div>
-          </div>
-        </FeatureCard>
+          <FeatureCard title="Payments" description="RevenueCat subscription." featureId="payments">
+            <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Purchase</div>
+              <div class="text-charcoal/20 text-center text-xs">↓</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server Verify</div>
+              <div class="text-charcoal/20 text-center text-xs">↓</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Entitlement</div>
+            </div>
+          </FeatureCard>
 
-        <!-- Row 3: State Mgmt + Chat + Multilingual -->
-        <FeatureCard title="State Management" description="Cubit pattern across all features.">
-          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5;">emit(DrawLoading());
+          <!-- Row 3 -->
+          <FeatureCard title="State Management" description="Cubit pattern across all features." featureId="state">
+            <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5;">emit(DrawLoading());
 
 final result = await
   drawUseCase(params);
 
 emit(DrawComplete(result));</pre>
-        </FeatureCard>
+          </FeatureCard>
 
-        <FeatureCard title="AI Chat" description="Post-reading conversation with AI.">
-          <div class="flex flex-col gap-1.5" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <div class="bg-charcoal/8 rounded-lg px-2 py-1 self-end font-mono text-charcoal/50 max-w-[85%]">What does The Tower mean here?</div>
-            <div class="bg-charcoal/15 rounded-lg px-2 py-1 self-start font-mono text-charcoal/50 max-w-[85%]">In this context, it suggests a necessary disruption...</div>
-          </div>
-        </FeatureCard>
+          <FeatureCard title="AI Chat" description="Post-reading conversation with AI." featureId="chat">
+            <div class="flex flex-col gap-1.5" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <div class="bg-charcoal/8 rounded-lg px-2 py-1 self-end font-mono text-charcoal/50 max-w-[85%]">What does The Tower mean here?</div>
+              <div class="bg-charcoal/15 rounded-lg px-2 py-1 self-start font-mono text-charcoal/50 max-w-[85%]">In this context, it suggests a necessary disruption...</div>
+            </div>
+          </FeatureCard>
 
-        <FeatureCard title="Multilingual" description="Full i18n — 3 languages.">
-          <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
-            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
-            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
-          </div>
-        </FeatureCard>
+          <FeatureCard title="Multilingual" description="Full i18n — 3 languages." featureId="i18n">
+            <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+              <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
+              <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
+              <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
+            </div>
+          </FeatureCard>
+
+        </div>
+
+        <!-- Store badges -->
+        <div class="mt-4 pt-4 border-t border-charcoal/10 flex gap-3 items-center">
+          <a href="https://play.google.com/store/apps/details?id=com.mindtarot.app" target="_blank" rel="noopener"
+             class="font-mono no-underline px-4 py-2 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors"
+             style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+            [ Google Play → ]
+          </a>
+          <span class="font-mono px-4 py-2 border border-charcoal/10 text-charcoal/30 rounded cursor-default"
+                style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+            [ Apple Store — soon ]
+          </span>
+        </div>
 
       </div>
 
-      <!-- Store badges -->
-      <div class="mt-4 pt-4 border-t border-charcoal/10 flex gap-3 items-center">
-        <a href="https://play.google.com/store/apps/details?id=com.mindtarot.app" target="_blank" rel="noopener"
-           class="font-mono no-underline px-4 py-2 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors"
-           style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
-          [ Google Play → ]
-        </a>
-        <span class="font-mono px-4 py-2 border border-charcoal/10 text-charcoal/30 rounded cursor-default"
-              style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
-          [ Apple Store — soon ]
-        </span>
+      <!-- ========== DETAIL VIEW (hidden, shown on card click) ========== -->
+      <div id="feature-detail-view" class="hidden">
+
+        <button id="detail-back" class="font-mono text-charcoal/40 hover:text-charcoal transition-colors mb-4 cursor-pointer" style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+          [ ← back ]
+        </button>
+
+        <!-- Clean Architecture -->
+        <div class="feature-detail hidden" data-detail="clean-arch">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Clean Architecture</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Every feature is a self-contained module with three layers. Dependencies flow inward — presentation depends on domain, domain depends on nothing.
+          </p>
+          <div class="grid grid-cols-3 gap-2 mb-4">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">data/</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Repositories, datasources, models. Handles API calls, local storage, data mapping.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">domain/</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Entities, use cases, repository interfaces. Pure business logic, zero framework dependency.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">presentation/</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Cubits, pages, widgets. State management and UI. Depends only on domain.</p>
+            </div>
+          </div>
+          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-3" style="font-size: clamp(0.6rem, 0.65vw, 0.7rem); line-height: 1.6;" set:html={`class GetDrawInterpretation implements UseCase&lt;Interpretation, DrawParams&gt; {
+  final DrawRepository repository;
+
+  GetDrawInterpretation(this.repository);
+
+  @override
+  Future&lt;Interpretation&gt; call(DrawParams params) {
+    return repository.getInterpretation(params);
+  }
+}`} />
+        </div>
+
+        <!-- AI Integration -->
+        <div class="feature-detail hidden" data-detail="ai">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">AI Integration</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Gemini 2.5 Flash via Cloud Functions. The client never talks to the AI directly — everything goes through server-side validation.
+          </p>
+          <div class="flex flex-col gap-2 mb-4">
+            <div class="flex items-center gap-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">1</span>
+              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">User sets intention + selects emotions</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">2</span>
+              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Cloud Function receives full context (cards, spread, emotions)</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">3</span>
+              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Structured prompt built with tarot methodology</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">4</span>
+              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Gemini generates personalized interpretation</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">5</span>
+              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Response validated and returned to client</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="feature-detail hidden" data-detail="security">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Security Pipeline</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Defense in depth. Every request passes through multiple validation layers before reaching business logic.
+          </p>
+          <div class="flex flex-col gap-1.5">
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">1</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firebase App Check — genuine app instances only</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">2</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Cloud Function entry validation</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">3</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firebase Auth token verification</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">4</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Rate limiting per user (Firestore counters)</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">5</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Input sanitization</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">6</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Business logic validation + quota checks</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">7</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firestore Security Rules (450+ lines)</div>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">8</span>
+              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">GDPR compliance — data deletion, export</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Authentication -->
+        <div class="feature-detail hidden" data-detail="auth">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Authentication</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Three providers, unified flow. Anonymous sessions supported — users try the app before creating an account, then link their data.
+          </p>
+          <div class="flex flex-col gap-2">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Email / Password</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">With email verification flow</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Google Sign-In</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">OAuth 2.0 — Android + Web</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Apple Sign-In</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">Required for iOS — Apple review compliant</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3 border border-dashed border-charcoal/10">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Anonymous → Account Link</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">Try first, create account later. Data preserved.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payments -->
+        <div class="feature-detail hidden" data-detail="payments">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Payments</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            RevenueCat manages the full subscription lifecycle. Server-side receipt verification — no client-side trust.
+          </p>
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Purchase</span>
+              <span class="text-charcoal/20">→</span>
+              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">RevenueCat SDK</span>
+              <span class="text-charcoal/20">→</span>
+              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Server Verify</span>
+              <span class="text-charcoal/20">→</span>
+              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Entitlement</span>
+            </div>
+          </div>
+          <div class="mt-4 flex flex-col gap-1.5 font-mono text-charcoal/50" style="font-size: 0.65rem;">
+            <p>• Webhook for renewal, cancellation, billing issues</p>
+            <p>• Free trial period supported</p>
+            <p>• Entitlements synced across devices</p>
+          </div>
+        </div>
+
+        <!-- State Management -->
+        <div class="feature-detail hidden" data-detail="state">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">State Management</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Cubit pattern — simplified BLoC. Each feature has its own Cubit. State is immutable. UI rebuilds only on state change.
+          </p>
+          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-3 mb-4" style="font-size: clamp(0.6rem, 0.65vw, 0.7rem); line-height: 1.6;" set:html={`class DrawCubit extends Cubit&lt;DrawState&gt; {
+  final GetDrawInterpretation _getInterpretation;
+
+  DrawCubit(this._getInterpretation)
+    : super(DrawInitial());
+
+  Future&lt;void&gt; interpret(DrawParams params) async {
+    emit(DrawLoading());
+    try {
+      final result = await _getInterpretation(params);
+      emit(DrawComplete(result));
+    } catch (e) {
+      emit(DrawError(e.toString()));
+    }
+  }
+}`} />
+        </div>
+
+        <!-- AI Chat -->
+        <div class="feature-detail hidden" data-detail="chat">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">AI Chat</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Post-reading conversation. The AI knows the cards drawn, the interpretation, and the user's intention. Context-aware follow-up.
+          </p>
+          <div class="flex flex-col gap-2 mb-4">
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
+              <p class="text-charcoal/50">Conversation history maintained per session</p>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
+              <p class="text-charcoal/50">Ask follow-up questions about the reading</p>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
+              <p class="text-charcoal/50">"Precision card" — draw additional card during chat</p>
+            </div>
+            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
+              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
+              <p class="text-charcoal/50">Cloud Function manages context + token limits</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Multilingual -->
+        <div class="feature-detail hidden" data-detail="i18n">
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Multilingual</h3>
+          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+            Full i18n system. Language detection from device locale with manual override.
+          </p>
+          <div class="flex flex-col gap-2">
+            <div class="flex gap-3 mb-3">
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60 border border-charcoal/15" style="font-size: 0.7rem;">English</span>
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Français</span>
+              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Русский</span>
+            </div>
+            <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
+              <p>• UI strings (buttons, labels, navigation)</p>
+              <p>• AI prompts — interpretation language matches user</p>
+              <p>• Store listings (Google Play, Apple Store)</p>
+              <p>• Device locale detection + manual override</p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
     </div>

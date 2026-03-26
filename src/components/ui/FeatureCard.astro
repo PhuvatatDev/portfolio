@@ -2,15 +2,21 @@
 interface Props {
   title: string;
   description: string;
+  featureId: string;
   colSpan?: 1 | 2;
 }
-const { title, description, colSpan = 1 } = Astro.props;
+const { title, description, featureId, colSpan = 1 } = Astro.props;
 ---
 
-<div class:list={['feature-card', colSpan === 2 && 'col-span-2']}>
-  <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(0.8rem, 0.9vw, 0.95rem);">
-    {title}
-  </h3>
+<div class:list={['feature-card group', colSpan === 2 && 'col-span-2']} data-feature={featureId}>
+  <div class="flex justify-between items-start">
+    <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(0.8rem, 0.9vw, 0.95rem);">
+      {title}
+    </h3>
+    <span class="font-mono text-charcoal/20 group-hover:text-charcoal/50 transition-colors shrink-0 ml-2" style="font-size: 0.75rem;">
+      →
+    </span>
+  </div>
   <p class="font-mono text-charcoal/50 mt-1" style="font-size: clamp(0.6rem, 0.65vw, 0.72rem); line-height: 1.5;">
     {description}
   </p>
@@ -25,5 +31,11 @@ const { title, description, colSpan = 1 } = Astro.props;
     border-radius: 0.5rem;
     padding: clamp(0.75rem, 1vw, 1rem);
     background: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    border-color: rgba(26, 26, 26, 0.15);
+    box-shadow: 0 2px 8px rgba(26, 26, 26, 0.04);
   }
 </style>
