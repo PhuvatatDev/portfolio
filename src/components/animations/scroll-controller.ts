@@ -133,4 +133,52 @@ export function initScrollController() {
       },
     });
   }
+
+  // --- Illustrations responsive compression ---
+  // Same pattern as MindTarot cards: compress toward center of gravity on smaller viewports
+  const isMobile = window.innerWidth < 1180;
+  const illustrations = [
+    document.getElementById('illus-build'),
+    document.getElementById('illus-idea'),
+    document.getElementById('illus-live'),
+    document.getElementById('illus-discussion'),
+  ].filter((el): el is HTMLElement => el !== null);
+
+  if (!isMobile && illustrations.length === 4) {
+    const DESIGN_WIDTH = 1920;
+
+    // Store original positions
+    const illusOriginals = illustrations.map(el => ({
+      el,
+      right: parseFloat(el.style.right),
+      top: parseFloat(el.style.top),
+    }));
+
+    // Center of gravity
+    const avgRight = illusOriginals.reduce((s, c) => s + c.right, 0) / illusOriginals.length;
+    const avgTop = illusOriginals.reduce((s, c) => s + c.top, 0) / illusOriginals.length;
+
+    function compressIllustrations() {
+      // t: 0 at 1180px, 1 at 1920px
+      const t = Math.max(0, Math.min(1, (window.innerWidth - 1180) / (DESIGN_WIDTH - 1180)));
+
+      // Horizontal: 50% spread at 1180px → 100% at 1920px
+      const hCompress = 0.5 + 0.5 * t;
+      // Vertical: 85% spread at 1180px → 100% at 1920px
+      const vCompress = 0.85 + 0.15 * t;
+
+      illusOriginals.forEach(({ el, right, top }) => {
+        el.style.right = (avgRight + (right - avgRight) * hCompress) + 'vw';
+        el.style.top = (avgTop + (top - avgTop) * vCompress) + 'vh';
+      });
+    }
+
+    compressIllustrations();
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 1180) {
+        compressIllustrations();
+        ScrollTrigger.refresh();
+      }
+    });
+  }
 }
