@@ -46,15 +46,15 @@ import FeatureCard from '../ui/FeatureCard.astro';
     └── widgets/`} />
           </FeatureCard>
 
-          <FeatureCard title="AI Integration" description="Context-aware readings via Cloud Functions." featureId="ai">
+          <FeatureCard title="AI Integration" description="Smart AI readings. Built with Gemini, secured server-side." featureId="ai">
             <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">User Intent</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 12px; height: 12px;" />Client</div>
               <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Cloud Function</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/firebase.svg" alt="Firebase" style="width: 12px; height: 12px;" />Cloud Function</div>
               <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Gemini 2.5 Flash</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/gemini.svg" alt="Gemini" style="width: 24px; height: 24px; transform: perspective(200px) rotateY(15deg); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.15));" />Gemini AI</div>
               <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Personalized Reading</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 12px; height: 12px;" />Personalized Reading</div>
             </div>
           </FeatureCard>
 
@@ -88,28 +88,21 @@ import FeatureCard from '../ui/FeatureCard.astro';
           </FeatureCard>
 
           <!-- Row 3 -->
-          <FeatureCard title="State Management" description="Cubit pattern across all features." featureId="state">
-            <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5;">emit(DrawLoading());
-
-final result = await
-  drawUseCase(params);
-
-emit(DrawComplete(result));</pre>
-          </FeatureCard>
-
-          <FeatureCard title="AI Chat" description="Post-reading conversation with AI." featureId="chat">
-            <div class="flex flex-col gap-1.5" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-              <div class="bg-charcoal/8 rounded-lg px-2 py-1 self-end font-mono text-charcoal/50 max-w-[85%]">What does The Tower mean here?</div>
-              <div class="bg-charcoal/15 rounded-lg px-2 py-1 self-start font-mono text-charcoal/50 max-w-[85%]">In this context, it suggests a necessary disruption...</div>
-            </div>
-          </FeatureCard>
-
           <FeatureCard title="Multilingual" description="Full i18n — 3 languages." featureId="i18n">
             <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
               <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
               <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
               <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
             </div>
+          </FeatureCard>
+
+          <FeatureCard title="State Management" description="Fast, responsive UI. Every action gives instant feedback." featureId="state" colSpan={2}>
+            <pre class="font-mono bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5; color: #6B6B5A;" set:html={`emit(<span style="color:#C4841D">DrawLoading</span>());
+
+<span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span>
+  drawUseCase(params);
+
+emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           </FeatureCard>
 
         </div>
@@ -156,22 +149,26 @@ emit(DrawComplete(result));</pre>
               <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Cubits, pages, widgets. State management and UI. Depends only on domain.</p>
             </div>
           </div>
-          <pre class="font-mono bg-charcoal/5 rounded p-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawCubit</span> <span style="color:#5C7A3A">extends</span> <span style="color:#C4841D">Cubit</span>&lt;<span style="color:#C4841D">DrawState</span>&gt; {
-  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawCardsUseCase</span> _drawCards;
-  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">SaveDrawUseCase</span> _saveDraw;
-  <span style="color:#8A8A7A">// ... 7 more injected use cases</span>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">domain/ — interface (contract)</p>
+          <pre class="font-mono bg-charcoal/5 rounded p-3 mb-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">abstract class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepository</span> {
+  <span style="color:#C4841D">Future</span>&lt;<span style="color:#C4841D">Either</span>&lt;<span style="color:#C4841D">AppException</span>, <span style="color:#C4841D">AIInterpretation</span>&gt;&gt;
+      <span style="color:#1A1A1A">requestAIInterpretation</span>({
+    <span style="color:#5C7A3A">required</span> String contextPrompt,
+    <span style="color:#5C7A3A">required</span> String userId,
+    <span style="color:#5C7A3A">required</span> String tier,
+  });
+}`} />
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">data/ — implementation</p>
+          <pre class="font-mono bg-charcoal/5 rounded p-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepositoryImpl</span>
+    <span style="color:#5C7A3A">implements</span> <span style="color:#C4841D">DrawRepository</span> {
+  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawRemoteDataSource</span> dataSource;
 
-  <span style="color:#C4841D">Future</span>&lt;<span style="color:#5C7A3A">void</span>&gt; <span style="color:#1A1A1A">drawCards</span>() <span style="color:#5C7A3A">async</span> {
-    emit(<span style="color:#C4841D">DrawDrawingCards</span>(_currentConfig!));
-
+  <span style="color:#C4841D">Future</span>&lt;<span style="color:#C4841D">Either</span>&lt;...&gt;&gt; <span style="color:#1A1A1A">requestAIInterpretation</span>(...) <span style="color:#5C7A3A">async</span> {
     <span style="color:#5C7A3A">try</span> {
-      <span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span> _drawCards.execute(_currentConfig!);
-      emit(<span style="color:#C4841D">DrawCardsDrawn</span>(
-        config: _currentConfig!,
-        drawResult: result,
-      ));
+      <span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span> dataSource.requestInterpretation(...);
+      <span style="color:#5C7A3A">return</span> <span style="color:#C4841D">Right</span>(result);
     } <span style="color:#5C7A3A">on</span> <span style="color:#C4841D">AppException</span> <span style="color:#5C7A3A">catch</span> (e) {
-      emit(<span style="color:#C4841D">DrawError</span>(e.getUserMessage()));
+      <span style="color:#5C7A3A">return</span> <span style="color:#C4841D">Left</span>(e);
     }
   }
 }`} />
@@ -181,29 +178,35 @@ emit(DrawComplete(result));</pre>
         <div class="feature-detail hidden" data-detail="ai">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">AI Integration</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Gemini 2.5 Flash via Cloud Functions. The client never talks to the AI directly — everything goes through server-side validation.
+            Every AI feature runs through Cloud Functions — the app never talks to Gemini directly. A 300-line custom system prompt defines the interpretation method. Responses use Gemini's structured JSON output, enforced at the API level. Retry with exponential backoff on failures.
           </p>
-          <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">1</span>
-              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">User sets intention + selects emotions</p>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">4 Cloud Functions × Gemini AI</p>
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Interpretation</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Main draw (1-7 cards). Structured JSON response with card-by-card analysis.</p>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">2</span>
-              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Cloud Function receives full context (cards, spread, emotions)</p>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Draw Chat</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Post-reading conversation. AI knows the cards, intention, and history. Can draw a "precision card".</p>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">3</span>
-              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Structured prompt built with tarot methodology</p>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Quick Chat</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Fast mode — 1 subject, 1 card drawn server-side, instant conversation.</p>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">4</span>
-              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Gemini generates personalized interpretation</p>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Guided Paths</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Multi-step introspection. QCM + card per step, AI connects answers across the journey.</p>
             </div>
-            <div class="flex items-center gap-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.65rem;">5</span>
-              <p class="font-mono text-charcoal/50" style="font-size: 0.7rem;">Response validated and returned to client</p>
-            </div>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Context sent to AI</p>
+          <div class="flex flex-wrap gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">user profile</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">emotions</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">intention</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">cards + positions</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">past draws</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">language</span>
           </div>
         </div>
 
@@ -303,50 +306,27 @@ emit(DrawComplete(result));</pre>
         <div class="feature-detail hidden" data-detail="state">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">State Management</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Cubit pattern — simplified BLoC. Each feature has its own Cubit. State is immutable. UI rebuilds only on state change.
+            The app stays fast and responsive. Every action — drawing cards, saving, loading — shows clear feedback: loading, success, or error. No frozen screens, no lost data. Under the hood: Cubit pattern with immutable states. Each feature has its own Cubit. Use cases are injected, keeping everything testable and independent.
           </p>
-          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-3 mb-4" style="font-size: clamp(0.6rem, 0.65vw, 0.7rem); line-height: 1.6;" set:html={`class DrawCubit extends Cubit&lt;DrawState&gt; {
-  final GetDrawInterpretation _getInterpretation;
+          <pre class="font-mono bg-charcoal/5 rounded p-3 mb-4" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawCubit</span> <span style="color:#5C7A3A">extends</span> <span style="color:#C4841D">Cubit</span>&lt;<span style="color:#C4841D">DrawState</span>&gt; {
+  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawCardsUseCase</span> _drawCards;
+  <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">SaveDrawUseCase</span> _saveDraw;
+  <span style="color:#8A8A7A">// ... 7 more injected use cases</span>
 
-  DrawCubit(this._getInterpretation)
-    : super(DrawInitial());
+  <span style="color:#C4841D">Future</span>&lt;<span style="color:#5C7A3A">void</span>&gt; <span style="color:#1A1A1A">drawCards</span>() <span style="color:#5C7A3A">async</span> {
+    emit(<span style="color:#C4841D">DrawDrawingCards</span>(_currentConfig!));
 
-  Future&lt;void&gt; interpret(DrawParams params) async {
-    emit(DrawLoading());
-    try {
-      final result = await _getInterpretation(params);
-      emit(DrawComplete(result));
-    } catch (e) {
-      emit(DrawError(e.toString()));
+    <span style="color:#5C7A3A">try</span> {
+      <span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span> _drawCards.execute(_currentConfig!);
+      emit(<span style="color:#C4841D">DrawCardsDrawn</span>(
+        config: _currentConfig!,
+        drawResult: result,
+      ));
+    } <span style="color:#5C7A3A">on</span> <span style="color:#C4841D">AppException</span> <span style="color:#5C7A3A">catch</span> (e) {
+      emit(<span style="color:#C4841D">DrawError</span>(e.getUserMessage()));
     }
   }
 }`} />
-        </div>
-
-        <!-- AI Chat -->
-        <div class="feature-detail hidden" data-detail="chat">
-          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">AI Chat</h3>
-          <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Post-reading conversation. The AI knows the cards drawn, the interpretation, and the user's intention. Context-aware follow-up.
-          </p>
-          <div class="flex flex-col gap-2 mb-4">
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
-              <p class="text-charcoal/50">Conversation history maintained per session</p>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
-              <p class="text-charcoal/50">Ask follow-up questions about the reading</p>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
-              <p class="text-charcoal/50">"Precision card" — draw additional card during chat</p>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">•</span>
-              <p class="text-charcoal/50">Cloud Function manages context + token limits</p>
-            </div>
-          </div>
         </div>
 
         <!-- Multilingual -->
