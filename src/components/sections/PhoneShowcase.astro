@@ -1,75 +1,130 @@
 ---
+import FeatureCard from '../ui/FeatureCard.astro';
 // Phone Showcase — MindTarot featured project
-// Feature blocks scroll naturally past the fixed phone
-// Same pattern as MindTarot website's PhoneShowcase
+// Phone fixed left + cream panel fixed right with Stytch-style feature grid
+// Section height provides scroll distance for animations
 ---
 
-<section id="phone-showcase" class="relative z-10">
-  <div style="margin-left: calc(50% + 14vw); padding-right: 8%;">
+<section id="phone-showcase" class="relative z-10" style="height: 300vh;">
 
-    <!-- Spacer: phone visible with home screenshot before text arrives -->
-    <div style="height: 100vh;"></div>
+  <!-- Showcase panel — fixed, right of phone, fades in via GSAP -->
+  <div id="showcase-panel" class="fixed z-20 opacity-0 pointer-events-none"
+       style="left: 42%; top: 50%; transform: translateY(-50%); width: 50vw; max-width: 700px; max-height: 88vh; overflow-y: auto;">
+    <div style="background: #F5F3EF; border-radius: 1rem; padding: clamp(1.2rem, 1.8vw, 1.8rem);">
 
-    <!-- Feature 0: Home — intro -->
-    <div class="feature-text" data-feature="0" style="padding-bottom: 75vh;">
-      <p class="font-mono text-charcoal/40 mb-4" style="font-size: clamp(0.7rem, 0.8vw, 0.8rem); letter-spacing: 0.1em;">[ featured project ]</p>
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.5rem, 2.2vw, 2.5rem);">MindTarot</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        An introspective tarot app with AI-powered interpretations. Built from authentication to payment system to store deployment.
+      <!-- Header -->
+      <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
+        [ featured project ]
       </p>
-    </div>
-
-    <!-- Feature 1: Draw -->
-    <div class="feature-text" data-feature="1" style="padding-bottom: 75vh;">
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Draw Experience</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        Interactive card drawing with fluid animations. Multiple spread types, from quick single-card pulls to detailed multi-card readings.
+      <h2 class="font-serif font-bold text-charcoal mb-1" style="font-size: clamp(1.4rem, 1.8vw, 2rem);">
+        MindTarot
+      </h2>
+      <p class="font-mono text-charcoal/50 mb-5" style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+        Built from scratch to store, live in production.
       </p>
-    </div>
 
-    <!-- Feature 2: Interpretation -->
-    <div class="feature-text" data-feature="2" style="padding-bottom: 75vh;">
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">AI-Powered Readings</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        Gemini 2.5 Flash generates context-aware interpretations. Each reading adapts to the user's intention and emotional state.
-      </p>
-    </div>
+      <!-- Feature grid — 3 columns, Stytch style -->
+      <div class="grid grid-cols-3 gap-3">
 
-    <!-- Feature 3: Chat -->
-    <div class="feature-text" data-feature="3" style="padding-bottom: 75vh;">
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Post-Draw Chat</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        Continue the conversation after a reading. Ask questions, request clarification, or pull a precision card for deeper insight.
-      </p>
-    </div>
+        <!-- Row 1: Clean Architecture (wide) + AI Integration -->
+        <FeatureCard title="Clean Architecture" description="Feature-first structure. Each module fully isolated." colSpan={2}>
+          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.6;">lib/features/draw/
+├── data/
+│   ├── datasources/
+│   ├── models/
+│   └── repositories/
+├── domain/
+│   ├── entities/
+│   ├── usecases/
+│   └── repositories/
+└── presentation/
+    ├── cubits/
+    ├── pages/
+    └── widgets/</pre>
+        </FeatureCard>
 
-    <!-- Feature 4: Journal -->
-    <div class="feature-text" data-feature="4" style="padding-bottom: 75vh;">
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Personal Journal</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        Every reading saved in Firestore. Full CRUD operations, search, filtering. Offline support built in.
-      </p>
-    </div>
+        <FeatureCard title="AI Integration" description="Context-aware readings via Cloud Functions.">
+          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">User Intent</div>
+            <div class="text-charcoal/20 text-center text-xs">↓</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Cloud Function</div>
+            <div class="text-charcoal/20 text-center text-xs">↓</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Gemini 2.5 Flash</div>
+            <div class="text-charcoal/20 text-center text-xs">↓</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Personalized Reading</div>
+          </div>
+        </FeatureCard>
 
-    <!-- Feature 5: Ambiance -->
-    <div class="feature-text" data-feature="5" style="padding-bottom: 75vh;">
-      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Soundscapes</h2>
-      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
-        Spatial audio and ambient sounds. 20+ sound layers to combine freely. A tarot reading becomes a ritual.
-      </p>
-    </div>
+        <!-- Row 2: Security + Auth + Payment -->
+        <FeatureCard title="Security" description="Defense in depth. Multi-layer pipeline.">
+          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">CF Validation</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Firestore Rules</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Rate Limiting</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">GDPR</div>
+          </div>
+        </FeatureCard>
 
-    <!-- Store badges -->
-    <div style="padding-bottom: 40vh;">
-      <div class="flex gap-4 flex-wrap">
-        <a href="https://play.google.com/store/apps/details?id=com.mindtarot.app" target="_blank" rel="noopener" class="font-mono no-underline px-6 py-3 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors" style="font-size: clamp(0.8rem, 1vw, 0.95rem);">
-          [ view on Google Play → ]
+        <FeatureCard title="Authentication" description="Multi-provider sign-in.">
+          <div class="flex flex-col gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">✉ Email / Password</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">G Google Sign-In</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60"> Apple Sign-In</div>
+          </div>
+        </FeatureCard>
+
+        <FeatureCard title="Payments" description="RevenueCat subscription.">
+          <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Purchase</div>
+            <div class="text-charcoal/20 text-center text-xs">↓</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server Verify</div>
+            <div class="text-charcoal/20 text-center text-xs">↓</div>
+            <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Entitlement</div>
+          </div>
+        </FeatureCard>
+
+        <!-- Row 3: State Mgmt + Chat + Multilingual -->
+        <FeatureCard title="State Management" description="Cubit pattern across all features.">
+          <pre class="font-mono text-charcoal/50 bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5;">emit(DrawLoading());
+
+final result = await
+  drawUseCase(params);
+
+emit(DrawComplete(result));</pre>
+        </FeatureCard>
+
+        <FeatureCard title="AI Chat" description="Post-reading conversation with AI.">
+          <div class="flex flex-col gap-1.5" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <div class="bg-charcoal/8 rounded-lg px-2 py-1 self-end font-mono text-charcoal/50 max-w-[85%]">What does The Tower mean here?</div>
+            <div class="bg-charcoal/15 rounded-lg px-2 py-1 self-start font-mono text-charcoal/50 max-w-[85%]">In this context, it suggests a necessary disruption...</div>
+          </div>
+        </FeatureCard>
+
+        <FeatureCard title="Multilingual" description="Full i18n — 3 languages.">
+          <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
+          </div>
+        </FeatureCard>
+
+      </div>
+
+      <!-- Store badges -->
+      <div class="mt-4 pt-4 border-t border-charcoal/10 flex gap-3 items-center">
+        <a href="https://play.google.com/store/apps/details?id=com.mindtarot.app" target="_blank" rel="noopener"
+           class="font-mono no-underline px-4 py-2 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors"
+           style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+          [ Google Play → ]
         </a>
-        <span class="font-mono px-6 py-3 border-2 border-charcoal/10 text-charcoal/30 rounded cursor-default" style="font-size: clamp(0.8rem, 1vw, 0.95rem);">
-          [ Apple Store — coming soon ]
+        <span class="font-mono px-4 py-2 border border-charcoal/10 text-charcoal/30 rounded cursor-default"
+              style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+          [ Apple Store — soon ]
         </span>
       </div>
-    </div>
 
+    </div>
   </div>
+
 </section>
