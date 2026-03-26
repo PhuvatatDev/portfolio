@@ -2,7 +2,8 @@
  * Portfolio Scroll Controller
  * Adapted from MindTarot website scroll-controller.ts
  *
- * Grid parallax, Hero fade, illustration convergence → cream card
+ * Grid parallax, Hero fade, illustration convergence → cream card,
+ * card exit, phone rise, screenshot transitions, feature labels
  */
 
 import { gsap } from 'gsap';
@@ -20,9 +21,8 @@ export function initScrollController() {
   if (!gridCanvas) return;
 
   // --- Grid parallax ---
-  // Translate grid canvas based on scroll (slower than content = parallax)
   gsap.to(gridCanvas, {
-    y: -3000,  // Grid moves up 3000px over entire scroll
+    y: -3000,
     ease: 'none',
     scrollTrigger: {
       trigger: document.body,
@@ -41,15 +41,13 @@ export function initScrollController() {
       end: 'bottom bottom',
       scrub: true,
       onUpdate: (self) => {
-        // Progress bar slides from left (0%) to right (80%)
         progressBar.style.left = `${self.progress * 80}%`;
       },
     });
   }
 
-  // --- Hero text fade out on scroll ---
+  // --- Hero text fade out + exit left ---
   const heroText = document.getElementById('hero-text');
-
   if (heroText) {
     gsap.to(heroText, {
       opacity: 0,
@@ -64,8 +62,9 @@ export function initScrollController() {
     });
   }
 
-  // --- Illustrations responsive compression ---
-  // Same pattern as MindTarot cards: compress toward center of gravity on smaller viewports
+  // ============================================
+  // Illustrations responsive compression
+  // ============================================
   const isMobile = window.innerWidth < 1180;
   const illustrations = [
     document.getElementById('illus-build'),
@@ -76,27 +75,18 @@ export function initScrollController() {
 
   if (!isMobile && illustrations.length === 4) {
     const DESIGN_WIDTH = 1920;
-
-    // Store original positions
     const illusOriginals = illustrations.map(el => ({
       el,
       right: parseFloat(el.style.right),
       top: parseFloat(el.style.top),
     }));
-
-    // Center of gravity
     const avgRight = illusOriginals.reduce((s, c) => s + c.right, 0) / illusOriginals.length;
     const avgTop = illusOriginals.reduce((s, c) => s + c.top, 0) / illusOriginals.length;
 
     function compressIllustrations() {
-      // t: 0 at 1180px, 1 at 1920px
       const t = Math.max(0, Math.min(1, (window.innerWidth - 1180) / (DESIGN_WIDTH - 1180)));
-
-      // Horizontal: 50% spread at 1180px → 100% at 1920px
       const hCompress = 0.5 + 0.5 * t;
-      // Vertical: 85% spread at 1180px → 100% at 1920px
       const vCompress = 0.85 + 0.15 * t;
-
       illusOriginals.forEach(({ el, right, top }) => {
         el.style.right = (avgRight + (right - avgRight) * hCompress) + 'vw';
         el.style.top = (avgTop + (top - avgTop) * vCompress) + 'vh';
@@ -115,10 +105,6 @@ export function initScrollController() {
   // ============================================
   // Illustrations convergence → cream card slots
   // ============================================
-  // Same pattern as MindTarot: both illustrations and card are FIXED
-  // → same coordinate system → simple scrub tweens with arrow functions
-  // No pin needed. Separate ScrollTriggers per animation phase.
-
   const myWorkSection = document.getElementById('my-work');
   const processCard = document.getElementById('process-card');
   const illusIdea = document.getElementById('illus-idea');
@@ -131,6 +117,9 @@ export function initScrollController() {
   const slotBuild = document.querySelector('#process-slot-build .process-illus-slot') as HTMLElement;
   const slotLive = document.querySelector('#process-slot-live .process-illus-slot') as HTMLElement;
 
+  // Track convergence triggers so we can disable them during card exit
+  const convergenceTriggers: (ScrollTrigger | undefined)[] = [];
+
   if (myWorkSection && processCard && illusIdea && illusDiscussion && illusBuild && illusLive
       && slotIdea && slotDiscussion && slotBuild && slotLive) {
 
@@ -141,11 +130,9 @@ export function initScrollController() {
       { illus: illusLive, slot: slotLive },
     ];
 
-    // --- Step 1: Illustrations converge (starts early — as you leave Hero) ---
-    // 'top 60%' = animation starts when myWork top is at 60% of viewport (still in Hero)
-    // 'top top' = animation ends when myWork top reaches viewport top
+    // --- Illustrations converge ---
     pairs.forEach(({ illus, slot }) => {
-      gsap.to(illus, {
+      const tween = gsap.to(illus, {
         x: () => {
           const ir = illus.getBoundingClientRect();
           const sr = slot.getBoundingClientRect();
@@ -168,10 +155,11 @@ export function initScrollController() {
           invalidateOnRefresh: true,
         },
       });
+      convergenceTriggers.push(tween.scrollTrigger);
     });
 
-    // --- Step 2: Card fades in (slightly after convergence starts) ---
-    gsap.to(processCard, {
+    // --- Card fades in ---
+    const cardFade = gsap.to(processCard, {
       opacity: 1,
       ease: 'none',
       scrollTrigger: {
@@ -181,6 +169,162 @@ export function initScrollController() {
         scrub: true,
       },
     });
+    convergenceTriggers.push(cardFade.scrollTrigger);
+  }
 
+  // ============================================
+  // Card + illustrations exit up → phone rises
+  // ============================================
+  const phoneShowcase = document.getElementById('phone-showcase');
+  const heroIllustrations = document.getElementById('hero-illustrations');
+  const phoneContainer = document.getElementById('phone-container');
+  const screenOverlay = document.getElementById('phone-screen-overlay');
+
+  if (phoneShowcase && processCard) {
+    // --- Disable convergence triggers when card exits ---
+    ScrollTrigger.create({
+      trigger: phoneShowcase,
+      start: 'top bottom',
+      onEnter: () => convergenceTriggers.forEach(t => t?.disable(false)),
+      onLeaveBack: () => convergenceTriggers.forEach(t => t?.enable(false)),
+    });
+
+    // --- Card + illustrations slide up together (no opacity fade, just exit off-screen) ---
+    const exitTargets = [processCard, heroIllustrations].filter(Boolean) as HTMLElement[];
+    exitTargets.forEach(el => {
+      gsap.to(el, {
+        y: '-100vh',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: phoneShowcase,
+          start: 'top bottom',
+          end: 'top 30%',
+          scrub: true,
+        },
+      });
+    });
+  }
+
+  // ============================================
+  // Phone rises from bottom
+  // ============================================
+  if (phoneContainer && phoneShowcase) {
+    gsap.fromTo(phoneContainer,
+      { xPercent: -50, yPercent: -50, y: '100vh' },
+      {
+        xPercent: -50,
+        yPercent: -50,
+        y: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: phoneShowcase,
+          start: 'top 60%',
+          end: 'top top',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+  }
+
+  // ============================================
+  // Black overlay fades out to reveal Home screenshot
+  // ============================================
+  if (screenOverlay && phoneShowcase) {
+    gsap.to(screenOverlay, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: phoneShowcase,
+        start: 'top 20%',
+        end: 'top top',
+        scrub: true,
+      },
+    });
+  }
+
+  // ============================================
+  // Screenshot transitions — driven by feature text blocks
+  // ============================================
+  const featureTextBlocks = document.querySelectorAll<HTMLElement>('.feature-text[data-feature]');
+  const phoneSlides = document.querySelectorAll<HTMLElement>('.phone-slide');
+
+  featureTextBlocks.forEach((textBlock, index) => {
+    if (index === 0) return; // Home screenshot already visible
+
+    const prevSlide = phoneSlides[index - 1];
+    const currSlide = phoneSlides[index];
+    if (!prevSlide || !currSlide) return;
+
+    // New screenshot slides up from bottom
+    gsap.fromTo(currSlide,
+      { yPercent: 100 },
+      {
+        yPercent: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: textBlock,
+          start: 'top bottom',
+          end: 'top 45%',
+          scrub: true,
+        },
+      }
+    );
+
+    // Old screenshot fades out (synced with slide-up)
+    gsap.to(prevSlide, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: textBlock,
+        start: 'top 85%',
+        end: 'top 50%',
+        scrub: true,
+      },
+    });
+  });
+
+  // ============================================
+  // Feature label — fixed left, changes per feature block
+  // ============================================
+  const featureLabel = document.getElementById('feature-label');
+  const featureLabelText = document.getElementById('feature-label-text');
+  const labelTexts = ['Design', 'Interactive', 'AI', 'Chat', 'Data', 'Sound'];
+
+  if (featureLabel && featureLabelText && featureTextBlocks.length > 0) {
+    let currentLabel = -1;
+
+    featureTextBlocks.forEach((textBlock, index) => {
+      ScrollTrigger.create({
+        trigger: textBlock,
+        start: 'top 70%',
+        onEnter: () => updateLabel(index),
+        onLeaveBack: () => { if (index > 0) updateLabel(index - 1); },
+      });
+    });
+
+    function updateLabel(index: number) {
+      if (index === currentLabel) return;
+      gsap.killTweensOf(featureLabel);
+      currentLabel = index;
+      gsap.to(featureLabel, {
+        opacity: 0, duration: 0.2, ease: 'power1.in',
+        onComplete: () => {
+          featureLabelText!.textContent = labelTexts[index] || '';
+          gsap.to(featureLabel, { opacity: 1, duration: 0.4, ease: 'power1.out' });
+        },
+      });
+    }
+
+    // Hide label when scrolling back above showcase
+    ScrollTrigger.create({
+      trigger: featureTextBlocks[0],
+      start: 'top bottom',
+      onLeaveBack: () => {
+        gsap.killTweensOf(featureLabel);
+        gsap.set(featureLabel, { opacity: 0 });
+        currentLabel = -1;
+      },
+    });
   }
 }

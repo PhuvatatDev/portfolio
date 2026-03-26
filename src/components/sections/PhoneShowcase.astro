@@ -1,0 +1,75 @@
+---
+// Phone Showcase — MindTarot featured project
+// Feature blocks scroll naturally past the fixed phone
+// Same pattern as MindTarot website's PhoneShowcase
+---
+
+<section id="phone-showcase" class="relative z-10">
+  <div style="margin-left: calc(50% + 14vw); padding-right: 8%;">
+
+    <!-- Spacer: phone visible with home screenshot before text arrives -->
+    <div style="height: 100vh;"></div>
+
+    <!-- Feature 0: Home — intro -->
+    <div class="feature-text" data-feature="0" style="padding-bottom: 75vh;">
+      <p class="font-mono text-charcoal/40 mb-4" style="font-size: clamp(0.7rem, 0.8vw, 0.8rem); letter-spacing: 0.1em;">[ featured project ]</p>
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.5rem, 2.2vw, 2.5rem);">MindTarot</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        An introspective tarot app with AI-powered interpretations. Built from authentication to payment system to store deployment.
+      </p>
+    </div>
+
+    <!-- Feature 1: Draw -->
+    <div class="feature-text" data-feature="1" style="padding-bottom: 75vh;">
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Draw Experience</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        Interactive card drawing with fluid animations. Multiple spread types, from quick single-card pulls to detailed multi-card readings.
+      </p>
+    </div>
+
+    <!-- Feature 2: Interpretation -->
+    <div class="feature-text" data-feature="2" style="padding-bottom: 75vh;">
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">AI-Powered Readings</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        Gemini 2.5 Flash generates context-aware interpretations. Each reading adapts to the user's intention and emotional state.
+      </p>
+    </div>
+
+    <!-- Feature 3: Chat -->
+    <div class="feature-text" data-feature="3" style="padding-bottom: 75vh;">
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Post-Draw Chat</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        Continue the conversation after a reading. Ask questions, request clarification, or pull a precision card for deeper insight.
+      </p>
+    </div>
+
+    <!-- Feature 4: Journal -->
+    <div class="feature-text" data-feature="4" style="padding-bottom: 75vh;">
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Personal Journal</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        Every reading saved in Firestore. Full CRUD operations, search, filtering. Offline support built in.
+      </p>
+    </div>
+
+    <!-- Feature 5: Ambiance -->
+    <div class="feature-text" data-feature="5" style="padding-bottom: 75vh;">
+      <h2 class="font-serif font-bold text-charcoal mb-3" style="font-size: clamp(1.3rem, 1.8vw, 2rem);">Soundscapes</h2>
+      <p class="font-mono text-charcoal/60 mt-4" style="font-size: clamp(0.85rem, 0.95vw, 1rem); line-height: 1.7;">
+        Spatial audio and ambient sounds. 20+ sound layers to combine freely. A tarot reading becomes a ritual.
+      </p>
+    </div>
+
+    <!-- Store badges -->
+    <div style="padding-bottom: 40vh;">
+      <div class="flex gap-4 flex-wrap">
+        <a href="https://play.google.com/store/apps/details?id=com.mindtarot.app" target="_blank" rel="noopener" class="font-mono no-underline px-6 py-3 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors" style="font-size: clamp(0.8rem, 1vw, 0.95rem);">
+          [ view on Google Play → ]
+        </a>
+        <span class="font-mono px-6 py-3 border-2 border-charcoal/10 text-charcoal/30 rounded cursor-default" style="font-size: clamp(0.8rem, 1vw, 0.95rem);">
+          [ Apple Store — coming soon ]
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>

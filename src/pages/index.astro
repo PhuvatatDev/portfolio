@@ -4,6 +4,7 @@ import CodeGrid from '../components/sections/CodeGrid.astro';
 import Header from '../components/layout/Header.astro';
 import Hero from '../components/sections/Hero.astro';
 import MyWork from '../components/sections/MyWork.astro';
+import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
 ---
 
 <BaseLayout>
@@ -11,9 +12,30 @@ import MyWork from '../components/sections/MyWork.astro';
   <Header />
   <Hero />
   <MyWork />
+  <PhoneShowcase />
 
-  <!-- Placeholder content for scroll (removed in later phases) -->
-  <div class="relative z-10" style="height: 300vh;"></div>
+  <!-- Phone container — fixed, globally centered, starts below viewport -->
+  <div id="phone-container" class="fixed z-30 pointer-events-none" style="left: 50%; top: 50%;">
+    <div class="relative" style="width: 25vw; max-width: 360px;">
+      <!-- Screenshots (behind the frame, inside screen area) -->
+      <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 2.2vw; background: #000;">
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="0" src="/portfolio/images/screenshots/en/screenshot-home.webp" alt="Home" />
+        <div id="phone-screen-overlay" class="absolute inset-0 z-10" style="background: #000;"></div>
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="1" src="/portfolio/images/screenshots/en/screenshot-draws.webp" alt="Draw" />
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="2" src="/portfolio/images/screenshots/en/screenshot-interpretation.webp" alt="Interpretation" />
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="3" src="/portfolio/images/screenshots/en/screenshot-chat.webp" alt="Chat" />
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="4" src="/portfolio/images/screenshots/en/screenshot-journal.webp" alt="Journal" />
+        <img class="phone-slide absolute inset-0 w-full h-full object-cover object-top" data-slide="5" src="/portfolio/images/screenshots/en/screenshot-ambiance.webp" alt="Ambiance" />
+      </div>
+      <!-- Phone frame (on top) -->
+      <img src="/portfolio/images/phone-frame.png" alt="" class="w-full relative z-10" />
+    </div>
+  </div>
+
+  <!-- Feature label — fixed, left side, changes per feature block -->
+  <div id="feature-label" class="fixed z-20 pointer-events-none opacity-0" style="left: 8vw; top: 50%; transform: translateY(-50%);">
+    <span id="feature-label-text" class="font-serif font-bold text-charcoal/8 leading-none select-none" style="font-size: clamp(4rem, 8vw, 10rem);">Design</span>
+  </div>
 </BaseLayout>
 
 <script>
