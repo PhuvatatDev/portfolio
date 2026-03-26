@@ -59,17 +59,17 @@ import FeatureCard from '../ui/FeatureCard.astro';
           </FeatureCard>
 
           <!-- Row 2 -->
-          <FeatureCard title="Security" description="Defense in depth. Multi-layer pipeline." featureId="security">
+          <FeatureCard title="Security" description="Read-only client. All business logic runs server-side." featureId="security">
             <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">CF Validation</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Auth Verification</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server-side Logic</div>
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Firestore Rules</div>
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Rate Limiting</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">GDPR</div>
             </div>
           </FeatureCard>
 
-          <FeatureCard title="Authentication" description="Multi-provider sign-in." featureId="auth">
+          <FeatureCard title="Authentication" description="Quick sign-in with email, Google, or Apple." featureId="auth">
             <div class="flex flex-col gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">✉ Email / Password</div>
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">G Google Sign-In</div>
@@ -212,42 +212,26 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
         <!-- Security -->
         <div class="feature-detail hidden" data-detail="security">
-          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Security Pipeline</h3>
+          <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Security</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Defense in depth. Every request passes through multiple validation layers before reaching business logic.
+            Your personal data never leaves a secure environment. The app only displays information — all processing happens on protected servers. Under the hood: the Flutter client is read-only. All business logic runs in Cloud Functions and Firebase triggers. User documents are created server-side (onCreate trigger), subscriptions can only be written by the backend, and sensitive fields are locked in Firestore rules.
           </p>
-          <div class="flex flex-col gap-1.5">
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">1</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firebase App Check — genuine app instances only</div>
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Device Attestation</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">App Check verifies genuine app instances before any Cloud Function call.</p>
             </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">2</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Cloud Function entry validation</div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Auth + Validation</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Every CF checks auth token, validates inputs, and verifies the claimed subscription tier server-side.</p>
             </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">3</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firebase Auth token verification</div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Firestore Rules</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Default deny-all. Owner-only reads. Writes blocked on sensitive collections — only Admin SDK can write.</p>
             </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">4</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Rate limiting per user (Firestore counters)</div>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">5</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Input sanitization</div>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">6</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Business logic validation + quota checks</div>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">7</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">Firestore Security Rules (450+ lines)</div>
-            </div>
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="text-charcoal/30 w-4 text-right shrink-0">8</span>
-              <div class="bg-charcoal/5 rounded px-3 py-1.5 text-charcoal/60 flex-1">GDPR compliance — data deletion, export</div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Rate Limiting</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Per-user rate limits on AI calls, chat, and sensitive operations like account deletion.</p>
             </div>
           </div>
         </div>
@@ -256,25 +240,31 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
         <div class="feature-detail hidden" data-detail="auth">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Authentication</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Three providers, unified flow. Anonymous sessions supported — users try the app before creating an account, then link their data.
+            Create your account in seconds with the method you prefer. Three providers, one unified flow. Your user profile is created server-side by a Firebase onCreate trigger — the client never writes sensitive account data. Every route is protected by a GoRouter auth guard with automatic redirects.
           </p>
-          <div class="flex flex-col gap-2">
+          <div class="flex flex-col gap-2 mb-4">
             <div class="bg-charcoal/5 rounded p-3">
               <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Email / Password</p>
-              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">With email verification flow</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">With email verification (client-side quick check + server-side Cloud Function sync).</p>
             </div>
             <div class="bg-charcoal/5 rounded p-3">
               <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Google Sign-In</p>
-              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">OAuth 2.0 — Android + Web</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">OAuth 2.0 via google_sign_in v7. Pre-verified email.</p>
             </div>
             <div class="bg-charcoal/5 rounded p-3">
               <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Apple Sign-In</p>
-              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">Required for iOS — Apple review compliant</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">iOS only. Apple review compliant. Pre-verified email.</p>
             </div>
-            <div class="bg-charcoal/5 rounded p-3 border border-dashed border-charcoal/10">
-              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Anonymous → Account Link</p>
-              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem;">Try first, create account later. Data preserved.</p>
-            </div>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Account deletion — 3-step flow</p>
+          <div class="flex items-center gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Warnings</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Reason</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Re-auth</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Server deletes all data</span>
           </div>
         </div>
 
