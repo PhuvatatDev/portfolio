@@ -181,4 +181,90 @@ export function initScrollController() {
       }
     });
   }
+
+  // ============================================
+  // Illustrations convergence → cream card slots
+  // ============================================
+  // Same pattern as MindTarot: both illustrations and card are FIXED
+  // → same coordinate system → simple scrub tweens with arrow functions
+  // No pin needed. Separate ScrollTriggers per animation phase.
+
+  const myWorkSection = document.getElementById('my-work');
+  const processCard = document.getElementById('process-card');
+  const illusIdea = document.getElementById('illus-idea');
+  const illusDiscussion = document.getElementById('illus-discussion');
+  const illusBuild = document.getElementById('illus-build');
+  const illusLive = document.getElementById('illus-live');
+
+  const slotIdea = document.querySelector('#process-slot-idea .process-illus-slot') as HTMLElement;
+  const slotDiscussion = document.querySelector('#process-slot-discussion .process-illus-slot') as HTMLElement;
+  const slotBuild = document.querySelector('#process-slot-build .process-illus-slot') as HTMLElement;
+  const slotLive = document.querySelector('#process-slot-live .process-illus-slot') as HTMLElement;
+
+  if (myWorkSection && processCard && illusIdea && illusDiscussion && illusBuild && illusLive
+      && slotIdea && slotDiscussion && slotBuild && slotLive) {
+
+    const pairs = [
+      { illus: illusIdea, slot: slotIdea },
+      { illus: illusDiscussion, slot: slotDiscussion },
+      { illus: illusBuild, slot: slotBuild },
+      { illus: illusLive, slot: slotLive },
+    ];
+
+    const badges = document.querySelectorAll('.process-badges');
+
+    // --- Step 1: Illustrations converge FIRST (scroll drives movement) ---
+    // Arrow functions → evaluated at creation & on invalidateOnRefresh
+    pairs.forEach(({ illus, slot }) => {
+      gsap.to(illus, {
+        x: () => {
+          const ir = illus.getBoundingClientRect();
+          const sr = slot.getBoundingClientRect();
+          return (sr.left + sr.width / 2) - (ir.left + ir.width / 2);
+        },
+        y: () => {
+          const ir = illus.getBoundingClientRect();
+          const sr = slot.getBoundingClientRect();
+          return (sr.top + sr.height / 2) - (ir.top + ir.height / 2);
+        },
+        scale: () => slot.getBoundingClientRect().width / illus.offsetWidth,
+        rotateY: 0,
+        rotateX: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: myWorkSection,
+          start: 'top top',
+          end: '45% top',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+    });
+
+    // --- Step 2: Card fades in WHILE illustrations are converging (mid-way) ---
+    gsap.to(processCard, {
+      opacity: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: myWorkSection,
+        start: '15% top',
+        end: '35% top',
+        scrub: true,
+      },
+    });
+
+    // --- Step 3: Badges fade in (after illustrations have landed) ---
+    badges.forEach((badge) => {
+      gsap.to(badge, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: myWorkSection,
+          start: '55% top',
+          end: '67% top',
+          scrub: true,
+        },
+      });
+    });
+  }
 }
