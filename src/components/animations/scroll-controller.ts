@@ -2,83 +2,13 @@
  * Portfolio Scroll Controller
  * Adapted from MindTarot website scroll-controller.ts
  *
- * Phase 1: Grid parallax + color transition (cream → pistachio)
+ * Grid parallax, Hero fade, illustration convergence → cream card
  */
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
-
-// ============================================
-// Color Phases — cream → pistachio
-// ============================================
-// Same transition pattern as MindTarot:
-// 70% stable → 10% darken → 10% crossfade → 10% lighten
-
-interface ColorPhase {
-  h: number;  // HSL hue
-  s: number;  // HSL saturation (%)
-  l: number;  // HSL lightness (%)
-}
-
-const COLOR_PHASES: ColorPhase[] = [
-  { h: 38, s: 33, l: 95 },   // Cream #F5F3EF
-  { h: 80, s: 22, l: 70 },   // Pistachio #B5C99A
-];
-
-function interpolateColor(progress: number): string {
-  // With 2 phases: simple interpolation with luminosity modulation
-  const t = Math.max(0, Math.min(1, progress));
-
-  const from = COLOR_PHASES[0];
-  const to = COLOR_PHASES[1];
-
-  // Transition zone: 35% to 65% of scroll
-  const transitionStart = 0.35;
-  const transitionEnd = 0.65;
-
-  let mixRatio: number;
-  let luminosityMod: number;
-
-  if (t <= transitionStart) {
-    // Phase 1 stable
-    mixRatio = 0;
-    luminosityMod = 1.0;
-  } else if (t >= transitionEnd) {
-    // Phase 2 stable
-    mixRatio = 1;
-    luminosityMod = 1.0;
-  } else {
-    // Transition zone
-    const transitionProgress = (t - transitionStart) / (transitionEnd - transitionStart);
-
-    // 3-step transition: darken → crossfade → lighten
-    if (transitionProgress < 0.33) {
-      // Darken current color
-      mixRatio = 0;
-      luminosityMod = 1.0 - (transitionProgress / 0.33) * 0.15;
-    } else if (transitionProgress < 0.66) {
-      // Crossfade between colors (darkened)
-      mixRatio = (transitionProgress - 0.33) / 0.33;
-      luminosityMod = 0.85;
-    } else {
-      // Lighten new color
-      mixRatio = 1;
-      luminosityMod = 0.85 + ((transitionProgress - 0.66) / 0.34) * 0.15;
-    }
-  }
-
-  const h = from.h + (to.h - from.h) * mixRatio;
-  const s = from.s + (to.s - from.s) * mixRatio;
-  const l = (from.l + (to.l - from.l) * mixRatio) * luminosityMod;
-
-  return `hsl(${h}, ${s}%, ${l}%)`;
-}
-
-// ============================================
-// Init
-// ============================================
 export function initScrollController() {
   const gridOverlay = document.getElementById('grid-color-overlay');
   const codeGrid = document.getElementById('code-grid');
@@ -123,12 +53,12 @@ export function initScrollController() {
   if (heroText) {
     gsap.to(heroText, {
       opacity: 0,
-      y: -50,
+      x: '-100vw',
       ease: 'none',
       scrollTrigger: {
         trigger: document.body,
         start: 'top top',
-        end: '5% top',
+        end: '12% top',
         scrub: true,
       },
     });
@@ -211,8 +141,6 @@ export function initScrollController() {
       { illus: illusLive, slot: slotLive },
     ];
 
-    const badges = document.querySelectorAll('.process-badges');
-
     // --- Step 1: Illustrations converge (starts early — as you leave Hero) ---
     // 'top 60%' = animation starts when myWork top is at 60% of viewport (still in Hero)
     // 'top top' = animation ends when myWork top reaches viewport top
@@ -234,7 +162,7 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: myWorkSection,
-          start: 'top 60%',
+          start: 'top 85%',
           end: 'top top',
           scrub: true,
           invalidateOnRefresh: true,
@@ -254,18 +182,5 @@ export function initScrollController() {
       },
     });
 
-    // --- Step 3: Badges fade in (after illustrations have landed) ---
-    badges.forEach((badge) => {
-      gsap.to(badge, {
-        opacity: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: myWorkSection,
-          start: '10% top',
-          end: '20% top',
-          scrub: true,
-        },
-      });
-    });
   }
 }
