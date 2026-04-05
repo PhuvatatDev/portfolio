@@ -52,7 +52,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
               <div class="text-charcoal/20 text-center text-xs">↓</div>
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/firebase.svg" alt="Firebase" style="width: 12px; height: 12px;" />Cloud Function</div>
               <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/gemini.svg" alt="Gemini" style="width: 24px; height: 24px; transform: perspective(200px) rotateY(15deg); filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.15));" />Gemini AI</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/gemini.svg" alt="Gemini" style="width: 12px; height: 12px;" />Gemini AI</div>
               <div class="text-charcoal/20 text-center text-xs">↓</div>
               <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1.5"><img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 12px; height: 12px;" />Personalized Reading</div>
             </div>
@@ -77,18 +77,17 @@ import FeatureCard from '../ui/FeatureCard.astro';
             </div>
           </FeatureCard>
 
-          <FeatureCard title="Payments" description="RevenueCat subscription." featureId="payments">
+          <FeatureCard title="Payments" description="Freemium model with premium subscriptions. Users pay, upgrade, cancel — everything handled automatically." featureId="payments">
             <div class="flex flex-col gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Purchase</div>
-              <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server Verify</div>
-              <div class="text-charcoal/20 text-center text-xs">↓</div>
-              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Entitlement</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">RevenueCat SDK</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">3 Cloud Functions</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">7 Webhook Events</div>
+              <div class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server-side only</div>
             </div>
           </FeatureCard>
 
           <!-- Row 3 -->
-          <FeatureCard title="Multilingual" description="Full i18n — 3 languages." featureId="i18n">
+          <FeatureCard title="Multilingual" description="3 languages. UI, AI responses, card data — everything adapts to the user's language." featureId="i18n">
             <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
               <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
               <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
@@ -272,23 +271,47 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
         <div class="feature-detail hidden" data-detail="payments">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Payments</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            RevenueCat manages the full subscription lifecycle. Server-side receipt verification — no client-side trust.
+            Subscriptions are managed entirely server-side. The app handles the purchase UI — everything else (verification, tier changes, quota resets) happens through RevenueCat webhooks and Cloud Functions. The Flutter client never writes subscription data. Every tier change comes from a webhook.
           </p>
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-3 font-mono" style="font-size: 0.7rem;">
-              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Purchase</span>
-              <span class="text-charcoal/20">→</span>
-              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">RevenueCat SDK</span>
-              <span class="text-charcoal/20">→</span>
-              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Server Verify</span>
-              <span class="text-charcoal/20">→</span>
-              <span class="bg-charcoal/5 rounded px-3 py-2 text-charcoal/60">Entitlement</span>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Flow — zero client-side trust</p>
+          <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">User purchases</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">App Store / Play Store</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">RevenueCat</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Webhook</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Cloud Function</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Firestore updated</span>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">7 webhook events handled</p>
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Purchase & Renewal</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Upgrade to Premium, reset quotas, clear cancellation flags.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Cancellation</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Auto-renew disabled. Access stays until expiration date.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Expiration & Refund</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Subscription ended or store refunded. Downgrade to Free, quotas reset.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Plan Change & Transfer</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Monthly ↔ annual switch. Entitlement transfer between accounts.</p>
             </div>
           </div>
-          <div class="mt-4 flex flex-col gap-1.5 font-mono text-charcoal/50" style="font-size: 0.65rem;">
-            <p>• Webhook for renewal, cancellation, billing issues</p>
-            <p>• Free trial period supported</p>
-            <p>• Entitlements synced across devices</p>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Why RevenueCat</p>
+          <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
+            <p>• One SDK for both iOS and Android stores</p>
+            <p>• Server-side receipt verification — no client-side trust</p>
+            <p>• Webhooks for every lifecycle event (no polling)</p>
+            <p>• Handles edge cases: proration, sandbox, cross-device sync</p>
           </div>
         </div>
 
@@ -323,20 +346,46 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
         <div class="feature-detail hidden" data-detail="i18n">
           <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Multilingual</h3>
           <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
-            Full i18n system. Language detection from device locale with manual override.
+            The app runs in 3 languages — English, French, Russian. The backend supports 11. Language detection is automatic: the app reads the device locale, checks for a stored preference, and falls back to English. The choice persists even after logout. When a user switches language, everything reloads instantly — UI, card meanings, AI prompts.
           </p>
-          <div class="flex flex-col gap-2">
-            <div class="flex gap-3 mb-3">
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60 border border-charcoal/15" style="font-size: 0.7rem;">English</span>
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Français</span>
-              <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Русский</span>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">3 languages</p>
+          <div class="flex gap-3 mb-4">
+            <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60 border border-charcoal/15" style="font-size: 0.7rem;">English</span>
+            <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Français</span>
+            <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Русский</span>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">What adapts per language</p>
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">UI</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Every button, label, error message. Flutter's official l10n with .arb files.</p>
             </div>
-            <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
-              <p>• UI strings (buttons, labels, navigation)</p>
-              <p>• AI prompts — interpretation language matches user</p>
-              <p>• Store listings (Google Play, Apple Store)</p>
-              <p>• Device locale detection + manual override</p>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">AI Responses</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">languageCode sent to Cloud Function. Gemini receives a language-specific system instruction.</p>
             </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Card Data</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Keywords and meanings loaded from localized JSON files per language.</p>
+            </div>
+            <div class="bg-charcoal/5 rounded p-3">
+              <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Error Messages</p>
+              <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Localized error handling — Cubits access translations via a global L10nService, no BuildContext needed.</p>
+            </div>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Language detection — smart fallback</p>
+          <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Stored preference</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Device locale</span>
+            <span class="text-charcoal/20">→</span>
+            <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Fallback: English</span>
+          </div>
+          <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Persists across sessions</p>
+          <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
+            <p>• Language choice saved locally — survives logout</p>
+            <p>• Synced to user profile in Firestore on login</p>
+            <p>• Runtime switch — instant reload, no app restart</p>
           </div>
         </div>
 
