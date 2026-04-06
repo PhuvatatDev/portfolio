@@ -19,11 +19,18 @@ import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
   <div id="phone-container" class="fixed z-30 pointer-events-none" style="left: 50%; top: 55%;">
     <div class="relative" style="width: 22vw; max-width: 340px;">
       <!-- Screen area -->
-      <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 2.2vw; background: #000;">
-        <!-- Video placeholder — will be replaced with screen recording -->
-        <div class="absolute inset-0 flex items-center justify-center">
-          <span class="font-mono text-white/20" style="font-size: 0.6rem;">[ video ]</span>
-        </div>
+      <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 1.5vw; background: #F5F3EF;">
+        <video
+          id="phone-video"
+          class="absolute inset-0 w-full h-full object-cover object-top"
+          autoplay
+          muted
+          playsinline
+          preload="auto"
+          data-playlist="/portfolio/video/login.mp4,/portfolio/video/payment.mp4,/portfolio/video/navigation.mp4"
+        >
+          <source src="/portfolio/video/login.mp4" type="video/mp4" />
+        </video>
       </div>
       <!-- Phone frame (on top of screen content) -->
       <img src="/portfolio/images/phone-frame.png" alt="" class="w-full relative z-10" />
@@ -36,4 +43,24 @@ import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
   import { initFeaturePanel } from '../components/animations/feature-panel';
   initScrollController();
   initFeaturePanel();
+
+  // Phone video playlist — cycles through videos with fade transitions
+  const video = document.getElementById('phone-video') as HTMLVideoElement;
+  if (video) {
+    const playlist = video.dataset.playlist?.split(',') ?? [];
+    let currentIndex = 0;
+    video.style.transition = 'opacity 0.5s ease';
+
+    video.addEventListener('ended', () => {
+      // Fade out
+      video.style.opacity = '0';
+      setTimeout(() => {
+        currentIndex = (currentIndex + 1) % playlist.length;
+        video.src = playlist[currentIndex];
+        video.play();
+        // Fade in
+        video.style.opacity = '1';
+      }, 500);
+    });
+  }
 </script>
