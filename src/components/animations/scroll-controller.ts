@@ -253,8 +253,8 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: phoneShowcase,
-          start: 'top 60%',
-          end: 'top top',
+          start: 'top 95%',
+          end: 'top 20%',
           scrub: true,
         },
       }
