@@ -5,6 +5,7 @@ import Header from '../components/layout/Header.astro';
 import Hero from '../components/sections/Hero.astro';
 import MyWork from '../components/sections/MyWork.astro';
 import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
+import ContactHero from '../components/sections/ContactHero.astro';
 ---
 
 <BaseLayout>
@@ -13,9 +14,10 @@ import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
   <Hero />
   <MyWork />
   <PhoneShowcase />
+  <ContactHero />
 
   <!-- Phone container — fixed, centered, starts below viewport -->
-  <!-- Rises via GSAP, then shifts left to make room for showcase panel -->
+  <!-- Rises via GSAP, then shifts left while CreamPanel morphs to right side -->
   <div id="phone-container" class="fixed z-30 pointer-events-none" style="left: 50%; top: 55%;">
     <div class="relative" style="width: 22vw; max-width: 340px;">
       <!-- Screen area -->

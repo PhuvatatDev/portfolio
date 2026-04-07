@@ -1,6 +1,6 @@
 /**
  * Feature Panel — card click → detail view interaction
- * Handles grid ↔ detail view transitions inside the showcase panel
+ * Handles grid ↔ detail view transitions inside the CreamPanel's tech panel
  */
 
 import { gsap } from 'gsap';
@@ -9,9 +9,9 @@ export function initFeaturePanel() {
   const gridView = document.getElementById('feature-grid-view');
   const detailView = document.getElementById('feature-detail-view');
   const backBtn = document.getElementById('detail-back');
-  const showcasePanel = document.getElementById('showcase-panel');
+  const scrollContainer = document.getElementById('panel-tech-scroll');
 
-  if (!gridView || !detailView || !backBtn || !showcasePanel) return;
+  if (!gridView || !detailView || !backBtn || !scrollContainer) return;
 
   // --- Card click: open detail view ---
   gridView.addEventListener('click', (e) => {
@@ -37,8 +37,8 @@ export function initFeaturePanel() {
     if (!detail) return;
     detail.classList.remove('hidden');
 
-    // Scroll panel to top
-    showcasePanel.scrollTop = 0;
+    // Scroll container to top
+    scrollContainer.scrollTop = 0;
 
     // Transition: grid fades out → detail fades in
     gsap.to(gridView, {
@@ -57,8 +57,8 @@ export function initFeaturePanel() {
   }
 
   function closeDetail() {
-    // Scroll panel to top
-    showcasePanel.scrollTop = 0;
+    // Scroll container to top
+    scrollContainer.scrollTop = 0;
 
     // Transition: detail fades out → grid fades in
     gsap.to(detailView, {

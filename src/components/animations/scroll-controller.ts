@@ -2,17 +2,15 @@
  * Portfolio Scroll Controller
  * Adapted from MindTarot website scroll-controller.ts
  *
- * Animations (in scroll order):
- * 1. Grid parallax
- * 2. Scroll progress bar
- * 3. Hero text fade + exit left
- * 4. Illustration compression (responsive)
- * 5. Illustration convergence → cream process card
- * 6. Process card + illustrations exit up
- * 6b. Header slides up (makes room for phone)
- * 7. Phone rise from bottom
- * 8. Phone shift left
- * 9. Showcase panel slide in from right
+ * Key pattern (from MindTarot): disable/enable conflicting triggers at phase boundaries.
+ * Every scrub tween auto-reverses on scroll-back. Height changes use callbacks (not tweens)
+ * because GSAP can't reverse-animate to `auto`.
+ *
+ * Phases:
+ * 1. Hero → Convergence (illustrations → card)
+ * 2. Content swaps (Process → About → Repo)  — card stays centered
+ * 3. Phone + card morph (card shifts right, phone rises)
+ * 4. Contact (phone + card fade out, contact fades in)
  */
 
 import { gsap } from 'gsap';
@@ -134,8 +132,19 @@ export function initScrollController() {
   const illusBuild = document.getElementById('illus-build');
   const illusLive = document.getElementById('illus-live');
 
-  // Track triggers so we can disable them during exit (prevents tween conflicts)
+  // Phase 1 triggers — disabled during content swaps to prevent tween conflicts
   const convergenceTriggers: (ScrollTrigger | undefined)[] = [];
+
+  // Phase 3 triggers (phone section) — disabled when scrolling back before phone section
+  const phonePhaseTriggers: (ScrollTrigger | undefined)[] = [];
+
+  // Phase 4 triggers (contact section) — disabled when scrolling back before contact
+  const contactTriggers: (ScrollTrigger | undefined)[] = [];
+
+  // Initialize card position with GSAP (replaces CSS transform: translate(-50%, -50%))
+  if (processCard) {
+    gsap.set(processCard, { xPercent: -50, yPercent: -50 });
+  }
 
   if (myWorkSection && processCard
       && illusIdea && illusDiscussion && illusBuild && illusLive
@@ -176,7 +185,7 @@ export function initScrollController() {
       convergenceTriggers.push(tween.scrollTrigger);
     });
 
-    // Card fades in
+    // Card fades in (part of convergence phase)
     const cardFade = gsap.to(processCard, {
       opacity: 1,
       ease: 'none',
@@ -191,38 +200,99 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 6. Process card + illustrations exit up
+  // Phase boundary: convergence → content swaps
   // ============================================
-  const phoneShowcase = document.getElementById('phone-showcase');
-
-  if (phoneShowcase && processCard) {
-    // Disable convergence triggers when exiting (prevents property conflicts)
+  if (myWorkSection) {
     ScrollTrigger.create({
-      trigger: phoneShowcase,
-      start: 'top bottom',
+      trigger: myWorkSection,
+      start: '20% top',
       onEnter: () => convergenceTriggers.forEach(t => t?.disable(false)),
-      onLeaveBack: () => convergenceTriggers.forEach(t => t?.enable(false, false)),
-    });
-
-    // Card + illustrations slide up together as one unit
-    const exitTargets = [processCard, heroIllustrations].filter(Boolean) as HTMLElement[];
-    exitTargets.forEach(el => {
-      gsap.to(el, {
-        y: '-100vh',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: 'top bottom',
-          end: 'top 30%',
-          scrub: true,
-        },
-      });
+      onLeaveBack: () => {
+        // Re-enable convergence, disable contact phase
+        convergenceTriggers.forEach(t => t?.enable(false, false));
+        contactTriggers.forEach(t => t?.disable(false));
+      },
     });
   }
 
   // ============================================
-  // 6b. Header fades out as phone rises
+  // 6. Content swap: Process + illustrations → About
   // ============================================
+  const panelProcess = document.getElementById('panel-process');
+  const panelAbout = document.getElementById('panel-about');
+  const panelRepo = document.getElementById('panel-repo');
+  const panelTech = document.getElementById('panel-tech');
+
+  // Process content + illustrations all fade out together
+  const fadeOutTargets = [panelProcess, heroIllustrations].filter(Boolean) as HTMLElement[];
+  fadeOutTargets.forEach(el => {
+    if (myWorkSection) {
+      gsap.to(el, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: myWorkSection,
+          start: '22% top',
+          end: '32% top',
+          scrub: true,
+        },
+      });
+    }
+  });
+
+  // About fades in
+  if (myWorkSection && panelAbout) {
+    gsap.to(panelAbout, {
+      opacity: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: myWorkSection,
+        start: '28% top',
+        end: '38% top',
+        scrub: true,
+        onEnter: () => { panelAbout.style.pointerEvents = 'auto'; },
+        onLeaveBack: () => { panelAbout.style.pointerEvents = 'none'; },
+      },
+    });
+  }
+
+  // ============================================
+  // 6b. Content swap: About → Repo
+  // ============================================
+  if (myWorkSection && panelAbout && panelRepo) {
+    // About fades out
+    gsap.to(panelAbout, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: myWorkSection,
+        start: '55% top',
+        end: '65% top',
+        scrub: true,
+        onEnter: () => { panelAbout.style.pointerEvents = 'none'; },
+        onLeaveBack: () => { panelAbout.style.pointerEvents = 'auto'; },
+      },
+    });
+
+    // Repo fades in
+    gsap.to(panelRepo, {
+      opacity: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: myWorkSection,
+        start: '60% top',
+        end: '70% top',
+        scrub: true,
+        onEnter: () => { panelRepo.style.pointerEvents = 'auto'; },
+        onLeaveBack: () => { panelRepo.style.pointerEvents = 'none'; },
+      },
+    });
+  }
+
+  // ============================================
+  // 7. Header slides up
+  // ============================================
+  const phoneShowcase = document.getElementById('phone-showcase');
   const siteHeader = document.getElementById('site-header');
 
   if (siteHeader && phoneShowcase) {
@@ -239,7 +309,109 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 7. Phone rise from bottom
+  // 7b. Card morphs: center → right side + Repo → Tech crossfade
+  // ============================================
+  if (phoneShowcase && processCard) {
+    // Repo fades out as card starts morphing — tracked for disable/enable
+    if (panelRepo) {
+      const repoPhoneFade = gsap.to(panelRepo, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: phoneShowcase,
+          start: 'top 80%',
+          end: 'top 40%',
+          scrub: true,
+          onEnter: () => { panelRepo.style.pointerEvents = 'none'; },
+          onLeaveBack: () => { panelRepo.style.pointerEvents = 'auto'; },
+        },
+      });
+      phonePhaseTriggers.push(repoPhoneFade.scrollTrigger);
+    }
+
+    // Card position/size morph — fromTo with explicit start values
+    // NO height/maxHeight — GSAP can't reverse-animate from auto
+    gsap.fromTo(processCard,
+      {
+        left: '50%',
+        xPercent: -50,
+        width: '85vw',
+        maxWidth: 1100,
+      },
+      {
+        left: '39%',
+        xPercent: 0,
+        width: 'calc(60vw - 2rem)',
+        maxWidth: 700,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: phoneShowcase,
+          start: 'top 80%',
+          end: 'top 20%',
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      }
+    );
+
+    // Height managed via callbacks (GSAP can't tween auto → px → auto)
+    ScrollTrigger.create({
+      trigger: phoneShowcase,
+      start: 'top 50%',
+      onEnter: () => {
+        if (processCard) {
+          processCard.style.height = '80vh';
+          processCard.style.maxHeight = '750px';
+        }
+      },
+      onLeaveBack: () => {
+        if (processCard) {
+          processCard.style.height = '';
+          processCard.style.maxHeight = '';
+        }
+      },
+    });
+
+    // Tech panel fades in — tracked for disable/enable
+    if (panelTech) {
+      const techFade = gsap.to(panelTech, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: phoneShowcase,
+          start: 'top 40%',
+          end: 'top 10%',
+          scrub: true,
+          onEnter: () => { panelTech.style.pointerEvents = 'auto'; },
+          onLeaveBack: () => { panelTech.style.pointerEvents = 'none'; },
+        },
+      });
+      phonePhaseTriggers.push(techFade.scrollTrigger);
+    }
+  }
+
+  // ============================================
+  // Phase boundary: myWork content ↔ phone section
+  // Disable phone-phase tweens on scroll-back so myWork tweens control panels
+  // ============================================
+  if (phoneShowcase) {
+    ScrollTrigger.create({
+      trigger: phoneShowcase,
+      start: 'top 85%',
+      onEnter: () => phonePhaseTriggers.forEach(t => t?.enable(false, false)),
+      onLeaveBack: () => {
+        phonePhaseTriggers.forEach(t => t?.disable(false));
+        // Reset panels to myWork-phase state (repo visible, tech hidden)
+        if (panelRepo) gsap.set(panelRepo, { opacity: 1 });
+        if (panelTech) gsap.set(panelTech, { opacity: 0 });
+        if (panelRepo) panelRepo.style.pointerEvents = 'auto';
+        if (panelTech) panelTech.style.pointerEvents = 'none';
+      },
+    });
+  }
+
+  // ============================================
+  // 8. Phone rise from bottom
   // ============================================
   const phoneContainer = document.getElementById('phone-container');
 
@@ -261,7 +433,7 @@ export function initScrollController() {
     );
 
     // ============================================
-    // 8. Phone shifts left (after rise completes)
+    // 9. Phone shifts left (after rise completes)
     // ============================================
     gsap.to(phoneContainer, {
       left: '28%',
@@ -276,32 +448,111 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 9. Showcase panel slides in from right
+  // Phase boundary: phone → contact
+  // Enable contact triggers when entering contact zone, disable on scroll-back
   // ============================================
-  const showcasePanel = document.getElementById('showcase-panel');
+  const contactSection = document.getElementById('contact-section');
 
-  if (showcasePanel && phoneShowcase) {
-    gsap.fromTo(showcasePanel,
-      { opacity: 0, x: 40 },
-      {
-        opacity: 1,
-        x: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: '5% top',
-          end: '13% top',
-          scrub: true,
-        },
-      }
-    );
-
-    // Enable pointer events once panel is visible
+  if (contactSection && phoneShowcase) {
     ScrollTrigger.create({
-      trigger: phoneShowcase,
-      start: '13% top',
-      onEnter: () => { showcasePanel.style.pointerEvents = 'auto'; },
-      onLeaveBack: () => { showcasePanel.style.pointerEvents = 'none'; },
+      trigger: contactSection,
+      start: 'top bottom',
+      onEnter: () => contactTriggers.forEach(t => t?.enable(false, false)),
+      onLeaveBack: () => {
+        contactTriggers.forEach(t => t?.disable(false));
+        // Restore card opacity (contactFade may have set it to 0)
+        if (processCard) gsap.set(processCard, { opacity: 1 });
+      },
+    });
+  }
+
+  // ============================================
+  // 10. Phone + card fade out (at contact section)
+  // ============================================
+  if (contactSection && phoneContainer) {
+    gsap.to(phoneContainer, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contactSection,
+        start: 'top 80%',
+        end: 'top 40%',
+        scrub: true,
+      },
+    });
+  }
+
+  // Card fades out — tracked in contactTriggers for disable/enable
+  // Uses gsap.to (NOT fromTo) — fromTo would apply opacity:1 immediately at creation
+  if (contactSection && processCard) {
+    const cardFadeOut = gsap.to(processCard, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contactSection,
+        start: 'top 80%',
+        end: 'top 40%',
+        scrub: true,
+        onEnter: () => { if (panelTech) panelTech.style.pointerEvents = 'none'; },
+        onLeaveBack: () => { if (panelTech) panelTech.style.pointerEvents = 'auto'; },
+      },
+    });
+    contactTriggers.push(cardFadeOut.scrollTrigger);
+    // Start disabled — enabled by phase boundary when reaching contact zone
+    cardFadeOut.scrollTrigger?.disable(false);
+  }
+
+  // ============================================
+  // 11. Header slides back in
+  // ============================================
+  if (siteHeader && contactSection) {
+    gsap.to(siteHeader, {
+      y: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contactSection,
+        start: 'top 60%',
+        end: 'top 30%',
+        scrub: true,
+      },
+    });
+  }
+
+  // ============================================
+  // 12. Contact text fade in
+  // ============================================
+  const contactText = document.getElementById('contact-text');
+
+  if (contactText && contactSection) {
+    gsap.to(contactText, {
+      opacity: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contactSection,
+        start: 'top 30%',
+        end: 'top top',
+        scrub: true,
+        onEnter: () => { contactText.style.pointerEvents = 'auto'; },
+        onLeaveBack: () => { contactText.style.pointerEvents = 'none'; },
+      },
+    });
+  }
+
+  // ============================================
+  // 13. Scattered tech cards fade in
+  // ============================================
+  const scatteredCards = document.getElementById('scattered-cards');
+
+  if (scatteredCards && contactSection) {
+    gsap.to(scatteredCards, {
+      opacity: 1,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: contactSection,
+        start: 'top 20%',
+        end: 'top top',
+        scrub: true,
+      },
     });
   }
 }

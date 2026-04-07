@@ -1,0 +1,115 @@
+---
+// AboutContent — "Who I am" content panel inside the CreamPanel
+// Layout: photo carousel left + text right (flex row desktop, stack vertical mobile)
+// Photos: office1, office2, casual — with prev/next arrows
+//
+// Integration:
+// - Lives inside process-card as a content slot
+// - Hidden by default (opacity: 0, position: absolute)
+// - scroll-controller.ts crossfades from Process to this
+// - Then crossfades from this to RepoContent
+---
+
+<div id="panel-about" class="panel-content" style="opacity: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 2.5vw 3vw 1.5vw; pointer-events: none;">
+
+  <p class="font-mono text-charcoal/40 mb-5" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
+    [ about ]
+  </p>
+
+  <div class="flex flex-col lg:flex-row gap-6 items-start">
+
+    <!-- Photo carousel -->
+    <div class="shrink-0" style="width: clamp(160px, 16vw, 220px);">
+      <div id="about-photo-carousel" class="relative overflow-hidden rounded-lg" style="aspect-ratio: 3/4;">
+        <img src="/portfolio/images/photos/office1.webp" alt="Phuvatat — office" class="about-photo absolute inset-0 w-full h-full object-cover" data-index="0" />
+        <img src="/portfolio/images/photos/office2.webp" alt="Phuvatat — working" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="1" />
+        <img src="/portfolio/images/photos/casual.webp" alt="Phuvatat — casual" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="2" />
+
+        <!-- Navigation arrows -->
+        <button id="photo-prev" class="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, 2vw, 32px); height: clamp(24px, 2vw, 32px); font-size: clamp(0.7rem, 0.8vw, 0.9rem);">
+          ‹
+        </button>
+        <button id="photo-next" class="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, 2vw, 32px); height: clamp(24px, 2vw, 32px); font-size: clamp(0.7rem, 0.8vw, 0.9rem);">
+          ›
+        </button>
+
+        <!-- Dots indicator -->
+        <div class="absolute bottom-2 left-1/2 -translate-x-1/2 z-10 flex gap-1.5">
+          <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 1;"></span>
+          <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 0.4;"></span>
+          <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 0.4;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Text -->
+    <div class="flex-1">
+      <h2 class="font-serif font-bold text-charcoal mb-4" style="font-size: clamp(1.3rem, 1.6vw, 1.8rem);">
+        Phuvatat
+      </h2>
+
+      <div class="font-mono text-charcoal/60 space-y-3" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.8;">
+        <p>
+          I started with a cleaning business. Wanted an app — got scammed on a FlutterFlow course.
+          So I learned to build it myself.
+        </p>
+        <p>
+          8 years of jiu-jitsu taught me one thing — put in the hours, and you'll get there.
+        </p>
+        <p>
+          MindTarot is the result. Built from scratch to store, live in production.
+        </p>
+      </div>
+
+      <p class="font-mono text-charcoal/35 mt-4" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem);">
+        Based in Thailand · Working internationally
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+<style>
+  .about-photo {
+    transition: opacity 0.4s ease;
+  }
+</style>
+
+<script>
+  // Photo carousel — prev/next with fade transition
+  function initPhotoCarousel() {
+    const photos = document.querySelectorAll<HTMLImageElement>('.about-photo');
+    const dots = document.querySelectorAll<HTMLSpanElement>('.photo-dot');
+    const prevBtn = document.getElementById('photo-prev');
+    const nextBtn = document.getElementById('photo-next');
+
+    if (!photos.length || !prevBtn || !nextBtn) return;
+
+    let current = 0;
+    const total = photos.length;
+
+    function showPhoto(index: number) {
+      photos.forEach((photo, i) => {
+        photo.style.opacity = i === index ? '1' : '0';
+      });
+      dots.forEach((dot, i) => {
+        dot.style.opacity = i === index ? '1' : '0.4';
+      });
+      current = index;
+    }
+
+    prevBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPhoto((current - 1 + total) % total);
+    });
+
+    nextBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      showPhoto((current + 1) % total);
+    });
+  }
+
+  // Init when DOM is ready
+  initPhotoCarousel();
+</script>

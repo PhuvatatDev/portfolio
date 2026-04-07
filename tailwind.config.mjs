@@ -7,15 +7,13 @@ export default {
         'lg': '1180px',
       },
       colors: {
-        'mint': '#B8F0C8',
-        'mint-pale': '#D4F5E0',
-        'mint-deep': '#6BCB8B',
         'pop-yellow': '#FFD96A',
         'pop-yellow-deep': '#F5C542',
         'charcoal': '#1A1A1A',
         'charcoal-deep': '#1C1C1C',
         'warm-gray': '#8A8A7A',
         'cream': '#F5F3EF',
+        'hover-green': '#5C7A3A',
       },
       fontFamily: {
         'serif': ['"DM Serif Display"', 'serif'],

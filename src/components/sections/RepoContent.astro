@@ -1,0 +1,87 @@
+---
+// RepoContent — GitHub projects table inside the CreamPanel
+// Shows all repos before the phone arrives with the tech deep-dive
+//
+// Integration:
+// - Lives inside process-card as a content slot
+// - Hidden by default (opacity: 0, position: absolute)
+// - scroll-controller.ts crossfades from About to this
+// - Then crossfades to tech panel when phone arrives
+---
+
+<div id="panel-repo" class="panel-content" style="opacity: 0; position: absolute; top: 0; left: 0; right: 0; bottom: 0; padding: 2.5vw 3vw 1.5vw; pointer-events: none;">
+
+  <p class="font-mono text-charcoal/40 mb-4" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
+    [ projects ]
+  </p>
+
+  <h2 class="font-serif font-bold text-charcoal mb-5" style="font-size: clamp(1.4rem, 1.8vw, 2rem);">
+    What I've built
+  </h2>
+
+  <!-- Projects table -->
+  <div class="overflow-hidden rounded-lg border border-charcoal/10">
+    <table class="w-full font-mono" style="font-size: clamp(0.65rem, 0.75vw, 0.8rem);">
+      <thead>
+        <tr class="bg-charcoal/5 text-left">
+          <th class="px-4 py-2.5 text-charcoal/50 font-normal" style="width: 25%;">Project</th>
+          <th class="px-4 py-2.5 text-charcoal/50 font-normal" style="width: 40%;">Purpose</th>
+          <th class="px-4 py-2.5 text-charcoal/50 font-normal" style="width: 35%;">Demonstrates</th>
+        </tr>
+      </thead>
+      <tbody class="text-charcoal/60">
+        <!-- MindTarot — flagship -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <span class="font-bold text-charcoal/80">MindTarot</span>
+            <span class="text-charcoal/30 ml-1" style="font-size: 0.6rem;">private</span>
+          </td>
+          <td class="px-4 py-3">Tarot app with AI interpretations — live on stores</td>
+          <td class="px-4 py-3">Full product: architecture, AI, payments, deployment</td>
+        </tr>
+        <!-- study_flutter -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener" class="text-charcoal/80 font-bold hover:text-pop-yellow transition-colors no-underline">study_flutter</a>
+          </td>
+          <td class="px-4 py-3">Widgets & layouts written by hand, no AI</td>
+          <td class="px-4 py-3">Flutter fundamentals, self-discipline</td>
+        </tr>
+        <!-- dart_algorithm -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <a href="https://github.com/PhuvatatDev/dart_algorithm" target="_blank" rel="noopener" class="text-charcoal/80 font-bold hover:text-pop-yellow transition-colors no-underline">dart_algorithm</a>
+          </td>
+          <td class="px-4 py-3">Data structures & algorithms in Dart</td>
+          <td class="px-4 py-3">Problem solving, Dart proficiency</td>
+        </tr>
+        <!-- chat_app -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener" class="text-charcoal/80 font-bold hover:text-pop-yellow transition-colors no-underline">chat_app</a>
+          </td>
+          <td class="px-4 py-3">Real-time chat with Firebase</td>
+          <td class="px-4 py-3">Firestore, auth, real-time streams</td>
+        </tr>
+        <!-- lead_magnette -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <a href="https://github.com/PhuvatatDev/lead_magnette" target="_blank" rel="noopener" class="text-charcoal/80 font-bold hover:text-pop-yellow transition-colors no-underline">lead_magnette</a>
+          </td>
+          <td class="px-4 py-3">Marketing landing page for tarot masterclass</td>
+          <td class="px-4 py-3">Web dev, Astro, marketing</td>
+        </tr>
+        <!-- la_tarot_academie -->
+        <tr class="border-t border-charcoal/8">
+          <td class="px-4 py-3">
+            <span class="font-bold text-charcoal/80">la_tarot_academie</span>
+            <span class="text-charcoal/30 ml-1" style="font-size: 0.6rem;">private</span>
+          </td>
+          <td class="px-4 py-3">Full website for the tarot academy</td>
+          <td class="px-4 py-3">Astro SSG, design, content architecture</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
