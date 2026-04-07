@@ -46,6 +46,42 @@ import ContactHero from '../components/sections/ContactHero.astro';
   initScrollController();
   initFeaturePanel();
 
+  // Smooth scroll navigation — GSAP-compatible (no CSS scroll-behavior)
+  document.querySelectorAll('a.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = (link as HTMLAnchorElement).getAttribute('href');
+      if (!href || !href.startsWith('#')) return;
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+  });
+
+  // Tech panel scroll — intercept wheel on the card itself when tech is visible
+  const processCard = document.getElementById('process-card');
+  const techScrollEl = document.getElementById('panel-tech-scroll');
+  const techPanel = document.getElementById('panel-tech');
+  if (processCard && techScrollEl && techPanel) {
+    processCard.addEventListener('wheel', (e) => {
+      // Only when tech panel is active (opacity > 0 and pointer-events auto)
+      if (techPanel.style.pointerEvents === 'none') return;
+      const opacity = parseFloat(getComputedStyle(techPanel).opacity);
+      if (opacity < 0.5) return;
+
+      const { scrollTop, scrollHeight, clientHeight } = techScrollEl;
+      const canScrollUp = scrollTop > 0;
+      const canScrollDown = scrollTop + clientHeight < scrollHeight - 1;
+
+      if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
+        e.preventDefault();
+        e.stopPropagation();
+        techScrollEl.scrollTop += e.deltaY;
+      }
+    }, { passive: false });
+  }
+
   // Phone video playlist — cycles through videos with fade transitions
   const video = document.getElementById('phone-video') as HTMLVideoElement;
   if (video) {

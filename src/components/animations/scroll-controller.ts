@@ -287,6 +287,7 @@ export function initScrollController() {
         onLeaveBack: () => { panelRepo.style.pointerEvents = 'none'; },
       },
     });
+
   }
 
   // ============================================
@@ -425,8 +426,8 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: phoneShowcase,
-          start: 'top 95%',
-          end: 'top 20%',
+          start: 'top 70%',
+          end: 'top 10%',
           scrub: true,
         },
       }

@@ -121,6 +121,10 @@ import TechContent from './TechContent.astro';
     animation: marquee-scroll 30s linear infinite;
   }
 
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
   .marquee-set {
     display: flex;
     align-items: center;
@@ -129,7 +133,7 @@ import TechContent from './TechContent.astro';
   }
 
   .marquee-logo {
-    height: clamp(1.2rem, 1.8vw, 1.6rem);
+    height: clamp(1.1rem, 1.5vw, 1.4rem);
     width: auto;
     opacity: 0.4;
     filter: grayscale(1);
@@ -146,12 +150,16 @@ import TechContent from './TechContent.astro';
     transform: translateY(2px);
   }
 
-  /* Wordmark logos need more height to be readable */
+  /* Wordmark logos — slightly taller but capped */
   .marquee-logo[src*="flutter"],
-  .marquee-logo[src*="codemagic"],
-  .marquee-logo[src*="revenuecat"],
   .marquee-logo[src*="stripe"] {
-    height: clamp(1.6rem, 2.5vw, 2.2rem);
+    height: clamp(1.3rem, 1.8vw, 1.6rem);
+  }
+
+  /* Long wordmarks — cap harder */
+  .marquee-logo[src*="codemagic"],
+  .marquee-logo[src*="revenuecat"] {
+    height: clamp(1.1rem, 1.4vw, 1.3rem);
   }
 
   @keyframes marquee-scroll {

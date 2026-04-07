@@ -4,7 +4,7 @@
 
 /* Base styles */
 html {
-  scroll-behavior: smooth;
+  /* No scroll-behavior: smooth — conflicts with GSAP ScrollTrigger */
 }
 
 body {
