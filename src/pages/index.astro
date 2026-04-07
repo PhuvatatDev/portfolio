@@ -59,26 +59,34 @@ import ContactHero from '../components/sections/ContactHero.astro';
     });
   });
 
-  // Tech panel scroll — intercept wheel on the card itself when tech is visible
+  // Tech panel scroll — intercept wheel at window level when tech is visible
+  // Must be window-level because fixed elements with absolute children
+  // don't reliably propagate wheel events for native scroll interception
   const processCard = document.getElementById('process-card');
   const techScrollEl = document.getElementById('panel-tech-scroll');
   const techPanel = document.getElementById('panel-tech');
   if (processCard && techScrollEl && techPanel) {
-    processCard.addEventListener('wheel', (e) => {
-      // Only when tech panel is active (opacity > 0 and pointer-events auto)
+    window.addEventListener('wheel', (e) => {
+      // Only when tech panel is active
       if (techPanel.style.pointerEvents === 'none') return;
       const opacity = parseFloat(getComputedStyle(techPanel).opacity);
       if (opacity < 0.5) return;
 
-      const { scrollTop, scrollHeight, clientHeight } = techScrollEl;
-      const canScrollUp = scrollTop > 0;
-      const canScrollDown = scrollTop + clientHeight < scrollHeight - 1;
+      // Only when cursor is over the card
+      const rect = processCard.getBoundingClientRect();
+      if (e.clientX < rect.left || e.clientX > rect.right ||
+          e.clientY < rect.top || e.clientY > rect.bottom) return;
 
-      if ((e.deltaY < 0 && canScrollUp) || (e.deltaY > 0 && canScrollDown)) {
+      const { scrollTop, scrollHeight, clientHeight } = techScrollEl;
+      const atTop = scrollTop <= 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
+
+      // Intercept: scroll the inner container instead of the page
+      if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
         e.preventDefault();
-        e.stopPropagation();
         techScrollEl.scrollTop += e.deltaY;
       }
+      // At extremes (top/bottom), let event pass → page scrolls → GSAP progresses
     }, { passive: false });
   }
 

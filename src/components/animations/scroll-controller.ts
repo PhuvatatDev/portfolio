@@ -374,6 +374,7 @@ export function initScrollController() {
     });
 
     // Tech panel fades in — tracked for disable/enable
+    const techScrollContainer = document.getElementById('panel-tech-scroll');
     if (panelTech) {
       const techFade = gsap.to(panelTech, {
         opacity: 1,
@@ -383,8 +384,23 @@ export function initScrollController() {
           start: 'top 40%',
           end: 'top 10%',
           scrub: true,
-          onEnter: () => { panelTech.style.pointerEvents = 'auto'; },
-          onLeaveBack: () => { panelTech.style.pointerEvents = 'none'; },
+          onEnter: () => {
+            panelTech.style.pointerEvents = 'auto';
+            // Force explicit pixel height on scroll container
+            // (% height inside absolute-positioned parent in overflow:hidden card is unreliable)
+            if (techScrollContainer && processCard) {
+              const h = processCard.offsetHeight + 'px';
+              techScrollContainer.style.height = h;
+              techScrollContainer.style.maxHeight = h;
+            }
+          },
+          onLeaveBack: () => {
+            panelTech.style.pointerEvents = 'none';
+            if (techScrollContainer) {
+              techScrollContainer.style.height = '100%';
+              techScrollContainer.style.maxHeight = '';
+            }
+          },
         },
       });
       phonePhaseTriggers.push(techFade.scrollTrigger);
