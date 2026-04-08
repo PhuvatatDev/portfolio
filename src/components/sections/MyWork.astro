@@ -1,13 +1,10 @@
 ---
-// My Work — CreamPanel: persistent cream card that changes content via scroll
-// Content flow: Process (4 steps) → About (photo + text) → Repo (MindTarot structure)
-// scroll-controller.ts handles crossfade between contents
-import AboutContent from './AboutContent.astro';
-import RepoContent from './RepoContent.astro';
-import TechContent from './TechContent.astro';
+// My Work — Process Card only
+// Illustrations converge into cream card with 4 steps (Idea → Discussion → Build → Live)
+// Card exits upward, then phone+tech arrives
 ---
 
-<section id="my-work" class="relative z-10" style="height: 450vh;">
+<section id="my-work" class="relative z-10" style="height: 200vh;">
   <!-- CreamPanel — FIXED, position managed by GSAP (xPercent/yPercent for centering) -->
   <div id="process-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden;">
 
@@ -95,15 +92,6 @@ import TechContent from './TechContent.astro';
     </div>
 
     </div><!-- end #panel-process -->
-
-    <!-- === Panel 2: About (hidden, crossfades in) === -->
-    <AboutContent />
-
-    <!-- === Panel 3: Repo (hidden, crossfades in) === -->
-    <RepoContent />
-
-    <!-- === Panel 4: Tech/MindTarot (hidden, crossfades in when phone arrives) === -->
-    <TechContent />
 
   </div>
 </section>

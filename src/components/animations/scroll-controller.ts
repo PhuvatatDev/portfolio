@@ -1,16 +1,19 @@
 /**
- * Portfolio Scroll Controller
- * Adapted from MindTarot website scroll-controller.ts
+ * Portfolio Scroll Controller — v4
  *
- * Key pattern (from MindTarot): disable/enable conflicting triggers at phase boundaries.
- * Every scrub tween auto-reverses on scroll-back. Height changes use callbacks (not tweens)
- * because GSAP can't reverse-animate to `auto`.
+ * Each card uses a SINGLE timeline for its entire lifecycle (entry → stay → exit).
+ * This prevents tween conflicts on scroll-back.
  *
- * Phases:
- * 1. Hero → Convergence (illustrations → card)
- * 2. Content swaps (Process → About → Repo)  — card stays centered
- * 3. Phone + card morph (card shifts right, phone rises)
- * 4. Contact (phone + card fade out, contact fades in)
+ * Transitions overlap: exit of card A and entry of card B share the same scroll range.
+ * Achieved via endTrigger spanning timelines across section boundaries.
+ *
+ * Section heights: Hero 100vh, MyWork 200vh, PhoneShowcase 300vh,
+ *                  RepoSection 250vh, AboutSection 250vh, Contact 150vh
+ *
+ * Scroll positions (approx):
+ *   Hero start: 0vh          MyWork start: 100vh
+ *   PhoneShowcase start: 300vh   RepoSection start: 600vh
+ *   AboutSection start: 850vh    Contact start: 1100vh
  */
 
 import { gsap } from 'gsap';
@@ -19,13 +22,32 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 export function initScrollController() {
-  const gridOverlay = document.getElementById('grid-color-overlay');
+  // ============================================
+  // Element references
+  // ============================================
   const codeGrid = document.getElementById('code-grid');
-
-  if (!gridOverlay || !codeGrid) return;
-
+  if (!codeGrid) return;
   const gridCanvas = codeGrid.children[1] as HTMLElement;
   if (!gridCanvas) return;
+
+  const myWorkSection = document.getElementById('my-work');
+  const phoneShowcase = document.getElementById('phone-showcase');
+  const repoSection = document.getElementById('repo-section');
+  const aboutSection = document.getElementById('about-section');
+  const contactSection = document.getElementById('contact-section');
+
+  const processCard = document.getElementById('process-card');
+  const phoneContainer = document.getElementById('phone-container');
+  const techPanelContainer = document.getElementById('tech-panel-container');
+  const repoCard = document.getElementById('repo-card');
+  const aboutCard = document.getElementById('about-card');
+
+  const heroText = document.getElementById('hero-text');
+  const heroIllustrations = document.getElementById('hero-illustrations');
+  const siteHeader = document.getElementById('site-header');
+  const progressBar = document.getElementById('scroll-progress');
+  const contactText = document.getElementById('contact-text');
+  const scatteredCards = document.getElementById('scattered-cards');
 
   // ============================================
   // 1. Grid parallax
@@ -44,7 +66,6 @@ export function initScrollController() {
   // ============================================
   // 2. Scroll progress bar
   // ============================================
-  const progressBar = document.getElementById('scroll-progress');
   if (progressBar) {
     ScrollTrigger.create({
       trigger: document.body,
@@ -60,7 +81,6 @@ export function initScrollController() {
   // ============================================
   // 3. Hero text fade + exit left
   // ============================================
-  const heroText = document.getElementById('hero-text');
   if (heroText) {
     gsap.to(heroText, {
       opacity: 0,
@@ -116,12 +136,9 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 5. Illustration convergence → cream process card
+  // 5. Illustration convergence (separate from card timeline)
+  // These animate the illustration elements, not the process card itself
   // ============================================
-  const myWorkSection = document.getElementById('my-work');
-  const processCard = document.getElementById('process-card');
-  const heroIllustrations = document.getElementById('hero-illustrations');
-
   const slotIdea = document.querySelector('#process-slot-idea .process-illus-slot') as HTMLElement;
   const slotDiscussion = document.querySelector('#process-slot-discussion .process-illus-slot') as HTMLElement;
   const slotBuild = document.querySelector('#process-slot-build .process-illus-slot') as HTMLElement;
@@ -132,16 +149,6 @@ export function initScrollController() {
   const illusBuild = document.getElementById('illus-build');
   const illusLive = document.getElementById('illus-live');
 
-  // Phase 1 triggers — disabled during content swaps to prevent tween conflicts
-  const convergenceTriggers: (ScrollTrigger | undefined)[] = [];
-
-  // Phase 3 triggers (phone section) — disabled when scrolling back before phone section
-  const phonePhaseTriggers: (ScrollTrigger | undefined)[] = [];
-
-  // Phase 4 triggers (contact section) — disabled when scrolling back before contact
-  const contactTriggers: (ScrollTrigger | undefined)[] = [];
-
-  // Initialize card position with GSAP (replaces CSS transform: translate(-50%, -50%))
   if (processCard) {
     gsap.set(processCard, { xPercent: -50, yPercent: -50 });
   }
@@ -157,9 +164,8 @@ export function initScrollController() {
       { illus: illusLive, slot: slotLive },
     ];
 
-    // Illustrations converge into card slots
     pairs.forEach(({ illus, slot }) => {
-      const tween = gsap.to(illus, {
+      gsap.to(illus, {
         x: () => {
           const ir = illus.getBoundingClientRect();
           const sr = slot.getBoundingClientRect();
@@ -182,346 +188,115 @@ export function initScrollController() {
           invalidateOnRefresh: true,
         },
       });
-      convergenceTriggers.push(tween.scrollTrigger);
     });
+  }
 
-    // Card fades in (part of convergence phase)
-    const cardFade = gsap.to(processCard, {
-      opacity: 1,
-      ease: 'none',
+  // ============================================
+  // 6. Process card — SINGLE TIMELINE (fade in → stay → exit up)
+  // Range: MyWork 'top 85%' (~15vh) to MyWork '80% top' (~260vh) = 245vh
+  // Starts at same point as illustration convergence so they sync on scroll-back.
+  // Fade in: 0-35% (85vh, synced with illustrations 15→100vh)
+  // Exit: 78-92% (34vh) — y:-100vh clears viewport before phone enters
+  // ============================================
+  if (processCard && myWorkSection) {
+    const processTl = gsap.timeline({
       scrollTrigger: {
         trigger: myWorkSection,
-        start: 'top 30%',
-        end: 'top top',
+        start: 'top 85%',
+        end: '80% top',
         scrub: true,
       },
     });
-    convergenceTriggers.push(cardFade.scrollTrigger);
-  }
 
-  // ============================================
-  // Phase boundary: convergence → content swaps
-  // ============================================
-  if (myWorkSection) {
-    ScrollTrigger.create({
-      trigger: myWorkSection,
-      start: '20% top',
-      onEnter: () => convergenceTriggers.forEach(t => t?.disable(false)),
-      onLeaveBack: () => {
-        // Re-enable convergence, disable contact phase
-        convergenceTriggers.forEach(t => t?.enable(false, false));
-        contactTriggers.forEach(t => t?.disable(false));
-      },
-    });
-  }
+    // Fade in — same scroll range as illustration convergence (15→100vh)
+    processTl.fromTo(processCard,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.35 },
+      0
+    );
 
-  // ============================================
-  // 6. Content swap: Process + illustrations → About
-  // ============================================
-  const panelProcess = document.getElementById('panel-process');
-  const panelAbout = document.getElementById('panel-about');
-  const panelRepo = document.getElementById('panel-repo');
-  const panelTech = document.getElementById('panel-tech');
+    // Exit upward + fade out — uses y (not yPercent) to travel full viewport height
+    processTl.to(processCard,
+      { y: '-100vh', opacity: 0, duration: 0.14 },
+      0.78
+    );
 
-  // Process content + illustrations all fade out together
-  const fadeOutTargets = [panelProcess, heroIllustrations].filter(Boolean) as HTMLElement[];
-  fadeOutTargets.forEach(el => {
-    if (myWorkSection) {
-      gsap.to(el, {
+    // Illustrations fade out just before card exits
+    if (heroIllustrations) {
+      gsap.to(heroIllustrations, {
         opacity: 0,
         ease: 'none',
         scrollTrigger: {
           trigger: myWorkSection,
-          start: '22% top',
-          end: '32% top',
+          start: '40% top',
+          end: '55% top',
           scrub: true,
         },
       });
     }
-  });
-
-  // About fades in
-  if (myWorkSection && panelAbout) {
-    gsap.to(panelAbout, {
-      opacity: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: myWorkSection,
-        start: '28% top',
-        end: '38% top',
-        scrub: true,
-        onEnter: () => { panelAbout.style.pointerEvents = 'auto'; },
-        onLeaveBack: () => { panelAbout.style.pointerEvents = 'none'; },
-      },
-    });
   }
 
   // ============================================
-  // 6b. Content swap: About → Repo
+  // 7. Phone + Tech — SINGLE TIMELINE (enter → stay → exit)
+  // Range: MyWork '55% top' (~210vh) to PhoneShowcase '90% top' (~570vh) = 360vh
+  // Entry: 0-14% (50vh), overlaps with process exit (80-100% of process TL = 210-260vh)
+  // Exit: 85-100% (54vh), overlaps with repo entry (section 9)
   // ============================================
-  if (myWorkSection && panelAbout && panelRepo) {
-    // About fades out
-    gsap.to(panelAbout, {
-      opacity: 0,
-      ease: 'none',
+  if (phoneContainer && techPanelContainer && myWorkSection && phoneShowcase) {
+    gsap.set(phoneContainer, { yPercent: -50 });
+    gsap.set(techPanelContainer, { yPercent: -50 });
+
+    const phoneTechTl = gsap.timeline({
       scrollTrigger: {
         trigger: myWorkSection,
         start: '55% top',
-        end: '65% top',
+        endTrigger: phoneShowcase,
+        end: '90% top',
         scrub: true,
-        onEnter: () => { panelAbout.style.pointerEvents = 'none'; },
-        onLeaveBack: () => { panelAbout.style.pointerEvents = 'auto'; },
       },
     });
 
-    // Repo fades in
-    gsap.to(panelRepo, {
-      opacity: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: myWorkSection,
-        start: '60% top',
-        end: '70% top',
-        scrub: true,
-        onEnter: () => { panelRepo.style.pointerEvents = 'auto'; },
-        onLeaveBack: () => { panelRepo.style.pointerEvents = 'none'; },
-      },
-    });
+    // Phone + Tech enter together (5% delay so process card clears screen first)
+    phoneTechTl
+      .fromTo(phoneContainer,
+        { y: '100vh', opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.12 },
+        0.05
+      )
+      .fromTo(techPanelContainer,
+        { y: '100vh', opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.12 },
+        0.05
+      );
 
+    // Phone + Tech exit together
+    phoneTechTl
+      .to(phoneContainer,
+        { y: '-100vh', opacity: 0, duration: 0.12 },
+        0.85
+      )
+      .to(techPanelContainer,
+        { y: '-100vh', opacity: 0, duration: 0.12 },
+        0.85
+      );
   }
 
   // ============================================
-  // 7. Header slides up
+  // 8. Header hide during phone, show at contact
   // ============================================
-  const phoneShowcase = document.getElementById('phone-showcase');
-  const siteHeader = document.getElementById('site-header');
-
-  if (siteHeader && phoneShowcase) {
+  if (siteHeader && myWorkSection) {
     gsap.to(siteHeader, {
       y: '-5vw',
       ease: 'none',
       scrollTrigger: {
-        trigger: phoneShowcase,
-        start: 'top 60%',
-        end: 'top 30%',
+        trigger: myWorkSection,
+        start: '45% top',
+        end: '55% top',
         scrub: true,
       },
     });
   }
 
-  // ============================================
-  // 7b. Card morphs: center → right side + Repo → Tech crossfade
-  // ============================================
-  if (phoneShowcase && processCard) {
-    // Repo fades out as card starts morphing — tracked for disable/enable
-    if (panelRepo) {
-      const repoPhoneFade = gsap.to(panelRepo, {
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: 'top 80%',
-          end: 'top 40%',
-          scrub: true,
-          onEnter: () => { panelRepo.style.pointerEvents = 'none'; },
-          onLeaveBack: () => { panelRepo.style.pointerEvents = 'auto'; },
-        },
-      });
-      phonePhaseTriggers.push(repoPhoneFade.scrollTrigger);
-    }
-
-    // Card position/size morph — fromTo with explicit start values
-    // NO height/maxHeight — GSAP can't reverse-animate from auto
-    gsap.fromTo(processCard,
-      {
-        left: '50%',
-        xPercent: -50,
-        width: '85vw',
-        maxWidth: 1100,
-      },
-      {
-        left: '39%',
-        xPercent: 0,
-        width: 'calc(60vw - 2rem)',
-        maxWidth: 700,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: 'top 80%',
-          end: 'top 20%',
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      }
-    );
-
-    // Height managed via callbacks (GSAP can't tween auto → px → auto)
-    ScrollTrigger.create({
-      trigger: phoneShowcase,
-      start: 'top 50%',
-      onEnter: () => {
-        if (processCard) {
-          processCard.style.height = '80vh';
-          processCard.style.maxHeight = '750px';
-        }
-      },
-      onLeaveBack: () => {
-        if (processCard) {
-          processCard.style.height = '';
-          processCard.style.maxHeight = '';
-        }
-      },
-    });
-
-    // Tech panel fades in — tracked for disable/enable
-    const techScrollContainer = document.getElementById('panel-tech-scroll');
-    if (panelTech) {
-      const techFade = gsap.to(panelTech, {
-        opacity: 1,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: 'top 40%',
-          end: 'top 10%',
-          scrub: true,
-          onEnter: () => {
-            panelTech.style.pointerEvents = 'auto';
-            // Force explicit pixel height on scroll container
-            // (% height inside absolute-positioned parent in overflow:hidden card is unreliable)
-            if (techScrollContainer && processCard) {
-              const h = processCard.offsetHeight + 'px';
-              techScrollContainer.style.height = h;
-              techScrollContainer.style.maxHeight = h;
-            }
-          },
-          onLeaveBack: () => {
-            panelTech.style.pointerEvents = 'none';
-            if (techScrollContainer) {
-              techScrollContainer.style.height = '100%';
-              techScrollContainer.style.maxHeight = '';
-            }
-          },
-        },
-      });
-      phonePhaseTriggers.push(techFade.scrollTrigger);
-    }
-  }
-
-  // ============================================
-  // Phase boundary: myWork content ↔ phone section
-  // Disable phone-phase tweens on scroll-back so myWork tweens control panels
-  // ============================================
-  if (phoneShowcase) {
-    ScrollTrigger.create({
-      trigger: phoneShowcase,
-      start: 'top 85%',
-      onEnter: () => phonePhaseTriggers.forEach(t => t?.enable(false, false)),
-      onLeaveBack: () => {
-        phonePhaseTriggers.forEach(t => t?.disable(false));
-        // Reset panels to myWork-phase state (repo visible, tech hidden)
-        if (panelRepo) gsap.set(panelRepo, { opacity: 1 });
-        if (panelTech) gsap.set(panelTech, { opacity: 0 });
-        if (panelRepo) panelRepo.style.pointerEvents = 'auto';
-        if (panelTech) panelTech.style.pointerEvents = 'none';
-      },
-    });
-  }
-
-  // ============================================
-  // 8. Phone rise from bottom
-  // ============================================
-  const phoneContainer = document.getElementById('phone-container');
-
-  if (phoneContainer && phoneShowcase) {
-    gsap.fromTo(phoneContainer,
-      { xPercent: -50, yPercent: -50, y: '100vh' },
-      {
-        xPercent: -50,
-        yPercent: -50,
-        y: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: phoneShowcase,
-          start: 'top 70%',
-          end: 'top 10%',
-          scrub: true,
-        },
-      }
-    );
-
-    // ============================================
-    // 9. Phone shifts left (after rise completes)
-    // ============================================
-    gsap.to(phoneContainer, {
-      left: '28%',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: phoneShowcase,
-        start: 'top top',
-        end: '10% top',
-        scrub: true,
-      },
-    });
-  }
-
-  // ============================================
-  // Phase boundary: phone → contact
-  // Enable contact triggers when entering contact zone, disable on scroll-back
-  // ============================================
-  const contactSection = document.getElementById('contact-section');
-
-  if (contactSection && phoneShowcase) {
-    ScrollTrigger.create({
-      trigger: contactSection,
-      start: 'top bottom',
-      onEnter: () => contactTriggers.forEach(t => t?.enable(false, false)),
-      onLeaveBack: () => {
-        contactTriggers.forEach(t => t?.disable(false));
-        // Restore card opacity (contactFade may have set it to 0)
-        if (processCard) gsap.set(processCard, { opacity: 1 });
-      },
-    });
-  }
-
-  // ============================================
-  // 10. Phone + card fade out (at contact section)
-  // ============================================
-  if (contactSection && phoneContainer) {
-    gsap.to(phoneContainer, {
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: contactSection,
-        start: 'top 80%',
-        end: 'top 40%',
-        scrub: true,
-      },
-    });
-  }
-
-  // Card fades out — tracked in contactTriggers for disable/enable
-  // Uses gsap.to (NOT fromTo) — fromTo would apply opacity:1 immediately at creation
-  if (contactSection && processCard) {
-    const cardFadeOut = gsap.to(processCard, {
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: contactSection,
-        start: 'top 80%',
-        end: 'top 40%',
-        scrub: true,
-        onEnter: () => { if (panelTech) panelTech.style.pointerEvents = 'none'; },
-        onLeaveBack: () => { if (panelTech) panelTech.style.pointerEvents = 'auto'; },
-      },
-    });
-    contactTriggers.push(cardFadeOut.scrollTrigger);
-    // Start disabled — enabled by phase boundary when reaching contact zone
-    cardFadeOut.scrollTrigger?.disable(false);
-  }
-
-  // ============================================
-  // 11. Header slides back in
-  // ============================================
   if (siteHeader && contactSection) {
     gsap.to(siteHeader, {
       y: 0,
@@ -536,10 +311,70 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 12. Contact text fade in
+  // 9. Repo card — SINGLE TIMELINE (enter → stay → exit)
+  // Range: PhoneShowcase '72% top' (~516vh) to RepoSection '85% top' (~812vh) = 296vh
+  // Entry: 0-15% (44vh), overlaps with phone exit
+  // Exit: 85-100% (44vh), overlaps with about entry (section 10)
   // ============================================
-  const contactText = document.getElementById('contact-text');
+  if (repoCard && phoneShowcase && repoSection) {
+    gsap.set(repoCard, { xPercent: -50, yPercent: -50 });
 
+    const repoTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: phoneShowcase,
+        start: '72% top',
+        endTrigger: repoSection,
+        end: '85% top',
+        scrub: true,
+      },
+    });
+
+    repoTl
+      .fromTo(repoCard,
+        { y: '100vh', opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.12 },
+        0.05
+      )
+      .to(repoCard,
+        { y: '-100vh', opacity: 0, duration: 0.12 },
+        0.85
+      );
+  }
+
+  // ============================================
+  // 10. About card — SINGLE TIMELINE (enter → stay → exit)
+  // Range: RepoSection '67% top' (~767vh) to AboutSection '85% top' (~1062vh) = 295vh
+  // Entry: 0-15% (44vh), overlaps with repo exit
+  // Exit: 85-100% (44vh)
+  // ============================================
+  if (aboutCard && repoSection && aboutSection) {
+    gsap.set(aboutCard, { xPercent: -50, yPercent: -50 });
+
+    const aboutTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: repoSection,
+        start: '67% top',
+        endTrigger: aboutSection,
+        end: '85% top',
+        scrub: true,
+      },
+    });
+
+    aboutTl
+      .fromTo(aboutCard,
+        { y: '100vh', opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.12 },
+        0.05
+      )
+      .to(aboutCard,
+        { y: '-100vh', opacity: 0, duration: 0.12 },
+        0.85
+      );
+  }
+
+  // ============================================
+  // 11. Contact text fade in
+  // ============================================
   if (contactText && contactSection) {
     gsap.to(contactText, {
       opacity: 1,
@@ -556,10 +391,8 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 13. Scattered tech cards fade in
+  // 12. Scattered tech cards fade in
   // ============================================
-  const scatteredCards = document.getElementById('scattered-cards');
-
   if (scatteredCards && contactSection) {
     gsap.to(scatteredCards, {
       opacity: 1,

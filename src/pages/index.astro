@@ -5,6 +5,9 @@ import Header from '../components/layout/Header.astro';
 import Hero from '../components/sections/Hero.astro';
 import MyWork from '../components/sections/MyWork.astro';
 import PhoneShowcase from '../components/sections/PhoneShowcase.astro';
+import TechContent from '../components/sections/TechContent.astro';
+import RepoSection from '../components/sections/RepoSection.astro';
+import AboutSection from '../components/sections/AboutSection.astro';
 import ContactHero from '../components/sections/ContactHero.astro';
 ---
 
@@ -14,11 +17,12 @@ import ContactHero from '../components/sections/ContactHero.astro';
   <Hero />
   <MyWork />
   <PhoneShowcase />
+  <RepoSection />
+  <AboutSection />
   <ContactHero />
 
-  <!-- Phone container — fixed, centered, starts below viewport -->
-  <!-- Rises via GSAP, then shifts left while CreamPanel morphs to right side -->
-  <div id="phone-container" class="fixed z-30 pointer-events-none" style="left: 50%; top: 55%;">
+  <!-- Phone container — fixed, already positioned left -->
+  <div id="phone-container" class="fixed z-30 pointer-events-none opacity-0" style="left: 25%; top: 50%; transform: translateY(-50%);">
     <div class="relative" style="width: 22vw; max-width: 340px;">
       <!-- Screen area -->
       <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 1.5vw; background: #F5F3EF;">
@@ -37,6 +41,11 @@ import ContactHero from '../components/sections/ContactHero.astro';
       <!-- Phone frame (on top of screen content) -->
       <img src="/portfolio/images/phone-frame.png" alt="" class="w-full relative z-10" />
     </div>
+  </div>
+
+  <!-- Tech panel — fixed, right of phone, cream card with scrollable content -->
+  <div id="tech-panel-container" class="fixed z-20 opacity-0" style="left: 40%; top: 50%; width: calc(57% - 2rem); max-width: 700px; height: 80vh; max-height: 750px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; transform: translateY(-50%);">
+    <TechContent />
   </div>
 </BaseLayout>
 
@@ -59,21 +68,17 @@ import ContactHero from '../components/sections/ContactHero.astro';
     });
   });
 
-  // Tech panel scroll — intercept wheel at window level when tech is visible
-  // Must be window-level because fixed elements with absolute children
-  // don't reliably propagate wheel events for native scroll interception
-  const processCard = document.getElementById('process-card');
+  // Tech panel scroll — intercept wheel when cursor is over the tech panel
+  const techContainer = document.getElementById('tech-panel-container');
   const techScrollEl = document.getElementById('panel-tech-scroll');
-  const techPanel = document.getElementById('panel-tech');
-  if (processCard && techScrollEl && techPanel) {
+  if (techContainer && techScrollEl) {
     window.addEventListener('wheel', (e) => {
-      // Only when tech panel is active
-      if (techPanel.style.pointerEvents === 'none') return;
-      const opacity = parseFloat(getComputedStyle(techPanel).opacity);
+      // Only when tech panel is visible
+      const opacity = parseFloat(getComputedStyle(techContainer).opacity);
       if (opacity < 0.5) return;
 
-      // Only when cursor is over the card
-      const rect = processCard.getBoundingClientRect();
+      // Only when cursor is over the panel
+      const rect = techContainer.getBoundingClientRect();
       if (e.clientX < rect.left || e.clientX > rect.right ||
           e.clientY < rect.top || e.clientY > rect.bottom) return;
 
@@ -86,7 +91,6 @@ import ContactHero from '../components/sections/ContactHero.astro';
         e.preventDefault();
         techScrollEl.scrollTop += e.deltaY;
       }
-      // At extremes (top/bottom), let event pass → page scrolls → GSAP progresses
     }, { passive: false });
   }
 
@@ -98,13 +102,11 @@ import ContactHero from '../components/sections/ContactHero.astro';
     video.style.transition = 'opacity 0.5s ease';
 
     video.addEventListener('ended', () => {
-      // Fade out
       video.style.opacity = '0';
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % playlist.length;
         video.src = playlist[currentIndex];
         video.play();
-        // Fade in
         video.style.opacity = '1';
       }, 500);
     });
