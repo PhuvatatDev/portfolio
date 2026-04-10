@@ -42,7 +42,10 @@ export function initScrollController() {
   const repoCard = document.getElementById('repo-card');
   const aboutCard = document.getElementById('about-card');
 
-  const heroText = document.getElementById('hero-text');
+  const heroSection = document.getElementById('hero');
+  const heroMarqueeText = document.getElementById('hero-marquee-text');
+  const heroLastWord = document.getElementById('hero-last-word');
+  const heroBottomLeft = document.getElementById('hero-bottom-left');
   const heroIllustrations = document.getElementById('hero-illustrations');
   const siteHeader = document.getElementById('site-header');
   const progressBar = document.getElementById('scroll-progress');
@@ -79,17 +82,36 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 3. Hero text fade + exit left
+  // 3a. Hero marquee — horizontal scroll-driven translate
+  // Text translates from 0 to -(scrollWidth - viewport) over the full Hero section
+  // Responsive: function-based x value + invalidateOnRefresh recalculates on resize
   // ============================================
-  if (heroText) {
-    gsap.to(heroText, {
-      opacity: 0,
-      x: '-100vw',
+  if (heroSection && heroMarqueeText) {
+    gsap.to(heroMarqueeText, {
+      x: () => -heroMarqueeText.scrollWidth,
       ease: 'none',
       scrollTrigger: {
-        trigger: document.body,
+        trigger: heroSection,
         start: 'top top',
-        end: '12% top',
+        end: 'bottom top',
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    });
+  }
+
+  // ============================================
+  // 3b. Hero bottom-left (subtext + CTAs) — fade out near end of Hero
+  // Clears the bottom-left area before the process card enters
+  // ============================================
+  if (heroSection && heroBottomLeft) {
+    gsap.to(heroBottomLeft, {
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: heroSection,
+        start: '70% top',
+        end: 'bottom top',
         scrub: true,
       },
     });
@@ -127,10 +149,11 @@ export function initScrollController() {
     }
 
     compressIllustrations();
+    // invalidateOnRefresh on Section 5 tweens handles ScrollTrigger re-measure,
+    // so we only need to reapply the compressed positions here.
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 1180) {
         compressIllustrations();
-        ScrollTrigger.refresh();
       }
     });
   }
@@ -153,7 +176,9 @@ export function initScrollController() {
     gsap.set(processCard, { xPercent: -50, yPercent: -50 });
   }
 
-  if (myWorkSection && processCard
+  // Mobile skips convergence (slot coordinates are desktop-only; Section 4
+  // isMobile guard kept illustration positions at original 1920px coords).
+  if (!isMobile && myWorkSection && processCard
       && illusIdea && illusDiscussion && illusBuild && illusLive
       && slotIdea && slotDiscussion && slotBuild && slotLive) {
 
@@ -181,9 +206,18 @@ export function initScrollController() {
         rotateX: 0,
         ease: 'none',
         scrollTrigger: {
-          trigger: myWorkSection,
-          start: 'top 85%',
-          end: 'top top',
+          trigger: heroSection,
+          start: () => {
+            // Start when the last word 'deployment' is centered horizontally
+            if (!heroLastWord || !heroMarqueeText) return 'top top';
+            const currentX = (gsap.getProperty(heroMarqueeText, 'x') as number) || 0;
+            const wordRect = heroLastWord.getBoundingClientRect();
+            const wordCenterNatural = wordRect.left + wordRect.width / 2 - currentX;
+            const translateNeeded = window.innerWidth / 2 - wordCenterNatural;
+            const progress = Math.max(0, Math.min(0.99, -translateNeeded / heroMarqueeText.scrollWidth));
+            return `${(progress * 100).toFixed(2)}% top`;
+          },
+          end: '140% top',
           scrub: true,
           invalidateOnRefresh: true,
         },
@@ -202,16 +236,21 @@ export function initScrollController() {
     const processTl = gsap.timeline({
       scrollTrigger: {
         trigger: myWorkSection,
-        start: 'top 85%',
+        start: 'top top',
         end: '80% top',
         scrub: true,
       },
     });
 
-    // Fade in — same scroll range as illustration convergence (15→100vh)
+    // Entry — reveal from bottom via clipPath (card stays physically at y:0
+    // so slot positions remain measurable by illustration convergence).
+    // ⚠️ DO NOT add layout-affecting properties (y, translateY, yPercent) here.
+    // clipPath + opacity are paint-only — if the card moves, Section 5's
+    // getBoundingClientRect() on the slots returns wrong targets and
+    // illustrations converge to offset positions.
     processTl.fromTo(processCard,
-      { opacity: 0 },
-      { opacity: 1, duration: 0.35 },
+      { clipPath: 'inset(100% 0 0 0)', opacity: 0 },
+      { clipPath: 'inset(0% 0 0 0)', opacity: 1, duration: 0.2 },
       0
     );
 

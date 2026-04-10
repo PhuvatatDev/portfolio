@@ -1,21 +1,34 @@
 ---
 ---
 
-<section class="h-screen relative">
-  <!-- Hero text, bottom-left -->
-  <div id="hero-text" class="fixed top-[28%] lg:top-[50%] lg:-translate-y-1/2 left-[8%] z-20 max-w-[90%] lg:max-w-[50%]">
-    <!-- Tagline -->
-    <h1 class="font-serif font-bold leading-[1.1] tracking-tight text-charcoal mb-6 lg:mb-8 max-w-[85vw] lg:max-w-[35vw]" style="font-size: clamp(2.2rem, 4vw, 4.5rem);">
-      I build apps from idea to deployment.
+<section id="hero" class="relative" style="height: 100vh;">
+
+  <!-- Marquee — full-viewport horizontal band, centered vertically -->
+  <!-- z-10: BELOW the illustrations (z-30) so they pass on top -->
+  <div id="hero-marquee" class="fixed left-0 overflow-hidden pointer-events-none z-10"
+       style="top: 50%; transform: translateY(-50%); width: 100vw;">
+    <h1 id="hero-marquee-text"
+        class="font-serif font-bold leading-none text-charcoal whitespace-nowrap"
+        style="font-size: clamp(5rem, 13vw, 18rem); will-change: transform; padding-left: 8vw;">
+      I build apps from idea to <span id="hero-last-word">deployment.</span>
     </h1>
-    <!-- Sub-text -->
-    <div class="flex items-center gap-4 mb-8 lg:mb-10 font-mono text-charcoal/50" style="font-size: clamp(1.1rem, 1.5vw, 1.4rem); letter-spacing: 0.08em;">
+  </div>
+
+  <!-- Bottom-left block: sub-text logos + CTAs -->
+  <!-- z-20: above marquee, below illustrations -->
+  <div id="hero-bottom-left" class="fixed z-20"
+       style="left: 8%; bottom: 10%; max-width: 50%;">
+
+    <!-- Sub-text with logos -->
+    <div class="flex items-center gap-4 mb-6 font-mono text-charcoal/50"
+         style="font-size: clamp(1rem, 1.4vw, 1.3rem); letter-spacing: 0.08em;">
       <img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" class="w-7 h-7" />Flutter
       <span>·</span>
       <img src="/portfolio/images/logos/firebase.svg" alt="Firebase" class="w-7 h-7" />Firebase
       <span>·</span>
       <img src="/portfolio/images/logos/typescript.svg" alt="TypeScript" class="w-7 h-7" />TypeScript
     </div>
+
     <!-- CTAs -->
     <div class="flex gap-4 font-mono" style="font-size: clamp(0.85rem, 1vw, 1rem);">
       <a href="#my-work" class="nav-link no-underline px-6 py-3 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors">[ see my work ]</a>
@@ -23,8 +36,7 @@
     </div>
   </div>
 
-  <!-- Illustrations — scattered on the right, not in order -->
-  <!-- Container: right 47vw like MindTarot cards, with 3D perspective -->
+  <!-- Illustrations — scattered on the right, z-30 so they pass ABOVE the marquee -->
   <div id="hero-illustrations" class="fixed z-30 pointer-events-none" style="right: 0; top: 0; width: 47vw; height: 100vh; perspective: 1200px;">
     <!-- Idea (step 1) — high left -->
     <img
