@@ -55,8 +55,12 @@ export function initScrollController() {
   const heroIllustrations = document.getElementById('hero-illustrations');
   const siteHeader = document.getElementById('site-header');
   const progressBar = document.getElementById('scroll-progress');
-  const contactText = document.getElementById('contact-text');
-  const scatteredCards = document.getElementById('scattered-cards');
+  const contactWarp = document.getElementById('contact-warp');
+  const contactMarqueeBand = document.getElementById('contact-marquee-band');
+  const contactMarqueeText = document.getElementById('contact-marquee-text');
+  const contactUpper = document.getElementById('contact-upper');
+  const contactTechMarquee = document.getElementById('contact-tech-marquee');
+  const contactFooter = document.getElementById('contact-footer');
 
   // ============================================
   // 1. Grid parallax
@@ -495,36 +499,119 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 11. Contact text fade in
+  // 11. Contact section — grid warp + marquee entrance + content fade
   // ============================================
-  if (contactText && contactSection) {
-    gsap.to(contactText, {
-      opacity: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: contactSection,
-        start: 'top 30%',
-        end: 'top top',
-        scrub: true,
-        onEnter: () => { contactText.style.pointerEvents = 'auto'; },
-        onLeaveBack: () => { contactText.style.pointerEvents = 'none'; },
-      },
-    });
+  if (contactSection) {
+    // 11a. Grid warp SVG — fade in as the section enters
+    if (contactWarp) {
+      gsap.to(contactWarp, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 60%',
+          end: 'top 10%',
+          scrub: true,
+        },
+      });
+    }
+
+    // 11b. Marquee — enters from the left (inverse of Hero marquee)
+    // Hero marquee: x: 0 → -scrollWidth (exits left)
+    // Contact marquee: x: -scrollWidth → 0 (enters from left)
+    if (contactMarqueeBand && contactMarqueeText) {
+      // Fade in the band
+      gsap.to(contactMarqueeBand, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 70%',
+          end: 'top 30%',
+          scrub: true,
+        },
+      });
+
+      // Horizontal entrance — from off-screen left to natural position
+      gsap.fromTo(contactMarqueeText,
+        { x: () => -contactMarqueeText.scrollWidth },
+        {
+          x: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: contactSection,
+            start: 'top bottom',
+            end: 'top top',
+            scrub: true,
+            invalidateOnRefresh: true,
+          },
+        }
+      );
+    }
+
+    // 11c. Upper content (tagline + terminal links) — fade in
+    if (contactUpper) {
+      gsap.to(contactUpper, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 50%',
+          end: 'top 10%',
+          scrub: true,
+          onEnter: () => { contactUpper.style.pointerEvents = 'auto'; },
+          onLeaveBack: () => { contactUpper.style.pointerEvents = 'none'; },
+        },
+      });
+    }
+
+    // 11d. Tech stack marquee — fade in above footer
+    if (contactTechMarquee) {
+      gsap.to(contactTechMarquee, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 30%',
+          end: 'top top',
+          scrub: true,
+          onEnter: () => { contactTechMarquee.style.pointerEvents = 'auto'; },
+          onLeaveBack: () => { contactTechMarquee.style.pointerEvents = 'none'; },
+        },
+      });
+    }
+
+    // 11f. Footer — fade in
+    if (contactFooter) {
+      gsap.to(contactFooter, {
+        opacity: 1,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 30%',
+          end: 'top top',
+          scrub: true,
+        },
+      });
+    }
   }
 
   // ============================================
-  // 12. Scattered tech cards fade in
+  // 12. Contact email — click to copy to clipboard
   // ============================================
-  if (scatteredCards && contactSection) {
-    gsap.to(scatteredCards, {
-      opacity: 1,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: contactSection,
-        start: 'top 20%',
-        end: 'top top',
-        scrub: true,
-      },
+  const contactEmail = document.getElementById('contact-email');
+  const copyIcon = document.getElementById('copy-icon');
+  const copiedFeedback = document.getElementById('copied-feedback');
+  if (contactEmail && copyIcon && copiedFeedback) {
+    contactEmail.addEventListener('click', () => {
+      navigator.clipboard.writeText('pvtdev.app@gmail.com');
+      copyIcon.style.display = 'none';
+      copiedFeedback.style.display = 'inline-flex';
+      setTimeout(() => {
+        copyIcon.style.display = 'inline';
+        copiedFeedback.style.display = 'none';
+      }, 1500);
     });
   }
+
 }

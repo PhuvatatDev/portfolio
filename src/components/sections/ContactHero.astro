@@ -1,93 +1,223 @@
 ---
-// ContactHero — Contact section styled like the Hero
-// Text left + scattered tech cards right (decorative symmetry with Hero illustrations)
+// ContactHero — Closing section of the site
 //
-// Integration:
-// - Placed at the end of the scroll
-// - Text + CTA fixed left (same position as Hero tagline)
-// - Tech cards scattered on the right (fade in via scroll-controller.ts)
-// - scroll-controller.ts handles: fade in text, fade in scattered cards
-import TechCard from '../ui/TechCard.astro';
+// Layout (all fixed, contact block as the focal point of the grid warp):
+// - Grid warp SVG background, centered on viewport
+// - Marquee "What are we building next?" — above contact block, enters from left
+// - Contact block (tagline + 2 link rows with icons) — EXACT viewport center
+//   - Email row: click-to-copy with feedback
+//   - Github row: external link
+// - Tech stack marquee — above footer, continuous CSS scroll
+// - Footer — bottom
+//
+// Vertical distribution uses calc(50% + Nrem) relative to CTA center,
+// so all gaps stay pixel-stable across viewport heights.
+//
+// Animations handled in scroll-controller.ts
 ---
 
 <section id="contact-section" class="relative z-10" style="height: 150vh;">
 
-  <!-- Contact text — same position as Hero tagline (fixed, left) -->
-  <div id="contact-text" class="fixed z-20 opacity-0 pointer-events-none"
-       style="top: 50%; left: 8%; transform: translateY(-50%); max-width: 45%;">
+  <!-- Grid warp background — centered on viewport (focal point = CTA) -->
+  <div id="contact-warp" class="fixed inset-0 flex items-center justify-center z-10 opacity-0 pointer-events-none">
+    <img src="/portfolio/images/contact-grid-warp.svg" alt="" aria-hidden="true"
+         class="w-full h-full object-cover" />
+  </div>
 
-    <p class="font-mono text-charcoal/40 mb-4" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
-      [ contact ]
-    </p>
-
-    <h2 class="font-serif font-bold text-charcoal mb-3 leading-tight" style="font-size: clamp(1.8rem, 3vw, 3.2rem);">
-      Let's build something.
+  <!-- Marquee band — enters from the left (inverse of Hero marquee) -->
+  <!-- Positioned by bottom so it stays anchored relative to the CTA center -->
+  <div id="contact-marquee-band" class="fixed left-0 z-20 overflow-hidden pointer-events-none opacity-0"
+       style="bottom: calc(50% + 7rem); width: 100vw;">
+    <h2 id="contact-marquee-text"
+        class="font-serif font-bold text-charcoal whitespace-nowrap text-center"
+        style="font-size: clamp(2rem, 5vw, 6rem); line-height: 1.15; will-change: transform; padding: 0.1em 8vw 0.2em;">
+      What are we building next?
     </h2>
+  </div>
 
-    <p class="font-mono text-charcoal/50 mb-6" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem);">
+  <!-- Contact block — EXACT viewport center (= grid warp focal point) -->
+  <div id="contact-upper"
+       class="fixed z-30 opacity-0 pointer-events-none flex flex-col items-center"
+       style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(90vw, 700px);">
+
+    <!-- Tagline -->
+    <p class="font-mono text-charcoal/55 text-center mb-7"
+       style="font-size: clamp(0.85rem, 0.95vw, 1rem);">
       Available for freelance projects and full-time roles.
     </p>
 
-    <!-- Terminal-style links -->
-    <div class="font-mono text-charcoal/60 mb-8" style="font-size: clamp(0.8rem, 0.9vw, 0.95rem); line-height: 2.2;">
-      <p>
-        <span class="text-charcoal/35">email</span>
-        <span class="text-charcoal/20 mx-3">→</span>
-        <a href="mailto:phuvatat.dev@gmail.com" class="text-charcoal hover:text-pop-yellow transition-colors no-underline">phuvatat.dev@gmail.com</a>
-      </p>
-      <p>
-        <span class="text-charcoal/35">github</span>
-        <span class="text-charcoal/20 mx-3">→</span>
-        <a href="https://github.com/PhuvatatDev" target="_blank" rel="noopener" class="text-charcoal hover:text-pop-yellow transition-colors no-underline">github.com/PhuvatatDev</a>
-      </p>
+    <!-- Contact rows — grid: icon | label | arrow | value -->
+    <div class="font-mono text-charcoal/60"
+         style="display: grid; grid-template-columns: auto auto auto auto; column-gap: 1rem; row-gap: 1rem; align-items: center; font-size: clamp(1rem, 1.2vw, 1.25rem);">
+
+      <!-- Email row (click to copy) -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-charcoal/45">
+        <rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/>
+      </svg>
+      <span class="text-charcoal/35 text-right">email</span>
+      <span class="text-charcoal/20 text-center">→</span>
+      <span id="contact-email"
+            class="cursor-pointer inline-flex items-center gap-2 text-charcoal hover:text-pop-yellow transition-colors"
+            title="Click to copy">
+        pvtdev.app@gmail.com
+        <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50">
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+        </svg>
+        <span id="copied-feedback" style="display:none;" class="inline-flex items-center gap-1 text-pop-yellow-deep">
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          <span style="font-size: 0.8em;">Copied</span>
+        </span>
+      </span>
+
+      <!-- Github row -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="text-charcoal/60">
+        <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.5 11.5 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+      </svg>
+      <span class="text-charcoal/35 text-right">github</span>
+      <span class="text-charcoal/20 text-center">→</span>
+      <a href="https://github.com/PhuvatatDev" target="_blank" rel="noopener"
+         class="text-charcoal hover:text-pop-yellow transition-colors no-underline">github.com/PhuvatatDev</a>
+
     </div>
-
-    <!-- CTA -->
-    <a href="mailto:phuvatat.dev@gmail.com"
-       class="font-mono no-underline inline-block px-6 py-3 bg-pop-yellow text-charcoal font-bold rounded hover:bg-pop-yellow-deep transition-colors"
-       style="font-size: clamp(0.8rem, 0.9vw, 0.95rem);">
-      [ send a message ]
-    </a>
-
-    <!-- Footer -->
-    <p class="font-mono text-charcoal/20 mt-16" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem);">
-      © 2026 Phuvatat
-    </p>
 
   </div>
 
-  <!-- Scattered tech cards — decorative, right side (mirrors Hero illustrations) -->
-  <div id="scattered-cards" class="fixed z-10 opacity-0 pointer-events-none hidden lg:block"
-       style="right: 0; top: 0; width: 47vw; height: 100vh;">
-
-    <div class="absolute" style="top: 12vh; right: 18vw; transform: rotate(-3deg);">
-      <TechCard title="Clean Architecture" description="data / domain / presentation" featureId="sc-clean" scattered />
+  <!-- Tech stack marquee — continuous CSS scroll, above footer -->
+  <div id="contact-tech-marquee" class="fixed left-0 z-20 opacity-0 pointer-events-none"
+       style="bottom: calc(6% + 2.5rem); width: 100vw;">
+    <p class="font-mono text-charcoal/30 text-center mb-3"
+       style="font-size: clamp(0.6rem, 0.7vw, 0.7rem); letter-spacing: 0.08em;">[ what I use ]</p>
+    <div class="marquee-container">
+      <div class="marquee-track">
+        <div class="marquee-set">
+          <img src="/portfolio/images/logos/flutter.svg" alt="Flutter" class="marquee-logo" />
+          <img src="/portfolio/images/logos/dart.svg" alt="Dart" class="marquee-logo" />
+          <img src="/portfolio/images/logos/firebase.svg" alt="Firebase" class="marquee-logo" />
+          <img src="/portfolio/images/logos/codemagic.svg" alt="Codemagic" class="marquee-logo" />
+          <img src="/portfolio/images/logos/gemini.svg" alt="Gemini AI" class="marquee-logo" />
+          <img src="/portfolio/images/logos/claude.svg" alt="Claude" class="marquee-logo" />
+          <img src="/portfolio/images/logos/typescript.svg" alt="TypeScript" class="marquee-logo" />
+          <img src="/portfolio/images/logos/revenuecat.svg" alt="RevenueCat" class="marquee-logo" />
+          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="Astro" class="marquee-logo" />
+          <img src="/portfolio/images/logos/stripe.svg" alt="Stripe" class="marquee-logo" />
+          <img src="/portfolio/images/logos/git.svg" alt="Git" class="marquee-logo" />
+        </div>
+        <div class="marquee-set" aria-hidden="true">
+          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" />
+        </div>
+        <div class="marquee-set" aria-hidden="true">
+          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" />
+        </div>
+        <div class="marquee-set" aria-hidden="true">
+          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" />
+          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" />
+        </div>
+      </div>
     </div>
+  </div>
 
-    <div class="absolute" style="top: 28vh; right: 6vw; transform: rotate(2deg);">
-      <TechCard title="AI Integration" description="Gemini 2.5 Flash" featureId="sc-ai" scattered />
-    </div>
-
-    <div class="absolute" style="top: 42vh; right: 22vw; transform: rotate(-1deg);">
-      <TechCard title="Security" description="App Check + Rules" featureId="sc-security" scattered />
-    </div>
-
-    <div class="absolute" style="top: 55vh; right: 10vw; transform: rotate(4deg);">
-      <TechCard title="Payments" description="RevenueCat" featureId="sc-payments" scattered />
-    </div>
-
-    <div class="absolute" style="top: 20vh; right: 4vw; transform: rotate(-2deg);">
-      <TechCard title="Authentication" description="Email, Google, Apple" featureId="sc-auth" scattered />
-    </div>
-
-    <div class="absolute" style="top: 68vh; right: 20vw; transform: rotate(1deg);">
-      <TechCard title="State Management" description="Cubit / BLoC" featureId="sc-state" scattered />
-    </div>
-
-    <div class="absolute" style="top: 75vh; right: 8vw; transform: rotate(-4deg);">
-      <TechCard title="Multilingual" description="EN · FR · RU" featureId="sc-i18n" scattered />
-    </div>
-
+  <!-- Footer — bottom -->
+  <div id="contact-footer" class="fixed z-30 opacity-0 pointer-events-none"
+       style="bottom: 6%; left: 50%; transform: translateX(-50%);">
+    <p class="font-mono text-charcoal/25 text-center"
+       style="font-size: clamp(0.55rem, 0.6vw, 0.65rem);">
+      © 2026 Phuvatat
+    </p>
   </div>
 
 </section>
+
+<style>
+  .marquee-container {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: contact-marquee-scroll 90s linear infinite;
+  }
+
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-set {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 3vw, 3.5rem);
+    padding-right: clamp(2rem, 3vw, 3.5rem);
+  }
+
+  .marquee-logo {
+    height: clamp(1.1rem, 1.5vw, 1.4rem);
+    width: auto;
+    opacity: 0.4;
+    filter: grayscale(1);
+    transition: opacity 0.3s, filter 0.3s;
+    flex-shrink: 0;
+  }
+
+  #contact-tech-marquee:hover .marquee-logo,
+  .marquee-container:hover .marquee-logo {
+    pointer-events: auto;
+  }
+
+  .marquee-logo:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  .marquee-logo[src*="revenuecat"] {
+    transform: translateY(2px);
+  }
+
+  .marquee-logo[src*="flutter"],
+  .marquee-logo[src*="stripe"] {
+    height: clamp(1.3rem, 1.8vw, 1.6rem);
+  }
+
+  .marquee-logo[src*="codemagic"],
+  .marquee-logo[src*="revenuecat"] {
+    height: clamp(1.1rem, 1.4vw, 1.3rem);
+  }
+
+  @keyframes contact-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>
