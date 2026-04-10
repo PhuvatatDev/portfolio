@@ -17,26 +17,36 @@
       What I've built
     </h2>
 
-    <!-- Projects table -->
+    <!-- Projects table — grouped by status: live / practice / client work -->
     <div class="overflow-hidden rounded-lg border border-charcoal/10">
       <table class="w-full font-mono" style="font-size: clamp(0.6rem, 0.68vw, 0.73rem);">
-        <thead>
-          <tr class="bg-charcoal/5 text-left">
-            <th class="px-3 py-2 text-charcoal/50 font-normal" style="width: 20%;">Project</th>
-            <th class="px-3 py-2 text-charcoal/50 font-normal" style="width: 55%;">Description</th>
-            <th class="px-3 py-2 text-charcoal/50 font-normal text-right" style="width: 25%;">Link</th>
-          </tr>
-        </thead>
+        <colgroup>
+          <col style="width: 20%;" />
+          <col style="width: 55%;" />
+          <col style="width: 25%;" />
+        </colgroup>
         <tbody class="text-charcoal/55">
+
+          <!-- ============ LIVE ============ -->
+          <tr class="bg-charcoal/5">
+            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+              [ live ]
+            </td>
+          </tr>
           <tr class="border-t border-charcoal/8">
             <td class="px-3 py-2.5 font-bold text-charcoal/80">MindTarot</td>
             <td class="px-3 py-2.5">Tarot app with AI interpretations — live on stores</td>
-            <td class="px-3 py-2.5 text-right">
+            <td class="px-3 py-2.5 text-right whitespace-nowrap">
               <a href="https://mindtarotapp.com" target="_blank" rel="noopener" class="repo-link">website</a>
-              <span class="text-charcoal/15 mx-1">·</span>
               <a href="https://play.google.com/store/apps/details?id=com.pvtdev.mindtarot" target="_blank" rel="noopener" class="repo-link">play</a>
-              <span class="text-charcoal/15 mx-1">·</span>
               <a href="https://apps.apple.com/app/mindtarot/id6757782630" target="_blank" rel="noopener" class="repo-link">ios</a>
+            </td>
+          </tr>
+
+          <!-- ============ PRACTICE ============ -->
+          <tr class="bg-charcoal/5 border-t border-charcoal/8">
+            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+              [ practice ]
             </td>
           </tr>
           <tr class="border-t border-charcoal/8">
@@ -45,9 +55,9 @@
             <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener" class="repo-link">github ↗</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/dart_algorithm" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">dart_algorithm</a></td>
+            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">dart_algos</a></td>
             <td class="px-3 py-2.5">Data structures & algorithms in Dart</td>
-            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/dart_algorithm" target="_blank" rel="noopener" class="repo-link">github ↗</a></td>
+            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener" class="repo-link">github ↗</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
             <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">chat_app</a></td>
@@ -55,15 +65,34 @@
             <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener" class="repo-link">github ↗</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/lead_magnette" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">lead_magnette</a></td>
-            <td class="px-3 py-2.5">Marketing landing page for a tarot masterclass</td>
-            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/lead_magnette" target="_blank" rel="noopener" class="repo-link">github ↗</a></td>
+            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/la_tarot_academie" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">la_tarot_academie</a></td>
+            <td class="px-3 py-2.5">Interactive tarot draw tool used in live webinars</td>
+            <td class="px-3 py-2.5 text-right whitespace-nowrap">
+              <a href="https://phuvatatdev.github.io/la_tarot_academie/" target="_blank" rel="noopener" class="repo-link">demo</a>
+              <a href="https://github.com/PhuvatatDev/la_tarot_academie" target="_blank" rel="noopener" class="repo-link">github ↗</a>
+            </td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5 font-bold text-charcoal/80">la_tarot_academie</td>
-            <td class="px-3 py-2.5">Full website for a tarot academy</td>
-            <td class="px-3 py-2.5 text-right"><span class="text-charcoal/25" style="font-size: 0.6rem;">private</span></td>
+            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/leadmagnet_audio" target="_blank" rel="noopener" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">leadmagnet_audio</a></td>
+            <td class="px-3 py-2.5">Audio lead-magnet landing page for a tarot masterclass</td>
+            <td class="px-3 py-2.5 text-right whitespace-nowrap">
+              <a href="https://la-tarot-academie.vercel.app/listen" target="_blank" rel="noopener" class="repo-link">live</a>
+              <a href="https://github.com/PhuvatatDev/leadmagnet_audio" target="_blank" rel="noopener" class="repo-link">github ↗</a>
+            </td>
           </tr>
+
+          <!-- ============ CLIENT WORK ============ -->
+          <tr class="bg-charcoal/5 border-t border-charcoal/8">
+            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+              [ client work ]
+            </td>
+          </tr>
+          <tr class="border-t border-charcoal/8">
+            <td class="px-3 py-2.5 font-bold text-charcoal/80">la-tarot-academy-website</td>
+            <td class="px-3 py-2.5">Full website for a tarot academy</td>
+            <td class="px-3 py-2.5 text-right"><span class="text-charcoal/25" style="font-size: 0.6rem;">in progress</span></td>
+          </tr>
+
         </tbody>
       </table>
     </div>
@@ -72,14 +101,39 @@
 </section>
 
 <style>
+  /* Repo links — permanent soft-yellow pill, 3D lift + saturated yellow on hover.
+     Matches the store-btn language used elsewhere, scaled down for table links. */
   .repo-link {
     font-family: 'Chivo Mono', monospace;
-    color: rgba(26, 26, 26, 0.4);
+    display: inline-block;
+    padding: 0.2rem 0.55rem;
+    border-radius: 0.35rem;
+    background-color: rgba(255, 217, 106, 0.22);
+    color: rgba(26, 26, 26, 0.7);
     text-decoration: none;
-    transition: color 0.2s;
+    white-space: nowrap;
+    box-shadow:
+      0 2px 4px -2px rgba(26, 26, 26, 0.08),
+      0 1px 2px -1px rgba(26, 26, 26, 0.05);
+    transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1),
+                box-shadow 0.2s,
+                background-color 0.2s,
+                color 0.2s;
+    will-change: transform;
+  }
+
+  /* Gap between adjacent repo-link badges (replaces the old · separators) */
+  .repo-link + .repo-link {
+    margin-left: 0.3rem;
   }
 
   .repo-link:hover {
-    color: rgba(26, 26, 26, 0.8);
+    background-color: #FFD96A;
+    color: rgba(26, 26, 26, 0.95);
+    transform: translateY(-3px);
+    box-shadow:
+      0 8px 14px -4px rgba(26, 26, 26, 0.22),
+      0 4px 8px -2px rgba(26, 26, 26, 0.12),
+      0 2px 4px -1px rgba(26, 26, 26, 0.08);
   }
 </style>
