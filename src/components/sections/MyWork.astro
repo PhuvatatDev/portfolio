@@ -5,16 +5,17 @@
 ---
 
 <section id="my-work" class="relative z-10" style="height: 200vh;">
+
+  <!-- Vertical section label — fixed, synced with process-card via GSAP -->
+  <div id="process-label" class="section-label-wrapper section-label-card">
+    <span class="section-label-vertical">[ how it works ]</span>
+  </div>
+
   <!-- CreamPanel — FIXED, position managed by GSAP (xPercent/yPercent for centering) -->
   <div id="process-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden;">
 
     <!-- === Panel 1: Process (visible by default) === -->
     <div id="panel-process" style="padding: 2.5vw 3vw 1.5vw;">
-
-      <!-- Section label -->
-      <p class="font-mono text-charcoal/40 mb-6" style="font-size: clamp(0.7rem, 0.8vw, 0.8rem); letter-spacing: 0.1em;">
-        [ how it works ]
-      </p>
 
       <!-- 4 steps — horizontal row -->
       <div class="flex justify-between items-start gap-4">

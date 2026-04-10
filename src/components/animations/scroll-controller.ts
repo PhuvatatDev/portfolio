@@ -42,6 +42,12 @@ export function initScrollController() {
   const repoCard = document.getElementById('repo-card');
   const aboutCard = document.getElementById('about-card');
 
+  // Vertical section labels — synced with their respective cards
+  const processLabel = document.getElementById('process-label');
+  const techLabel = document.getElementById('tech-label');
+  const repoLabel = document.getElementById('repo-label');
+  const aboutLabel = document.getElementById('about-label');
+
   const heroSection = document.getElementById('hero');
   const heroMarqueeText = document.getElementById('hero-marquee-text');
   const heroLastWord = document.getElementById('hero-last-word');
@@ -233,6 +239,9 @@ export function initScrollController() {
   // Exit: 78-92% (34vh) — y:-100vh clears viewport before phone enters
   // ============================================
   if (processCard && myWorkSection) {
+    // Vertical centering for process label (CSS top:55% + GSAP yPercent:-50)
+    if (processLabel) gsap.set(processLabel, { yPercent: -50 });
+
     const processTl = gsap.timeline({
       scrollTrigger: {
         trigger: myWorkSection,
@@ -254,24 +263,35 @@ export function initScrollController() {
       0
     );
 
+    // Section label — fade in with the card
+    if (processLabel) {
+      processTl.to(processLabel,
+        { opacity: 1, duration: 0.2 },
+        0
+      );
+    }
+
     // Exit upward + fade out — uses y (not yPercent) to travel full viewport height
     processTl.to(processCard,
       { y: '-100vh', opacity: 0, duration: 0.14 },
       0.78
     );
 
-    // Illustrations fade out just before card exits
+    // Section label — exit with the card
+    if (processLabel) {
+      processTl.to(processLabel,
+        { y: '-100vh', opacity: 0, duration: 0.14 },
+        0.78
+      );
+    }
+
+    // Illustrations travel up WITH the card (same timing, same distance)
+    // so they visually leave inside the card instead of fading prematurely
     if (heroIllustrations) {
-      gsap.to(heroIllustrations, {
-        opacity: 0,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: myWorkSection,
-          start: '40% top',
-          end: '55% top',
-          scrub: true,
-        },
-      });
+      processTl.to(heroIllustrations,
+        { y: '-100vh', opacity: 0, duration: 0.14 },
+        0.78
+      );
     }
   }
 
@@ -282,8 +302,8 @@ export function initScrollController() {
   // Exit: 85-100% (54vh), overlaps with repo entry (section 9)
   // ============================================
   if (phoneContainer && techPanelContainer && myWorkSection && phoneShowcase) {
-    gsap.set(phoneContainer, { yPercent: -50 });
-    gsap.set(techPanelContainer, { yPercent: -50 });
+    // Centering handled by #phone-panel-wrapper (flex + translate(-50%,-50%))
+    // No yPercent set here — GSAP y tweens are additive translates from current position
 
     const phoneTechTl = gsap.timeline({
       scrollTrigger: {
@@ -308,6 +328,15 @@ export function initScrollController() {
         0.05
       );
 
+    // Section label — fade in with phone+tech (label is child of #phone-panel-wrapper,
+    // so it already follows the wrapper's position; we only animate opacity)
+    if (techLabel) {
+      phoneTechTl.to(techLabel,
+        { opacity: 1, duration: 0.12 },
+        0.05
+      );
+    }
+
     // Phone + Tech exit together
     phoneTechTl
       .to(phoneContainer,
@@ -318,6 +347,14 @@ export function initScrollController() {
         { y: '-100vh', opacity: 0, duration: 0.12 },
         0.85
       );
+
+    // Section label — exit with phone+tech
+    if (techLabel) {
+      phoneTechTl.to(techLabel,
+        { opacity: 0, duration: 0.12 },
+        0.85
+      );
+    }
   }
 
   // ============================================
@@ -357,6 +394,7 @@ export function initScrollController() {
   // ============================================
   if (repoCard && phoneShowcase && repoSection) {
     gsap.set(repoCard, { xPercent: -50, yPercent: -50 });
+    if (repoLabel) gsap.set(repoLabel, { yPercent: -50 });
 
     const repoTl = gsap.timeline({
       scrollTrigger: {
@@ -378,6 +416,20 @@ export function initScrollController() {
         { y: '-100vh', opacity: 0, duration: 0.12 },
         0.85
       );
+
+    // Section label — sync with repo card
+    if (repoLabel) {
+      repoTl
+        .fromTo(repoLabel,
+          { y: '100vh', opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.12 },
+          0.05
+        )
+        .to(repoLabel,
+          { y: '-100vh', opacity: 0, duration: 0.12 },
+          0.85
+        );
+    }
   }
 
   // ============================================
@@ -388,6 +440,7 @@ export function initScrollController() {
   // ============================================
   if (aboutCard && repoSection && aboutSection) {
     gsap.set(aboutCard, { xPercent: -50, yPercent: -50 });
+    if (aboutLabel) gsap.set(aboutLabel, { yPercent: -50 });
 
     const aboutTl = gsap.timeline({
       scrollTrigger: {
@@ -409,6 +462,20 @@ export function initScrollController() {
         { y: '-100vh', opacity: 0, duration: 0.12 },
         0.85
       );
+
+    // Section label — sync with about card
+    if (aboutLabel) {
+      aboutTl
+        .fromTo(aboutLabel,
+          { y: '100vh', opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.12 },
+          0.05
+        )
+        .to(aboutLabel,
+          { y: '-100vh', opacity: 0, duration: 0.12 },
+          0.85
+        );
+    }
   }
 
   // ============================================

@@ -37,7 +37,10 @@ export function initFeaturePanel() {
     if (!detail) return;
     detail.classList.remove('hidden');
 
-    // Scroll container to top
+    // Enable internal scroll for detail view (content is long).
+    // overscroll-behavior: contain prevents scroll chain when detail reaches boundary
+    scrollContainer.style.overflowY = 'auto';
+    scrollContainer.style.overscrollBehavior = 'contain';
     scrollContainer.scrollTop = 0;
 
     // Transition: grid fades out → detail fades in
@@ -57,8 +60,11 @@ export function initFeaturePanel() {
   }
 
   function closeDetail() {
-    // Scroll container to top
+    // Scroll container to top, then disable scroll (grid fits without it).
+    // Reset overscroll-behavior so wheel events can bubble to window scroll
     scrollContainer.scrollTop = 0;
+    scrollContainer.style.overflowY = 'hidden';
+    scrollContainer.style.overscrollBehavior = '';
 
     // Transition: detail fades out → grid fades in
     gsap.to(detailView, {

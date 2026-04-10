@@ -21,31 +21,36 @@ import ContactHero from '../components/sections/ContactHero.astro';
   <AboutSection />
   <ContactHero />
 
-  <!-- Phone container — fixed, already positioned left -->
-  <div id="phone-container" class="fixed z-30 pointer-events-none opacity-0" style="left: 25%; top: 50%; transform: translateY(-50%);">
-    <div class="relative" style="width: 22vw; max-width: 340px;">
-      <!-- Screen area -->
-      <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 1.5vw; background: #F5F3EF;">
-        <video
-          id="phone-video"
-          class="absolute inset-0 w-full h-full object-cover object-top"
-          autoplay
-          muted
-          playsinline
-          preload="auto"
-          data-playlist="/portfolio/video/login.mp4,/portfolio/video/payment.mp4,/portfolio/video/navigation.mp4"
-        >
-          <source src="/portfolio/video/login.mp4" type="video/mp4" />
-        </video>
-      </div>
-      <!-- Phone frame (on top of screen content) -->
-      <img src="/portfolio/images/phone-frame.png" alt="" class="w-full relative z-10" />
+  <!-- Phone + Tech panel — centered flex wrapper, phone and panel as a unified block -->
+  <div id="phone-panel-wrapper" class="fixed z-20" style="top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: clamp(30px, 3.5vw, 70px); pointer-events: none;">
+    <!-- Vertical section label — absolute, positioned to the left of the phone, follows wrapper -->
+    <div id="tech-label" style="position: absolute; right: calc(100% + 1.25rem); top: 50%; transform: translateY(-50%); opacity: 0; pointer-events: none;">
+      <span class="section-label-vertical">[ featured project ]</span>
     </div>
-  </div>
+    <!-- Phone -->
+    <div id="phone-container" class="opacity-0" style="pointer-events: none;">
+      <div class="relative" style="width: clamp(260px, 20vw, 330px);">
+        <div id="phone-screen" class="absolute overflow-hidden" style="top: 9.4%; left: 11.7%; right: 9.0%; bottom: 11.4%; border-radius: 1.5vw; background: #F5F3EF;">
+          <video
+            id="phone-video"
+            class="absolute inset-0 w-full h-full object-cover object-top"
+            autoplay
+            muted
+            playsinline
+            preload="auto"
+            data-playlist="/portfolio/video/login.mp4,/portfolio/video/payment.mp4,/portfolio/video/navigation.mp4"
+          >
+            <source src="/portfolio/video/login.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <img src="/portfolio/images/phone-frame.png" alt="" class="w-full relative z-10" />
+      </div>
+    </div>
 
-  <!-- Tech panel — fixed, right of phone, cream card with scrollable content -->
-  <div id="tech-panel-container" class="fixed z-20 opacity-0" style="left: 40%; top: 50%; width: calc(57% - 2rem); max-width: 700px; height: 80vh; max-height: 750px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; transform: translateY(-50%);">
-    <TechContent />
+    <!-- Tech panel -->
+    <div id="tech-panel-container" class="opacity-0" style="width: clamp(580px, 60vw, 820px); height: clamp(620px, 88vh, 860px); background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; pointer-events: auto;">
+      <TechContent />
+    </div>
   </div>
 </BaseLayout>
 
@@ -67,32 +72,6 @@ import ContactHero from '../components/sections/ContactHero.astro';
       }
     });
   });
-
-  // Tech panel scroll — intercept wheel when cursor is over the tech panel
-  const techContainer = document.getElementById('tech-panel-container');
-  const techScrollEl = document.getElementById('panel-tech-scroll');
-  if (techContainer && techScrollEl) {
-    window.addEventListener('wheel', (e) => {
-      // Only when tech panel is visible
-      const opacity = parseFloat(getComputedStyle(techContainer).opacity);
-      if (opacity < 0.5) return;
-
-      // Only when cursor is over the panel
-      const rect = techContainer.getBoundingClientRect();
-      if (e.clientX < rect.left || e.clientX > rect.right ||
-          e.clientY < rect.top || e.clientY > rect.bottom) return;
-
-      const { scrollTop, scrollHeight, clientHeight } = techScrollEl;
-      const atTop = scrollTop <= 0;
-      const atBottom = scrollTop + clientHeight >= scrollHeight - 1;
-
-      // Intercept: scroll the inner container instead of the page
-      if ((e.deltaY > 0 && !atBottom) || (e.deltaY < 0 && !atTop)) {
-        e.preventDefault();
-        techScrollEl.scrollTop += e.deltaY;
-      }
-    }, { passive: false });
-  }
 
   // Phone video playlist — cycles through videos with fade transitions
   const video = document.getElementById('phone-video') as HTMLVideoElement;

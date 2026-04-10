@@ -36,6 +36,39 @@ body {
 }
 
 /* ============================================
+   SECTION LABELS — vertical "book spine" style
+   Placed outside each card to identify the current section
+   ============================================ */
+.section-label-wrapper {
+  position: fixed;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.section-label-vertical {
+  display: inline-block;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: 'Chivo Mono', monospace;
+  font-size: clamp(0.7rem, 0.85vw, 0.95rem);
+  letter-spacing: 0.35em;
+  color: rgba(26, 26, 26, 0.55);
+  font-weight: 700;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+/* Horizontal offset based on card max-width (1100px) with 85vw fallback
+   Gap of 1.75rem between label and card left edge.
+   Vertical centering is done via GSAP yPercent: -50 (avoids CSS transform
+   conflict with GSAP's y tween on card entry/exit). */
+.section-label-card {
+  top: 55%;
+  left: calc(50% - min(42.5vw, 550px) - 1.75rem);
+}
+
+/* ============================================
    MOBILE RESPONSIVE (< 1180px)
    Desktop styles untouched — mobile overrides only
    ============================================ */
@@ -49,5 +82,11 @@ body {
   #code-grid span {
     font-size: 0.55rem !important;
     letter-spacing: 0.05em !important;
+  }
+
+  /* Vertical section labels — hidden on mobile (not enough room) */
+  .section-label-wrapper,
+  #tech-label {
+    display: none !important;
   }
 }

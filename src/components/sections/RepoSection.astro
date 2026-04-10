@@ -5,11 +5,13 @@
 ---
 
 <section id="repo-section" class="relative z-10" style="height: 250vh;">
-  <div id="repo-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
 
-    <p class="font-mono text-charcoal/40 mb-4" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
-      [ projects ]
-    </p>
+  <!-- Vertical section label — fixed, synced with repo-card via GSAP -->
+  <div id="repo-label" class="section-label-wrapper section-label-card">
+    <span class="section-label-vertical">[ repositories ]</span>
+  </div>
+
+  <div id="repo-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
 
     <h2 class="font-serif font-bold text-charcoal mb-5" style="font-size: clamp(1.3rem, 1.6vw, 1.8rem);">
       What I've built
@@ -30,7 +32,7 @@
             <td class="px-3 py-2.5 font-bold text-charcoal/80">MindTarot</td>
             <td class="px-3 py-2.5">Tarot app with AI interpretations — live on stores</td>
             <td class="px-3 py-2.5 text-right">
-              <a href="https://mindtarot-b24d9.web.app" target="_blank" rel="noopener" class="repo-link">website</a>
+              <a href="https://mindtarotapp.com" target="_blank" rel="noopener" class="repo-link">website</a>
               <span class="text-charcoal/15 mx-1">·</span>
               <a href="https://play.google.com/store/apps/details?id=com.pvtdev.mindtarot" target="_blank" rel="noopener" class="repo-link">play</a>
               <span class="text-charcoal/15 mx-1">·</span>

@@ -5,11 +5,13 @@
 ---
 
 <section id="about-section" class="relative z-10" style="height: 250vh;">
-  <div id="about-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
 
-    <p class="font-mono text-charcoal/40 mb-5" style="font-size: clamp(0.65rem, 0.7vw, 0.75rem); letter-spacing: 0.1em;">
-      [ about ]
-    </p>
+  <!-- Vertical section label — fixed, synced with about-card via GSAP -->
+  <div id="about-label" class="section-label-wrapper section-label-card">
+    <span class="section-label-vertical">[ about ]</span>
+  </div>
+
+  <div id="about-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
 
     <div class="flex flex-col lg:flex-row gap-6 items-start">
 
