@@ -273,15 +273,15 @@ export function initScrollController() {
 
     // Exit upward + fade out — uses y (not yPercent) to travel full viewport height
     processTl.to(processCard,
-      { y: '-100vh', opacity: 0, duration: 0.14 },
-      0.78
+      { y: '-100vh', opacity: 0, duration: 0.22 },
+      0.76
     );
 
     // Section label — exit with the card
     if (processLabel) {
       processTl.to(processLabel,
-        { y: '-100vh', opacity: 0, duration: 0.14 },
-        0.78
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
     }
 
@@ -289,8 +289,8 @@ export function initScrollController() {
     // so they visually leave inside the card instead of fading prematurely
     if (heroIllustrations) {
       processTl.to(heroIllustrations,
-        { y: '-100vh', opacity: 0, duration: 0.14 },
-        0.78
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
     }
   }
@@ -319,44 +319,44 @@ export function initScrollController() {
       },
     });
 
-    // Phone + Tech enter together (5% delay so process card clears screen first)
+    // Phone + Tech enter together (2% delay so process card clears screen first)
     phoneTechTl
       .fromTo(phoneContainer,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.12 },
-        0.05
+        { y: 0, opacity: 1, duration: 0.22 },
+        0.02
       )
       .fromTo(techPanelContainer,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.12 },
-        0.05
+        { y: 0, opacity: 1, duration: 0.22 },
+        0.02
       );
 
     // Section label — travel up from below with phone+tech (same tween as card)
     if (techLabel) {
       phoneTechTl.fromTo(techLabel,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.12 },
-        0.05
+        { y: 0, opacity: 1, duration: 0.22 },
+        0.02
       );
     }
 
     // Phone + Tech exit together
     phoneTechTl
       .to(phoneContainer,
-        { y: '-100vh', opacity: 0, duration: 0.12 },
-        0.85
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       )
       .to(techPanelContainer,
-        { y: '-100vh', opacity: 0, duration: 0.12 },
-        0.85
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
 
     // Section label — exit upward with phone+tech
     if (techLabel) {
       phoneTechTl.to(techLabel,
-        { y: '-100vh', opacity: 0, duration: 0.12 },
-        0.85
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
     }
   }
@@ -425,12 +425,12 @@ export function initScrollController() {
     repoTl
       .fromTo(repoCard,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.12 },
-        0.05
+        { y: 0, opacity: 1, duration: 0.22 },
+        0.02
       )
       .to(repoCard,
-        { y: '-100vh', opacity: 0, duration: 0.12 },
-        0.85
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
 
     // Section label — sync with repo card
@@ -438,12 +438,12 @@ export function initScrollController() {
       repoTl
         .fromTo(repoLabel,
           { y: '100vh', opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.12 },
-          0.05
+          { y: 0, opacity: 1, duration: 0.22 },
+          0.02
         )
         .to(repoLabel,
-          { y: '-100vh', opacity: 0, duration: 0.12 },
-          0.85
+          { y: '-100vh', opacity: 0, duration: 0.22 },
+          0.76
         );
     }
   }
@@ -471,12 +471,12 @@ export function initScrollController() {
     aboutTl
       .fromTo(aboutCard,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.12 },
-        0.05
+        { y: 0, opacity: 1, duration: 0.22 },
+        0.02
       )
       .to(aboutCard,
-        { y: '-100vh', opacity: 0, duration: 0.12 },
-        0.85
+        { y: '-100vh', opacity: 0, duration: 0.22 },
+        0.76
       );
 
     // Section label — sync with about card
@@ -484,12 +484,12 @@ export function initScrollController() {
       aboutTl
         .fromTo(aboutLabel,
           { y: '100vh', opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.12 },
-          0.05
+          { y: 0, opacity: 1, duration: 0.22 },
+          0.02
         )
         .to(aboutLabel,
-          { y: '-100vh', opacity: 0, duration: 0.12 },
-          0.85
+          { y: '-100vh', opacity: 0, duration: 0.22 },
+          0.76
         );
     }
   }
