@@ -23,8 +23,9 @@ import ContactHero from '../components/sections/ContactHero.astro';
 
   <!-- Phone + Tech panel — centered flex wrapper, phone and panel as a unified block -->
   <div id="phone-panel-wrapper" class="fixed z-20" style="top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: clamp(30px, 3.5vw, 70px); pointer-events: none;">
-    <!-- Vertical section label — absolute, positioned to the left of the phone, follows wrapper -->
-    <div id="tech-label" style="position: absolute; right: calc(100% + 1.25rem); top: 50%; transform: translateY(-50%); opacity: 0; pointer-events: none;">
+    <!-- Vertical section label — absolute, positioned to the left of the phone.
+         Vertical centering handled by GSAP yPercent:-50 (so `y` tween stays additive). -->
+    <div id="tech-label" style="position: absolute; right: calc(100% + 1.25rem); top: 50%; opacity: 0; pointer-events: none;">
       <span class="section-label-vertical">[ featured project ]</span>
     </div>
     <!-- Phone -->

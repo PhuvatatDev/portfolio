@@ -305,6 +305,10 @@ export function initScrollController() {
     // Centering handled by #phone-panel-wrapper (flex + translate(-50%,-50%))
     // No yPercent set here — GSAP y tweens are additive translates from current position
 
+    // Tech label — vertical centering (CSS top:50% + GSAP yPercent:-50)
+    // so y tweens travel from that centered baseline.
+    if (techLabel) gsap.set(techLabel, { yPercent: -50 });
+
     const phoneTechTl = gsap.timeline({
       scrollTrigger: {
         trigger: myWorkSection,
@@ -328,11 +332,11 @@ export function initScrollController() {
         0.05
       );
 
-    // Section label — fade in with phone+tech (label is child of #phone-panel-wrapper,
-    // so it already follows the wrapper's position; we only animate opacity)
+    // Section label — travel up from below with phone+tech (same tween as card)
     if (techLabel) {
-      phoneTechTl.to(techLabel,
-        { opacity: 1, duration: 0.12 },
+      phoneTechTl.fromTo(techLabel,
+        { y: '100vh', opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.12 },
         0.05
       );
     }
@@ -348,10 +352,10 @@ export function initScrollController() {
         0.85
       );
 
-    // Section label — exit with phone+tech
+    // Section label — exit upward with phone+tech
     if (techLabel) {
       phoneTechTl.to(techLabel,
-        { opacity: 0, duration: 0.12 },
+        { y: '-100vh', opacity: 0, duration: 0.12 },
         0.85
       );
     }
@@ -359,31 +363,43 @@ export function initScrollController() {
 
   // ============================================
   // 8. Header hide during phone, show at contact
+  // fromTo with explicit values (not to()) so the reverse path is
+  // deterministic regardless of scroll speed. immediateRender:false
+  // prevents the fromTo start values from being applied at page load
+  // (otherwise the second tween's {y:-5vw} would hide the header in Hero).
   // ============================================
   if (siteHeader && myWorkSection) {
-    gsap.to(siteHeader, {
-      y: '-5vw',
-      ease: 'none',
-      scrollTrigger: {
-        trigger: myWorkSection,
-        start: '45% top',
-        end: '55% top',
-        scrub: true,
-      },
-    });
+    gsap.fromTo(siteHeader,
+      { y: 0 },
+      {
+        y: '-5vw',
+        ease: 'none',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: myWorkSection,
+          start: '45% top',
+          end: '55% top',
+          scrub: true,
+        },
+      }
+    );
   }
 
   if (siteHeader && contactSection) {
-    gsap.to(siteHeader, {
-      y: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: contactSection,
-        start: 'top 60%',
-        end: 'top 30%',
-        scrub: true,
-      },
-    });
+    gsap.fromTo(siteHeader,
+      { y: '-5vw' },
+      {
+        y: 0,
+        ease: 'none',
+        immediateRender: false,
+        scrollTrigger: {
+          trigger: contactSection,
+          start: 'top 60%',
+          end: 'top 30%',
+          scrub: true,
+        },
+      }
+    );
   }
 
   // ============================================
