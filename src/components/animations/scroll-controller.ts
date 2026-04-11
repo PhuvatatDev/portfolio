@@ -72,6 +72,9 @@ export function initScrollController() {
   // Scopeless (no second arg) to preserve global document scope for selectors.
   // ============================================
   const ctx = gsap.context(() => {
+  // Mobile breakpoint — matches Tailwind 'lg' (1180px) and global.css mobile block
+  const isMobile = window.innerWidth < 1180;
+
   // ============================================
   // 1. Grid parallax
   // ============================================
@@ -102,11 +105,12 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 3a. Hero marquee — horizontal scroll-driven translate
+  // 3a. Hero marquee — horizontal scroll-driven translate (desktop only)
   // Text translates from 0 to -(scrollWidth - viewport) over the full Hero section
-  // Responsive: function-based x value + invalidateOnRefresh recalculates on resize
+  // Mobile: skipped — CSS forces white-space:normal so the text wraps as a
+  // static title instead of sliding horizontally
   // ============================================
-  if (heroSection && heroMarqueeText) {
+  if (!isMobile && heroSection && heroMarqueeText) {
     gsap.to(heroMarqueeText, {
       x: () => -heroMarqueeText.scrollWidth,
       ease: 'none',
@@ -121,16 +125,48 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 3b. Hero bottom-left (subtext + CTAs) — fade out near end of Hero
-  // Clears the bottom-left area before the process card enters
+  // 3b. Hero bottom-left (subtext + CTAs) — clear before process card enters
+  // Desktop: fade out in place
+  // Mobile: slide left off-screen (consistent with 3c title slide)
   // ============================================
   if (heroSection && heroBottomLeft) {
-    gsap.to(heroBottomLeft, {
-      opacity: 0,
+    if (isMobile) {
+      gsap.to(heroBottomLeft, {
+        x: '-120vw',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroSection,
+          start: '30% top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    } else {
+      gsap.to(heroBottomLeft, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroSection,
+          start: '70% top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }
+  }
+
+  // ============================================
+  // 3c. Hero title — slide left on hero exit (mobile only)
+  // Desktop uses Section 3a marquee animation. On mobile the title is a
+  // static wrapped block, so we slide it off-screen left in sync with 3b.
+  // ============================================
+  if (isMobile && heroSection && heroMarqueeText) {
+    gsap.to(heroMarqueeText, {
+      x: '-120vw',
       ease: 'none',
       scrollTrigger: {
         trigger: heroSection,
-        start: '70% top',
+        start: '30% top',
         end: 'bottom top',
         scrub: true,
       },
@@ -138,9 +174,8 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 4. Illustration responsive compression
+  // 4. Illustration responsive compression (desktop only)
   // ============================================
-  const isMobile = window.innerWidth < 1180;
   const illustrations = [
     document.getElementById('illus-build'),
     document.getElementById('illus-idea'),
@@ -197,9 +232,10 @@ export function initScrollController() {
     gsap.set(processCard, { xPercent: -50, yPercent: -50 });
   }
 
-  // Mobile skips convergence (slot coordinates are desktop-only; Section 4
-  // isMobile guard kept illustration positions at original 1920px coords).
-  if (!isMobile && myWorkSection && processCard
+  // Desktop and mobile both run convergence. Desktop start is synced with the
+  // marquee position (when 'deployment' is centered). Mobile uses a simple
+  // fixed start (30% of hero) since there is no marquee animation.
+  if (myWorkSection && processCard
       && illusIdea && illusDiscussion && illusBuild && illusLive
       && slotIdea && slotDiscussion && slotBuild && slotLive) {
 
@@ -228,8 +264,8 @@ export function initScrollController() {
         ease: 'none',
         scrollTrigger: {
           trigger: heroSection,
-          start: () => {
-            // Start when the last word 'deployment' is centered horizontally
+          start: isMobile ? '30% top' : () => {
+            // Desktop: start when the last word 'deployment' is centered horizontally
             if (!heroLastWord || !heroMarqueeText) return 'top top';
             const currentX = (gsap.getProperty(heroMarqueeText, 'x') as number) || 0;
             const wordRect = heroLastWord.getBoundingClientRect();

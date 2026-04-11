@@ -73,20 +73,129 @@ body {
    Desktop styles untouched — mobile overrides only
    ============================================ */
 @media (max-width: 1179px) {
-  /* Code grid: shorter cells on mobile */
+  /* Code grid: force uniform short cells on mobile.
+     Overriding `height` (not just max-height) because the inline style
+     `height: Xpx` otherwise wins over max-height in flex columns. */
   #code-grid .shrink-0 {
-    max-height: 100px !important;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    height: 75px !important;
+    max-height: 75px !important;
   }
 
-  #code-grid span {
-    font-size: 0.55rem !important;
-    letter-spacing: 0.05em !important;
+  /* Terminal code (<pre>) — smaller font + tighter padding so narrow
+     mobile columns do not show an oversized code block */
+  #code-grid pre {
+    font-size: 0.42rem !important;
+    line-height: 1.25 !important;
+    padding: 0.2rem 0.35rem !important;
+  }
+
+  /* Terminal title bar — tighter padding + smaller dots */
+  #code-grid .terminal-cell > div:first-child {
+    padding: 0.2rem 0.4rem !important;
+    gap: 0.2rem !important;
+  }
+
+  #code-grid .terminal-cell > div:first-child > div {
+    width: 4px !important;
+    height: 4px !important;
   }
 
   /* Vertical section labels — hidden on mobile (not enough room) */
   .section-label-wrapper,
   #tech-label {
     display: none !important;
+  }
+
+  /* ============================================
+     HERO — mobile layout
+     Marquee → static title at top, illustrations fan-spread at bottom
+     (pattern from mindtarot/website mobile hero)
+     ============================================ */
+
+  /* Header: slightly lower on mobile */
+  #site-header {
+    top: 5svh !important;
+  }
+
+  /* Ex-marquee → static title block near top */
+  #hero-marquee {
+    top: 18svh !important;
+    transform: none !important;
+  }
+
+  #hero-marquee-text {
+    font-size: clamp(2.5rem, 9vw, 4rem) !important;
+    white-space: normal !important;
+    padding-right: 8vw !important;
+    line-height: 1.05 !important;
+  }
+
+  /* Sub-text logos + CTAs → positioned just below title */
+  #hero-bottom-left {
+    top: 42svh !important;
+    bottom: auto !important;
+    left: 5% !important;
+    max-width: 90% !important;
+  }
+
+  /* Hero CTAs mobile — compact so the 2 buttons stay on one row
+     at 390px without wrapping their text */
+  #hero-bottom-left .hero-cta {
+    padding: 0.55rem 0.85rem !important;
+    font-size: 0.72rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* Tighter gap between the 2 CTAs on mobile */
+  #hero-bottom-left > div:last-child {
+    gap: 0.6rem !important;
+  }
+
+  /* Logos row — smaller gap + smaller logo icons so "TypeScript"
+     is not clipped on the right at 390px */
+  #hero-bottom-left > div:first-child {
+    gap: 0.6rem !important;
+    font-size: 0.75rem !important;
+  }
+
+  #hero-bottom-left > div:first-child img {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  /* Illustrations container → full viewport width, svh for mobile stability */
+  #hero-illustrations {
+    width: 100vw !important;
+    right: 0 !important;
+    top: 0 !important;
+    height: 100svh !important;
+  }
+
+  /* 4 illustrations — fan spread at bottom, left to right:
+     idea, discussion, build (largest/center), live
+     Order matches the process card below for a clean scroll transition
+     Sized + positioned so the whole fan fits in 0-100vw (no clipping) */
+  #illus-idea {
+    width: 22vw !important;
+    top: 66svh !important;
+    right: 75vw !important;
+  }
+
+  #illus-discussion {
+    width: 24vw !important;
+    top: 64svh !important;
+    right: 53vw !important;
+  }
+
+  #illus-build {
+    width: 28vw !important;
+    top: 62svh !important;
+    right: 29vw !important;
+  }
+
+  #illus-live {
+    width: 22vw !important;
+    top: 65svh !important;
+    right: 7vw !important;
   }
 }
