@@ -1,0 +1,102 @@
+---
+// Reusable infinite marquee of tech logos.
+// Renders `repeat` copies of the logo set so CSS can loop seamlessly via
+// translateX(0) → translateX(-50%) (only works cleanly with an even total,
+// but any multiple ≥ 2 is visually acceptable since the mask-image hides seams).
+// The FIRST set uses real alts for a11y; subsequent sets are aria-hidden.
+import type { TechLogo } from '../../data/tech-logos';
+
+interface Props {
+  logos: readonly TechLogo[];
+  speed: string;           // e.g. '30s', '90s'
+  repeat: number;          // number of duplicated sets (≥ 2)
+  animationName?: string;  // CSS animation name (kept overridable, defaults shared)
+}
+
+const {
+  logos,
+  speed,
+  repeat,
+  animationName = 'marquee-scroll-shared',
+} = Astro.props;
+
+const sets = Array.from({ length: repeat }, (_, i) => i);
+---
+
+<div class="marquee-container">
+  <div class="marquee-track">
+    {sets.map((setIndex) => (
+      <div class="marquee-set" {...(setIndex > 0 ? { 'aria-hidden': 'true' } : {})}>
+        {logos.map((logo) => (
+          <img
+            src={logo.src}
+            alt={setIndex === 0 ? logo.alt : ''}
+            class="marquee-logo"
+            loading="lazy"
+            decoding="async"
+          />
+        ))}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style define:vars={{ speed, animationName }}>
+  .marquee-container {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: var(--animationName) var(--speed) linear infinite;
+  }
+
+  .marquee-container:hover .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee-set {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 3vw, 3.5rem);
+    padding-right: clamp(2rem, 3vw, 3.5rem);
+  }
+
+  .marquee-logo {
+    height: clamp(1.1rem, 1.5vw, 1.4rem);
+    width: auto;
+    opacity: 0.4;
+    filter: grayscale(1);
+    transition: opacity 0.3s, filter 0.3s;
+    flex-shrink: 0;
+  }
+
+  .marquee-logo:hover {
+    opacity: 1;
+    filter: grayscale(0);
+  }
+
+  .marquee-logo[src*="revenuecat"] {
+    transform: translateY(2px);
+  }
+
+  /* Wordmark logos — slightly taller but capped */
+  .marquee-logo[src*="flutter"],
+  .marquee-logo[src*="stripe"] {
+    height: clamp(1.3rem, 1.8vw, 1.6rem);
+  }
+
+  /* Long wordmarks — cap harder */
+  .marquee-logo[src*="codemagic"],
+  .marquee-logo[src*="revenuecat"] {
+    height: clamp(1.1rem, 1.4vw, 1.3rem);
+  }
+
+  @keyframes marquee-scroll-shared {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+</style>

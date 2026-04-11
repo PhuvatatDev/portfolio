@@ -2,6 +2,8 @@
 // My Work — Process Card only
 // Illustrations converge into cream card with 4 steps (Idea → Discussion → Build → Live)
 // Card exits upward, then phone+tech arrives
+import Marquee from '../ui/Marquee.astro';
+import { techLogos } from '../../data/tech-logos';
 ---
 
 <section id="my-work" class="relative z-10" style="height: 200vh;">
@@ -61,98 +63,10 @@
 
     <!-- Tech stack label + marquee -->
     <p class="font-mono text-charcoal/30 mt-6 border-t border-charcoal/10 pt-4 mb-3" style="font-size: clamp(0.6rem, 0.7vw, 0.7rem); letter-spacing: 0.08em;">[ what I use ]</p>
-    <div class="marquee-container">
-      <div class="marquee-track">
-        <div class="marquee-set">
-          <img src="/portfolio/images/logos/flutter.svg" alt="Flutter" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="Dart" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="Firebase" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="Codemagic" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="Gemini AI" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="Claude" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="TypeScript" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="RevenueCat" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="Astro" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="Stripe" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="Git" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-        <div class="marquee-set" aria-hidden="true">
-          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
+    <Marquee logos={techLogos} speed="30s" repeat={2} />
 
     </div><!-- end #panel-process -->
 
   </div>
 </section>
 
-<style>
-  .marquee-container {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marquee-scroll 30s linear infinite;
-  }
-
-  .marquee-container:hover .marquee-track {
-    animation-play-state: paused;
-  }
-
-  .marquee-set {
-    display: flex;
-    align-items: center;
-    gap: clamp(2rem, 3vw, 3.5rem);
-    padding-right: clamp(2rem, 3vw, 3.5rem);
-  }
-
-  .marquee-logo {
-    height: clamp(1.1rem, 1.5vw, 1.4rem);
-    width: auto;
-    opacity: 0.4;
-    filter: grayscale(1);
-    transition: opacity 0.3s, filter 0.3s;
-    flex-shrink: 0;
-  }
-
-  .marquee-logo:hover {
-    opacity: 1;
-    filter: grayscale(0);
-  }
-
-  .marquee-logo[src*="revenuecat"] {
-    transform: translateY(2px);
-  }
-
-  /* Wordmark logos — slightly taller but capped */
-  .marquee-logo[src*="flutter"],
-  .marquee-logo[src*="stripe"] {
-    height: clamp(1.3rem, 1.8vw, 1.6rem);
-  }
-
-  /* Long wordmarks — cap harder */
-  .marquee-logo[src*="codemagic"],
-  .marquee-logo[src*="revenuecat"] {
-    height: clamp(1.1rem, 1.4vw, 1.3rem);
-  }
-
-  @keyframes marquee-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-</style>

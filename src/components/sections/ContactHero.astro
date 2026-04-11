@@ -14,6 +14,8 @@
 // so all gaps stay pixel-stable across viewport heights.
 //
 // Animations handled in scroll-controller.ts
+import Marquee from '../ui/Marquee.astro';
+import { techLogos } from '../../data/tech-logos';
 ---
 
 <section id="contact-section" class="relative z-10" style="height: 150vh;">
@@ -90,62 +92,7 @@
        style="bottom: calc(6% + 2.5rem); width: 100vw;">
     <p class="font-mono text-charcoal/30 text-center mb-3"
        style="font-size: clamp(0.6rem, 0.7vw, 0.7rem); letter-spacing: 0.08em;">[ what I use ]</p>
-    <div class="marquee-container">
-      <div class="marquee-track">
-        <div class="marquee-set">
-          <img src="/portfolio/images/logos/flutter.svg" alt="Flutter" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="Dart" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="Firebase" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="Codemagic" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="Gemini AI" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="Claude" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="TypeScript" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="RevenueCat" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="Astro" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="Stripe" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="Git" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-        <div class="marquee-set" aria-hidden="true">
-          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-        <div class="marquee-set" aria-hidden="true">
-          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-        <div class="marquee-set" aria-hidden="true">
-          <img src="/portfolio/images/logos/flutter.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/dart.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/firebase.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/codemagic.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/gemini.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/claude.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/typescript.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/revenuecat.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/astro-icon-dark.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/stripe.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/logos/git.svg" alt="" class="marquee-logo" loading="lazy" decoding="async" />
-        </div>
-      </div>
-    </div>
+    <Marquee logos={techLogos} speed="90s" repeat={4} />
   </div>
 
   <!-- Footer — bottom -->
@@ -160,64 +107,10 @@
 </section>
 
 <style>
-  .marquee-container {
-    overflow: hidden;
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-  }
-
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: contact-marquee-scroll 90s linear infinite;
-  }
-
-  .marquee-container:hover .marquee-track {
-    animation-play-state: paused;
-  }
-
-  .marquee-set {
-    display: flex;
-    align-items: center;
-    gap: clamp(2rem, 3vw, 3.5rem);
-    padding-right: clamp(2rem, 3vw, 3.5rem);
-  }
-
-  .marquee-logo {
-    height: clamp(1.1rem, 1.5vw, 1.4rem);
-    width: auto;
-    opacity: 0.4;
-    filter: grayscale(1);
-    transition: opacity 0.3s, filter 0.3s;
-    flex-shrink: 0;
-  }
-
-  #contact-tech-marquee:hover .marquee-logo,
-  .marquee-container:hover .marquee-logo {
+  /* Re-enable pointer-events on marquee logos inside the pointer-events-none wrapper
+     so their hover (grayscale → color) still works. The .marquee-logo class lives
+     inside the Marquee child component, so we use :global() to pierce scoping. */
+  #contact-tech-marquee:hover :global(.marquee-logo) {
     pointer-events: auto;
-  }
-
-  .marquee-logo:hover {
-    opacity: 1;
-    filter: grayscale(0);
-  }
-
-  .marquee-logo[src*="revenuecat"] {
-    transform: translateY(2px);
-  }
-
-  .marquee-logo[src*="flutter"],
-  .marquee-logo[src*="stripe"] {
-    height: clamp(1.3rem, 1.8vw, 1.6rem);
-  }
-
-  .marquee-logo[src*="codemagic"],
-  .marquee-logo[src*="revenuecat"] {
-    height: clamp(1.1rem, 1.4vw, 1.3rem);
-  }
-
-  @keyframes contact-marquee-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
   }
 </style>
