@@ -16,6 +16,7 @@
 // Animations handled in scroll-controller.ts
 import Marquee from '../ui/Marquee.astro';
 import { techLogos } from '../../data/tech-logos';
+import { CONTACT_EMAIL } from '../../data/contact';
 ---
 
 <section id="contact-section" class="relative z-10" style="height: 150vh;">
@@ -61,7 +62,7 @@ import { techLogos } from '../../data/tech-logos';
       <span id="contact-email"
             class="cursor-pointer inline-flex items-center gap-2 text-charcoal hover:text-pop-yellow transition-colors"
             title="Click to copy">
-        pvtdev.app@gmail.com
+        {CONTACT_EMAIL}
         <svg id="copy-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="opacity-50">
           <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
           <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>

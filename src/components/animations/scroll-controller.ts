@@ -18,6 +18,7 @@
 
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { CONTACT_EMAIL } from '../../data/contact';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -618,14 +619,19 @@ export function initScrollController() {
   const copyIcon = document.getElementById('copy-icon');
   const copiedFeedback = document.getElementById('copied-feedback');
   if (contactEmail && copyIcon && copiedFeedback) {
-    contactEmail.addEventListener('click', () => {
-      navigator.clipboard.writeText('pvtdev.app@gmail.com');
-      copyIcon.style.display = 'none';
-      copiedFeedback.style.display = 'inline-flex';
-      setTimeout(() => {
-        copyIcon.style.display = 'inline';
-        copiedFeedback.style.display = 'none';
-      }, 1500);
+    contactEmail.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(CONTACT_EMAIL);
+        copyIcon.style.display = 'none';
+        copiedFeedback.style.display = 'inline-flex';
+        setTimeout(() => {
+          copyIcon.style.display = 'inline';
+          copiedFeedback.style.display = 'none';
+        }, 1500);
+      } catch {
+        // Silent fail — clipboard unavailable (insecure context, permissions)
+        // Do not flip UI on failure
+      }
     });
   }
 
