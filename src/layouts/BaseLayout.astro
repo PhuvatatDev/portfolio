@@ -49,7 +49,28 @@ const {
       ></dotlottie-wc>
     </div>
     <script>
-      import '@lottiefiles/dotlottie-wc';
+      // Lazy-load the ~1.2 MB Lottie web component ONLY when the mobile landscape
+      // overlay is actually shown. Media query must stay in sync with global.css.
+      const landscapeQuery = window.matchMedia(
+        '(orientation: landscape) and (max-height: 500px)'
+      );
+
+      let lottieLoaded = false;
+      const loadLottie = async () => {
+        if (lottieLoaded) return;
+        lottieLoaded = true;
+        await import('@lottiefiles/dotlottie-wc');
+      };
+
+      // Load immediately if already on mobile landscape at first paint
+      if (landscapeQuery.matches) {
+        loadLottie();
+      }
+
+      // Load on the first time the media query starts matching
+      landscapeQuery.addEventListener('change', (e) => {
+        if (e.matches) loadLottie();
+      });
     </script>
 
     <slot />
