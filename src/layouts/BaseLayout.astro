@@ -8,6 +8,10 @@ const {
   title = 'Phuvatat — Flutter Developer',
   description = 'I build products from architecture to deployment. Flutter, Firebase, Clean Architecture.',
 } = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const fontsHref =
+  'https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;700&family=DM+Serif+Display&display=swap';
 ---
 
 <!doctype html>
@@ -16,20 +20,24 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
 
     <!-- Fonts: DM Serif Display (headings) + Chivo Mono (everything else) -->
+    <!-- Non-blocking load: preload as style, swap to stylesheet on load -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@300;400;500;700&family=DM+Serif+Display&display=swap"
-      rel="stylesheet"
-    />
+    <link rel="preload" as="style" href={fontsHref} />
+    <link rel="stylesheet" href={fontsHref} media="print" onload="this.media='all'" />
+    <noscript>
+      <link rel="stylesheet" href={fontsHref} />
+    </noscript>
 
     <!-- Open Graph -->
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="PhuvatatDev" />
+    <meta property="og:url" content={canonicalURL} />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
