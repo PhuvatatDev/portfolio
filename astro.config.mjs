@@ -6,8 +6,4 @@ export default defineConfig({
   site: 'https://phuvatatdev.github.io',
   base: '/portfolio',
   integrations: [tailwind(), sitemap()],
-  i18n: {
-    defaultLocale: 'en',
-    locales: ['en', 'fr'],
-  },
 });
