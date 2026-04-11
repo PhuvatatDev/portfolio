@@ -73,31 +73,40 @@ body {
    Desktop styles untouched — mobile overrides only
    ============================================ */
 @media (max-width: 1179px) {
-  /* Code grid: force uniform short cells on mobile.
-     Overriding `height` (not just max-height) because the inline style
-     `height: Xpx` otherwise wins over max-height in flex columns. */
-  #code-grid .shrink-0 {
-    height: 75px !important;
-    max-height: 75px !important;
+  /* Code grid: uniform shorter cells on mobile.
+     IMPORTANT: the terminal-cell itself has classes `flex flex-col`,
+     so we must exclude it with :not(.terminal-cell), otherwise the
+     title bar (a .shrink-0 child of terminal-cell) also gets its
+     height forced and the dots end up vertically centered in a
+     huge title bar while the code <pre> is squashed to 0px. */
+  #code-grid .flex.flex-col:not(.terminal-cell) > .shrink-0 {
+    height: clamp(100px, 12vw, 150px) !important;
+    max-height: clamp(100px, 12vw, 150px) !important;
   }
 
-  /* Terminal code (<pre>) — smaller font + tighter padding so narrow
-     mobile columns do not show an oversized code block */
-  #code-grid pre {
-    font-size: 0.42rem !important;
-    line-height: 1.25 !important;
-    padding: 0.2rem 0.35rem !important;
+  /* Reduce from 6 columns to 3 on mobile so each one is wide enough
+     to fit a full terminal window (title bar + code) without squish.
+     At 390px: 4fr=156px, 3fr=117px, 3fr=117px — all > 60px minimum.
+     We keep the 3 wider source columns (original 2, 3, 5) and hide
+     the narrow ones (original 1, 4, 6). Children 1-5 are vertical
+     lines (absolute positioned), children 6-11 are the 6 columns. */
+  #code-grid > div:nth-child(2) {
+    grid-template-columns: 4fr 3fr 3fr !important;
   }
 
-  /* Terminal title bar — tighter padding + smaller dots */
-  #code-grid .terminal-cell > div:first-child {
-    padding: 0.2rem 0.4rem !important;
-    gap: 0.2rem !important;
+  #code-grid .flex.flex-col:nth-child(6),
+  #code-grid .flex.flex-col:nth-child(9),
+  #code-grid .flex.flex-col:nth-child(11) {
+    display: none !important;
   }
 
-  #code-grid .terminal-cell > div:first-child > div {
-    width: 4px !important;
-    height: 4px !important;
+  /* Yellow vertical lines — keep only 2 out of 5 on mobile
+     (28% and 68%, positions 2 and 4 in the grid children order)
+     so the background is not over-striped at 390px. */
+  #code-grid > div:nth-child(2) > div:nth-child(1),
+  #code-grid > div:nth-child(2) > div:nth-child(3),
+  #code-grid > div:nth-child(2) > div:nth-child(5) {
+    display: none !important;
   }
 
   /* Vertical section labels — hidden on mobile (not enough room) */
@@ -124,7 +133,7 @@ body {
   }
 
   #hero-marquee-text {
-    font-size: clamp(2.5rem, 9vw, 4rem) !important;
+    font-size: clamp(2.5rem, 8vw, 5rem) !important;
     white-space: normal !important;
     padding-right: 8vw !important;
     line-height: 1.05 !important;
@@ -138,29 +147,31 @@ body {
     max-width: 90% !important;
   }
 
-  /* Hero CTAs mobile — compact so the 2 buttons stay on one row
-     at 390px without wrapping their text */
+  /* Hero CTAs mobile — clamp padding/font so the 2 buttons stay on
+     one row at 390px but grow proportionally up to 1179px */
   #hero-bottom-left .hero-cta {
-    padding: 0.55rem 0.85rem !important;
-    font-size: 0.72rem !important;
+    padding: clamp(0.5rem, 0.9vw, 0.75rem) clamp(0.75rem, 1.5vw, 1.25rem) !important;
+    font-size: clamp(0.72rem, 1vw, 0.95rem) !important;
     white-space: nowrap !important;
   }
 
-  /* Tighter gap between the 2 CTAs on mobile */
+  /* Gap between the 2 CTAs scales with viewport */
   #hero-bottom-left > div:last-child {
-    gap: 0.6rem !important;
+    gap: clamp(0.5rem, 1vw, 1rem) !important;
   }
 
-  /* Logos row — smaller gap + smaller logo icons so "TypeScript"
-     is not clipped on the right at 390px */
+  /* Logos row — clamp gap/font/icon size so "TypeScript" is not
+     clipped at 390px and everything actually grows between 390px
+     and 1179px (preferred values bumped so scaling is visible
+     across the whole mobile range, not just 830px+). */
   #hero-bottom-left > div:first-child {
-    gap: 0.6rem !important;
-    font-size: 0.75rem !important;
+    gap: clamp(0.5rem, 2vw, 1.25rem) !important;
+    font-size: clamp(0.75rem, 2.2vw, 1.1rem) !important;
   }
 
   #hero-bottom-left > div:first-child img {
-    width: 20px !important;
-    height: 20px !important;
+    width: clamp(20px, 4vw, 28px) !important;
+    height: clamp(20px, 4vw, 28px) !important;
   }
 
   /* Illustrations container → full viewport width, svh for mobile stability */
@@ -172,30 +183,91 @@ body {
   }
 
   /* 4 illustrations — fan spread at bottom, left to right:
-     idea, discussion, build (largest/center), live
-     Order matches the process card below for a clean scroll transition
-     Sized + positioned so the whole fan fits in 0-100vw (no clipping) */
+     idea, discussion, build (largest/center), live.
+     Order matches the process card below for a clean scroll transition.
+     Widths use clamp() so they stay proportional at 390px but do not
+     explode at 1179px. Positions in vw are purely proportional. */
   #illus-idea {
-    width: 22vw !important;
+    width: clamp(80px, 22vw, 220px) !important;
     top: 66svh !important;
     right: 75vw !important;
   }
 
   #illus-discussion {
-    width: 24vw !important;
+    width: clamp(88px, 24vw, 240px) !important;
     top: 64svh !important;
     right: 53vw !important;
   }
 
   #illus-build {
-    width: 28vw !important;
+    width: clamp(105px, 28vw, 280px) !important;
     top: 62svh !important;
     right: 29vw !important;
   }
 
   #illus-live {
-    width: 22vw !important;
+    width: clamp(80px, 22vw, 220px) !important;
     top: 65svh !important;
     right: 7vw !important;
+  }
+
+  /* ============================================
+     MY WORK (process card) — mobile layout
+     4 steps switch from horizontal row to vertical
+     column; arrows hidden; illustration slots bigger
+     so the GSAP convergence lands on a readable target
+     ============================================ */
+
+  /* Card width + inner padding */
+  #process-card {
+    width: 90vw !important;
+  }
+
+  #process-card > div {
+    padding: clamp(1.25rem, 4vw, 1.75rem) clamp(1rem, 3.5vw, 1.5rem) clamp(1rem, 3vw, 1.25rem) !important;
+  }
+
+  /* 4 steps container: horizontal row → 2x2 square grid.
+     Illustrations stay large and visible instead of being dwarfed in
+     a single stretched column. */
+  #process-card > div > .flex.justify-between {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: clamp(1rem, 3.5vw, 2rem) !important;
+    row-gap: clamp(1.25rem, 4vw, 2rem) !important;
+    align-items: start !important;
+    justify-items: center !important;
+  }
+
+  /* Hide the right-arrow separators — they only make sense in a row.
+     Targets direct children that are NOT a process-slot (arrows have
+     no id, steps have id="process-slot-*") */
+  #process-card > div > .flex.justify-between > div:not([id^="process-slot"]) {
+    display: none !important;
+  }
+
+  /* Each step: drop flex-1 so grid cells control width */
+  #process-card [id^="process-slot-"] {
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    max-width: clamp(140px, 38vw, 240px) !important;
+  }
+
+  /* Illustration slot: significantly bigger on mobile so each square
+     of the 2x2 grid feels filled, not empty. */
+  #process-card .process-illus-slot {
+    width: clamp(110px, 32vw, 200px) !important;
+    height: clamp(110px, 32vw, 200px) !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+
+  /* Step typography — slightly larger so it stays readable */
+  #process-card [id^="process-slot-"] h3 {
+    font-size: clamp(1rem, 2.6vw, 1.2rem) !important;
+  }
+
+  #process-card [id^="process-slot-"] p {
+    font-size: clamp(0.72rem, 2vw, 0.85rem) !important;
   }
 }
