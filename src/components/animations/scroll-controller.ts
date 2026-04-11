@@ -62,6 +62,15 @@ export function initScrollController() {
   const contactTechMarquee = document.getElementById('contact-tech-marquee');
   const contactFooter = document.getElementById('contact-footer');
 
+  // Resize listener reference — declared outside ctx so HMR dispose can remove it
+  let handleResize: (() => void) | null = null;
+
+  // ============================================
+  // All GSAP/ScrollTrigger setup wrapped in a scopeless context
+  // so HMR can cleanly revert() every tween + trigger on dispose.
+  // Scopeless (no second arg) to preserve global document scope for selectors.
+  // ============================================
+  const ctx = gsap.context(() => {
   // ============================================
   // 1. Grid parallax
   // ============================================
@@ -161,11 +170,12 @@ export function initScrollController() {
     compressIllustrations();
     // invalidateOnRefresh on Section 5 tweens handles ScrollTrigger re-measure,
     // so we only need to reapply the compressed positions here.
-    window.addEventListener('resize', () => {
+    handleResize = () => {
       if (window.innerWidth >= 1180) {
         compressIllustrations();
       }
-    });
+    };
+    window.addEventListener('resize', handleResize);
   }
 
   // ============================================
@@ -595,6 +605,11 @@ export function initScrollController() {
       });
     }
   }
+  }); // end gsap.context()
+
+  // Refresh ScrollTrigger once fonts/images have settled, so triggers
+  // recalculate against final layout (prevents misaligned triggers).
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
 
   // ============================================
   // 12. Contact email — click to copy to clipboard
@@ -611,6 +626,20 @@ export function initScrollController() {
         copyIcon.style.display = 'inline';
         copiedFeedback.style.display = 'none';
       }, 1500);
+    });
+  }
+
+  // ============================================
+  // HMR cleanup (Vite/Astro dev only)
+  // Reverts all tweens/triggers created in ctx and removes the resize listener
+  // so hot reloads don't stack animations or leak memory.
+  // ============================================
+  if (import.meta.hot) {
+    import.meta.hot.dispose(() => {
+      ctx.revert();
+      if (handleResize) {
+        window.removeEventListener('resize', handleResize);
+      }
     });
   }
 
