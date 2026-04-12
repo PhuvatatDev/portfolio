@@ -101,11 +101,14 @@ import ContactHero from '../components/sections/ContactHero.astro';
       phoneContainer.style.pointerEvents = 'auto';
       phoneContainer.style.cursor = 'pointer';
       let phoneInFront = false;
+      let phoneTimer: ReturnType<typeof setTimeout> | null = null;
 
       const focusPhone = () => {
+        if (phoneTimer) clearTimeout(phoneTimer);
         phoneInFront = true;
         phoneContainer.style.opacity = '0';
-        setTimeout(() => {
+        phoneTimer = setTimeout(() => {
+          phoneTimer = null;
           phoneWrapper.style.zIndex = '30';
           const rect = phoneContainer.getBoundingClientRect();
           const offsetX = (window.innerWidth / 2) - (rect.left + rect.width / 2);
@@ -116,9 +119,11 @@ import ContactHero from '../components/sections/ContactHero.astro';
       };
 
       const unfocusPhone = () => {
+        if (phoneTimer) clearTimeout(phoneTimer);
         phoneInFront = false;
         phoneContainer.style.opacity = '0';
-        setTimeout(() => {
+        phoneTimer = setTimeout(() => {
+          phoneTimer = null;
           phoneWrapper.style.zIndex = '20';
           phoneContainer.style.translate = '';
           phoneContainer.classList.remove('phone-focused');
@@ -150,7 +155,9 @@ import ContactHero from '../components/sections/ContactHero.astro';
       savedScrollY = window.scrollY;
       modalContent.innerHTML = detailDiv.innerHTML;
       modal.style.display = '';
-      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${savedScrollY}px`;
+      document.body.style.width = '100%';
       requestAnimationFrame(() => modal.classList.add('modal-open'));
     };
 
@@ -160,7 +167,9 @@ import ContactHero from '../components/sections/ContactHero.astro';
       setTimeout(() => {
         modal.style.display = 'none';
         modalContent!.innerHTML = '';
-        document.body.style.overflow = '';
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
         window.scrollTo(0, savedScrollY);
       }, 300);
     };
@@ -194,7 +203,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
       setTimeout(() => {
         currentIndex = (currentIndex + 1) % playlist.length;
         video.src = playlist[currentIndex];
-        video.play();
+        video.play().catch(() => {});
         video.style.opacity = '1';
       }, 500);
     });

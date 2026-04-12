@@ -230,15 +230,3 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
 </div>
 
-<script>
-  document.querySelectorAll('.mobile-feature-card[data-mobile-feature]').forEach(card => {
-    card.addEventListener('click', () => {
-      const detail = card.querySelector('.mobile-card-detail');
-      const arrow = card.querySelector('.mobile-card-arrow');
-      if (detail) {
-        detail.classList.toggle('hidden');
-        if (arrow) arrow.textContent = detail.classList.contains('hidden') ? '→' : '↓';
-      }
-    });
-  });
-</script>
