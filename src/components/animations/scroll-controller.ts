@@ -348,9 +348,11 @@ export function initScrollController() {
 
   // ============================================
   // 7. Phone + Tech — SINGLE TIMELINE (enter → stay → exit)
-  // Range: MyWork '55% top' (~210vh) to PhoneShowcase '90% top' (~570vh) = 360vh
-  // Entry: 0-14% (50vh), overlaps with process exit (80-100% of process TL = 210-260vh)
-  // Exit: 85-100% (54vh), overlaps with repo entry (section 9)
+  // Range: MyWork '55% top' to PhoneShowcase '90% top'
+  // Desktop: ~360vh (section 300vh) — entry 0-14%, exit 76-100%
+  // Mobile:  ~720vh (section 700vh) — entry 0.02-0.08, shift left 0.10-0.14,
+  //          recenter 0.60-0.66, pause 0.66-0.70, exit up 0.70-0.80
+  // All mobile x/y tweens in ONE timeline — no separate ScrollTrigger conflicts
   // ============================================
   if (phoneContainer && techPanelContainer && myWorkSection && phoneShowcase) {
     // Centering handled by #phone-panel-wrapper (flex + translate(-50%,-50%))
@@ -398,14 +400,26 @@ export function initScrollController() {
     // Mobile title is now a scrollable card in MobileShowcase (not fixed)
 
     if (isMobile) {
-      // Mobile: phone centers then exits upward
+      // Mobile phone lifecycle — all in one timeline, no conflicting tweens.
+      // Section height: 700vh. Timeline total: ~720vh (starts 90vh before section).
+      // Card content fills ~465vh from section top (~300vh scroll).
+      // Store card exits viewport top at ~705vh scroll = timeline ~0.69.
+      //   0.10-0.14  shift left (-15vw) — cards start appearing
+      //   0.14-0.60  stay left — cards scroll through
+      //   0.60-0.66  recenter (x:0, linear) — phone slides back as last cards pass
+      //   0.66-0.70  pause — phone alone, centered
+      //   0.70-0.80  exit upward (y:-100vh) — clears before repo card (0.82)
       phoneTechTl.to(phoneContainer,
-        { x: 0, duration: 0.03, ease: 'power1.inOut' },
-        0.52
+        { x: '-15vw', duration: 0.04, ease: 'power1.inOut' },
+        0.10
       );
       phoneTechTl.to(phoneContainer,
-        { y: '-100vh', opacity: 0, duration: 0.06 },
-        0.55
+        { x: 0, duration: 0.06, ease: 'none' },
+        0.60
+      );
+      phoneTechTl.to(phoneContainer,
+        { y: '-100vh', opacity: 0, duration: 0.10 },
+        0.70
       );
     } else {
       // Desktop: phone + tech panel exit together
@@ -426,27 +440,6 @@ export function initScrollController() {
           0.76
         );
       }
-    }
-  }
-
-  // ============================================
-  // 7b. Phone shift left on mobile — MindTarot pattern
-  // Phone enters centered, then shifts left when first mobile card appears.
-  // Cards scroll on the right, overlapping the phone frame.
-  // ============================================
-  if (isMobile && phoneContainer) {
-    const firstMobileCard = document.querySelector('.mobile-feature-card');
-    if (firstMobileCard) {
-      gsap.to(phoneContainer, {
-        x: '-15vw',
-        ease: 'none',
-        scrollTrigger: {
-          trigger: firstMobileCard,
-          start: 'top bottom',
-          end: 'top 60%',
-          scrub: true,
-        },
-      });
     }
   }
 

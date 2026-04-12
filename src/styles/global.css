@@ -285,7 +285,7 @@ body {
      z-index: auto removes stacking context so cards (z-25)
      appear ABOVE the fixed phone wrapper (z-20). */
   #phone-showcase {
-    height: 900vh !important;
+    height: 700vh !important;
     z-index: auto !important;
   }
 
