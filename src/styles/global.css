@@ -389,6 +389,94 @@ body {
   .mobile-card-detail {
     overflow: hidden;
   }
+
+  /* ============================================
+     REPO SECTION — mobile layout
+     Table rows become flex: name+badges line 1, desc line 2
+     ============================================ */
+
+  #repo-section {
+    height: 200vh !important;
+  }
+
+  #repo-card {
+    width: 94vw !important;
+    padding: clamp(1rem, 3vw, 2rem) clamp(0.75rem, 2.5vw, 1.5rem) !important;
+  }
+
+  #repo-card h2 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem) !important;
+    margin-bottom: clamp(0.5rem, 1.5vw, 1rem) !important;
+  }
+
+  /* Break table display model so flex works on tr */
+  #repo-card table,
+  #repo-card tbody {
+    display: block !important;
+  }
+
+  #repo-card colgroup {
+    display: none;
+  }
+
+  #repo-card table {
+    font-size: clamp(0.72rem, 2.2vw, 0.9rem) !important;
+  }
+
+  /* Each project row → flex wrap with reordering */
+  #repo-card tr:not([class*="bg-charcoal"]) {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    padding: clamp(0.4rem, 1.2vw, 0.7rem) clamp(0.5rem, 1.5vw, 0.75rem) !important;
+  }
+
+  #repo-card tr:not([class*="bg-charcoal"]) td {
+    padding: 0 !important;
+  }
+
+  /* Name — order 1, left */
+  #repo-card tr:not([class*="bg-charcoal"]) td:first-child {
+    order: 1;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  /* Links — order 2, right (same line as name) */
+  #repo-card tr:not([class*="bg-charcoal"]) td:last-child {
+    order: 2;
+    flex: 0 0 auto;
+    text-align: right !important;
+    white-space: nowrap !important;
+  }
+
+  /* Description — order 3, full width below */
+  #repo-card tr:not([class*="bg-charcoal"]) td:nth-child(2) {
+    order: 3;
+    flex: 0 0 100%;
+    font-size: clamp(0.6rem, 1.8vw, 0.78rem) !important;
+    color: rgba(26, 26, 26, 0.4);
+    margin-top: 0.15rem;
+  }
+
+  /* Category headers — block, compact */
+  #repo-card tr[class*="bg-charcoal"] {
+    display: block;
+  }
+  #repo-card tr[class*="bg-charcoal"] td {
+    padding: clamp(0.25rem, 0.8vw, 0.4rem) clamp(0.5rem, 1.5vw, 0.75rem) !important;
+    font-size: clamp(0.6rem, 1.8vw, 0.75rem) !important;
+  }
+
+  /* Repo link badges — responsive tap targets */
+  #repo-card .repo-link {
+    padding: clamp(0.15rem, 0.5vw, 0.25rem) clamp(0.4rem, 1.2vw, 0.6rem);
+    font-size: clamp(0.62rem, 1.8vw, 0.78rem);
+  }
+
+  #repo-card .repo-link + .repo-link {
+    margin-left: clamp(0.15rem, 0.5vw, 0.3rem);
+  }
 }
 
 /* Tablet (768–1179px) — cards closer to phone + wider.
