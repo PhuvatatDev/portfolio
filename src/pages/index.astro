@@ -22,7 +22,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
   <ContactHero />
 
   <!-- Phone + Tech panel — centered flex wrapper, phone and panel as a unified block -->
-  <div id="phone-panel-wrapper" class="fixed z-20" style="top: 50%; left: 50%; transform: translate(-50%, -50%); display: flex; align-items: center; gap: clamp(30px, 3.5vw, 70px); pointer-events: none;">
+  <div id="phone-panel-wrapper" class="fixed z-20" style="inset: 0; padding-top: 8vh; display: flex; align-items: center; justify-content: center; gap: clamp(30px, 3.5vw, 70px); pointer-events: none;">
     <!-- Vertical section label — absolute, positioned to the left of the phone.
          Vertical centering handled by GSAP yPercent:-50 (so `y` tween stays additive). -->
     <div id="tech-label" style="position: absolute; right: calc(100% + 1.25rem); top: 50%; opacity: 0; pointer-events: none;">
@@ -49,7 +49,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
     </div>
 
     <!-- Tech panel -->
-    <div id="tech-panel-container" class="opacity-0" style="width: clamp(580px, 60vw, 820px); height: clamp(620px, 88vh, 860px); background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; pointer-events: auto;">
+    <div id="tech-panel-container" class="opacity-0" style="width: clamp(580px, 60vw, 820px); height: fit-content; max-height: clamp(620px, 88vh, 860px); background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; pointer-events: auto;">
       <TechContent />
     </div>
   </div>

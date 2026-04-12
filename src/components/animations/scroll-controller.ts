@@ -414,12 +414,14 @@ export function initScrollController() {
 
   // ============================================
   // 8. Header hide during phone, show at contact
+  // Desktop only — on mobile the header stays visible at all times
+  // (just a logo, no nav, doesn't obstruct content).
   // fromTo with explicit values (not to()) so the reverse path is
   // deterministic regardless of scroll speed. immediateRender:false
   // prevents the fromTo start values from being applied at page load
   // (otherwise the second tween's {y:-5vw} would hide the header in Hero).
   // ============================================
-  if (siteHeader && myWorkSection) {
+  if (!isMobile && siteHeader && myWorkSection) {
     gsap.fromTo(siteHeader,
       { y: 0 },
       {
@@ -436,9 +438,9 @@ export function initScrollController() {
     );
   }
 
-  if (siteHeader && contactSection) {
+  if (!isMobile && siteHeader && contactSection) {
     gsap.fromTo(siteHeader,
-      { y: '-5vw' },
+      { y: '-10vw' },
       {
         y: 0,
         ease: 'none',
