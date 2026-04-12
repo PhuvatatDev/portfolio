@@ -370,16 +370,19 @@ export function initScrollController() {
       },
     });
 
-    // Phone + Tech enter together (2% delay so process card clears screen first)
+    // Phone + Tech enter together
+    // Mobile: faster entry (0.08) so phone settles quickly in the longer section
+    // Desktop: normal entry (0.22)
+    const entryDuration = isMobile ? 0.08 : 0.22;
     phoneTechTl
       .fromTo(phoneContainer,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.22 },
+        { y: 0, opacity: 1, duration: entryDuration },
         0.02
       )
       .fromTo(techPanelContainer,
         { y: '100vh', opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.22 },
+        { y: 0, opacity: 1, duration: entryDuration },
         0.02
       );
 
@@ -392,23 +395,58 @@ export function initScrollController() {
       );
     }
 
-    // Phone + Tech exit together
-    phoneTechTl
-      .to(phoneContainer,
-        { y: '-100vh', opacity: 0, duration: 0.22 },
-        0.76
-      )
-      .to(techPanelContainer,
-        { y: '-100vh', opacity: 0, duration: 0.22 },
-        0.76
-      );
+    // Mobile title is now a scrollable card in MobileShowcase (not fixed)
 
-    // Section label — exit upward with phone+tech
-    if (techLabel) {
-      phoneTechTl.to(techLabel,
-        { y: '-100vh', opacity: 0, duration: 0.22 },
-        0.76
+    if (isMobile) {
+      // Mobile: phone centers then exits upward
+      phoneTechTl.to(phoneContainer,
+        { x: 0, duration: 0.03, ease: 'power1.inOut' },
+        0.52
       );
+      phoneTechTl.to(phoneContainer,
+        { y: '-100vh', opacity: 0, duration: 0.06 },
+        0.55
+      );
+    } else {
+      // Desktop: phone + tech panel exit together
+      phoneTechTl
+        .to(phoneContainer,
+          { y: '-100vh', opacity: 0, duration: 0.22 },
+          0.76
+        )
+        .to(techPanelContainer,
+          { y: '-100vh', opacity: 0, duration: 0.22 },
+          0.76
+        );
+
+      // Section label — exit upward with phone+tech
+      if (techLabel) {
+        phoneTechTl.to(techLabel,
+          { y: '-100vh', opacity: 0, duration: 0.22 },
+          0.76
+        );
+      }
+    }
+  }
+
+  // ============================================
+  // 7b. Phone shift left on mobile — MindTarot pattern
+  // Phone enters centered, then shifts left when first mobile card appears.
+  // Cards scroll on the right, overlapping the phone frame.
+  // ============================================
+  if (isMobile && phoneContainer) {
+    const firstMobileCard = document.querySelector('.mobile-feature-card');
+    if (firstMobileCard) {
+      gsap.to(phoneContainer, {
+        x: '-15vw',
+        ease: 'none',
+        scrollTrigger: {
+          trigger: firstMobileCard,
+          start: 'top bottom',
+          end: 'top 60%',
+          scrub: true,
+        },
+      });
     }
   }
 

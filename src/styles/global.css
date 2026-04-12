@@ -272,4 +272,86 @@ body {
   #process-card [id^="process-slot-"] p {
     font-size: clamp(0.72rem, 2vw, 0.85rem) !important;
   }
+
+  /* ============================================
+     PHONE SHOWCASE — mobile layout
+     Phone stays fixed left, feature cards scroll
+     in normal flow on the right, overlapping phone
+     ============================================ */
+
+  /* Section height for mobile cards — short enough that ALL cards
+     scroll through while the phone is still visible (phone exits
+     at ~76% of its GSAP timeline).
+     z-index: auto removes stacking context so cards (z-25)
+     appear ABOVE the fixed phone wrapper (z-20). */
+  #phone-showcase {
+    height: 900vh !important;
+    z-index: auto !important;
+  }
+
+  /* Hide the desktop tech panel on mobile */
+  #tech-panel-container {
+    display: none !important;
+  }
+
+  /* Show mobile showcase (hidden on desktop via global rule) */
+  #mobile-showcase {
+    display: block !important;
+  }
+
+  /* Mobile title — handled as first card in MobileShowcase, not fixed */
+  #phone-mobile-title {
+    display: none !important;
+  }
+
+  /* Phone position on mobile — higher since title is a scrollable card now */
+  #phone-panel-wrapper {
+    padding-top: 10vh !important;
+  }
+
+  /* Phone size on mobile — bigger to fill screen, capped for tablets */
+  #phone-container .relative {
+    width: min(75vw, 350px, 45svh) !important;
+  }
+
+  /* Mobile feature cards — compact, uniform, right-aligned with margin.
+     Cards sit above the phone (z-25 > wrapper z-20) thanks to
+     #phone-showcase z-index:auto removing the stacking context. */
+  .mobile-feature-card {
+    margin-left: auto;
+    margin-right: 5vw;
+    max-width: min(62vw, 300px);
+    margin-bottom: 20svh;
+    background-color: #F5F3EF;
+    border-radius: 0.75rem;
+    padding: clamp(0.75rem, 2.5vw, 1rem);
+    position: relative;
+    z-index: 25;
+    pointer-events: auto;
+    cursor: pointer;
+    box-shadow:
+      0 14px 28px -8px rgba(26, 26, 26, 0.25),
+      0 8px 14px -4px rgba(26, 26, 26, 0.14),
+      0 3px 6px -1px rgba(26, 26, 26, 0.08);
+    border: 1px solid rgba(26, 26, 26, 0.1);
+  }
+
+  .mobile-feature-card:last-child {
+    margin-bottom: 5svh;
+  }
+
+  /* Mobile card detail — expand section */
+  .mobile-card-detail {
+    overflow: hidden;
+  }
+}
+
+/* Mobile showcase: hidden by default (desktop), shown via media query */
+#mobile-showcase {
+  display: none;
+}
+
+/* Mobile phone title: hidden on desktop */
+#phone-mobile-title {
+  display: none;
 }

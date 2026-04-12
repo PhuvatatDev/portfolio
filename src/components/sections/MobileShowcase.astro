@@ -1,0 +1,244 @@
+---
+// MobileShowcase — Mobile-only feature cards for the PhoneShowcase section
+// On mobile (< 1180px), replaces the desktop tech panel with scrollable cards
+// that sit in normal document flow, right-aligned, overlapping the fixed phone.
+// Each card is clickable to expand/collapse detail content.
+---
+
+<div id="mobile-showcase" style="position: relative; pointer-events: none;">
+
+  <!-- Spacer — short, phone enters fast on mobile (duration 0.08) -->
+  <div style="height: 30svh;"></div>
+
+  <!-- ========== TITLE CARD — normal scroll, big spacing so it stays visible ========== -->
+  <div class="mobile-store-card" style="margin: 0 5%; pointer-events: auto; position: relative; z-index: 25; background-color: #F5F3EF; border-radius: 0.75rem; padding: clamp(0.75rem, 2.5vw, 1rem); border: 1px solid rgba(26,26,26,0.1); box-shadow: 0 14px 28px -8px rgba(26,26,26,0.25), 0 8px 14px -4px rgba(26,26,26,0.14), 0 3px 6px -1px rgba(26,26,26,0.08); margin-bottom: 60svh;">
+    <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1.2rem, 5vw, 1.6rem); line-height: 1.1;">MindTarot</h2>
+    <p class="font-mono text-charcoal/50" style="font-size: clamp(0.75rem, 2.5vw, 0.9rem); margin-top: 0.25rem;">Built from scratch to store, live in production.</p>
+  </div>
+
+  <!-- ========== CARD 1 — Clean Architecture ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="clean-arch">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        Clean Architecture
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Each feature is independent. Easy to maintain, easy to test, easy to scale.
+    </p>
+    <div style="margin-top: 0.75rem;">
+      <pre class="font-mono bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.7rem, 2vw, 0.8rem); line-height: 1.5; color: #8A8A7A;" set:html={`lib/features/draw/
+├── <span style="color:#5C7A3A;font-weight:600">data/</span>
+│   ├── datasources/
+│   └── repositories/
+├── <span style="color:#C4841D;font-weight:600">domain/</span>
+│   ├── entities/
+│   └── usecases/
+└── <span style="color:#1A1A1A;font-weight:600">presentation/</span>
+    ├── cubit/
+    └── pages/`} />
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        Three layers per feature: data, domain, presentation. Each one has a clear role. When something breaks, you know exactly where to look.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 2 — AI Integration ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="ai">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        AI Integration
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Smart AI readings. Built with Gemini, secured server-side.
+    </p>
+    <div class="flex flex-wrap items-center gap-1 font-mono" style="font-size: clamp(0.7rem, 2vw, 0.8rem); margin-top: 0.75rem;">
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1">
+        <img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />Client
+      </span>
+      <span class="text-charcoal/20">→</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1">
+        <img src="/portfolio/images/logos/firebase.svg" alt="Firebase" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />CF
+      </span>
+      <span class="text-charcoal/20">→</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1">
+        <img src="/portfolio/images/logos/gemini.svg" alt="Gemini" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />Gemini
+      </span>
+      <span class="text-charcoal/20">→</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1">
+        <img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />Reading
+      </span>
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        Every AI feature runs through Cloud Functions — the app never talks to Gemini directly.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 3 — Security ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="security">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        Security
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Read-only client. All business logic runs server-side.
+    </p>
+    <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.7rem, 2vw, 0.8rem); margin-top: 0.75rem;">
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Auth</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server logic</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Firestore Rules</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Rate Limiting</span>
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        Your personal data never leaves a secure environment. The app only displays information — all processing happens on protected servers.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 4 — Authentication ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="auth">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        Authentication
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Quick sign-in with email, Google, or Apple.
+    </p>
+    <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.7rem, 2vw, 0.8rem); margin-top: 0.75rem;">
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Email</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Google</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Apple</span>
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        Create your account in seconds with the method you prefer. Three providers, one unified flow.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 5 — Payments ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="payments">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        Payments
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Freemium model. Users pay, upgrade, cancel — everything handled automatically.
+    </p>
+    <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.7rem, 2vw, 0.8rem); margin-top: 0.75rem;">
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">RevenueCat</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">3 CFs</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">7 Webhooks</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server-side</span>
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        Subscriptions are managed entirely server-side. The app handles the purchase UI — everything else happens through RevenueCat webhooks and Cloud Functions.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 6 — Multilingual ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="i18n">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        Multilingual
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      3 languages. UI, AI responses, card data — everything adapts to the user's language.
+    </p>
+    <div class="flex gap-2 font-mono" style="font-size: clamp(0.7rem, 2vw, 0.8rem); margin-top: 0.75rem;">
+      <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
+      <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        The app runs in 3 languages — English, French, Russian. Language detection is automatic: device locale, stored preference, fallback to English.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== CARD 7 — State Management ========== -->
+  <div class="mobile-feature-card" data-mobile-feature="state">
+    <div class="flex justify-between items-start">
+      <h3 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, 4vw, 1.4rem);">
+        State Management
+      </h3>
+      <span class="mobile-card-arrow font-mono text-charcoal/30 shrink-0 ml-2" style="font-size: 1rem;">→</span>
+    </div>
+    <p class="font-mono text-charcoal/60" style="font-size: clamp(0.78rem, 2.5vw, 0.95rem); line-height: 1.5; margin-top: 0.5rem;">
+      Fast, responsive UI. Every action gives instant feedback.
+    </p>
+    <div style="margin-top: 0.75rem;">
+      <pre class="font-mono bg-charcoal/5 rounded p-2" style="font-size: clamp(0.7rem, 2vw, 0.8rem); line-height: 1.5; color: #6B6B5A;" set:html={`emit(<span style="color:#C4841D">DrawLoading</span>());
+
+<span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span>
+  drawUseCase(params);
+
+emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
+    </div>
+    <div class="mobile-card-detail hidden" style="margin-top: 0.75rem; border-top: 1px solid rgba(26,26,26,0.08); padding-top: 0.75rem;">
+      <p class="font-mono text-charcoal/60" style="font-size: clamp(0.75rem, 2.3vw, 0.88rem); line-height: 1.6;">
+        The app stays fast and responsive. Every action shows clear feedback: loading, success, or error. Cubit pattern with immutable states.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== STORE BUTTONS CARD — full-width closer (mirrors title card) ========== -->
+  <div style="height: 40svh;"></div>
+  <div id="mobile-store-card-end" class="mobile-store-card" style="margin: 0 5%; cursor: default; pointer-events: auto; position: relative; z-index: 25; background-color: #F5F3EF; border-radius: 0.75rem; padding: clamp(0.75rem, 2.5vw, 1rem); border: 1px solid rgba(26,26,26,0.1); box-shadow: 0 14px 28px -8px rgba(26,26,26,0.25), 0 8px 14px -4px rgba(26,26,26,0.14), 0 3px 6px -1px rgba(26,26,26,0.08); margin-bottom: 60svh;">
+    <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1.2rem, 5vw, 1.6rem); line-height: 1.1;">MindTarot</h2>
+    <p class="font-mono text-charcoal/50" style="font-size: clamp(0.75rem, 2.5vw, 0.9rem); margin-top: 0.25rem; margin-bottom: 0.75rem;">
+      Free to download. Free trial available.
+    </p>
+    <div class="flex flex-wrap gap-2 items-center">
+      <a href="https://play.google.com/store/apps/details?id=com.pvtdev.mindtarot" target="_blank" rel="noopener noreferrer"
+         class="store-btn store-btn-primary font-mono no-underline bg-pop-yellow text-charcoal font-bold rounded flex items-center gap-1.5"
+         style="padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2.5vw, 1rem); font-size: clamp(0.72rem, 2.2vw, 0.85rem);">
+        <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.807 1.626a1 1 0 0 1 0 1.732l-2.807 1.626L15.206 12l2.492-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>[ Google Play → ]
+      </a>
+      <a href="https://apps.apple.com/app/mindtarot/id6757782630" target="_blank" rel="noopener noreferrer"
+         class="store-btn store-btn-primary font-mono no-underline bg-pop-yellow text-charcoal font-bold rounded flex items-center gap-1.5"
+         style="padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2.5vw, 1rem); font-size: clamp(0.72rem, 2.2vw, 0.85rem);">
+        <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>[ App Store → ]
+      </a>
+      <a href="https://mindtarotapp.com" target="_blank" rel="noopener noreferrer"
+         class="store-btn store-btn-secondary font-mono no-underline border border-charcoal/20 text-charcoal/60 rounded flex items-center gap-1.5"
+         style="padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2.5vw, 1rem); font-size: clamp(0.72rem, 2.2vw, 0.85rem);">
+        <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>[ Website → ]
+      </a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.querySelectorAll('.mobile-feature-card[data-mobile-feature]').forEach(card => {
+    card.addEventListener('click', () => {
+      const detail = card.querySelector('.mobile-card-detail');
+      const arrow = card.querySelector('.mobile-card-arrow');
+      if (detail) {
+        detail.classList.toggle('hidden');
+        if (arrow) arrow.textContent = detail.classList.contains('hidden') ? '→' : '↓';
+      }
+    });
+  });
+</script>

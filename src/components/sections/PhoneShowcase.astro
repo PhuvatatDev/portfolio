@@ -5,6 +5,10 @@
 // - Phone rise from bottom
 // - Phone shift left + card morph to right side
 // - Card content crossfade (Repo → Tech)
+// On mobile: MobileShowcase replaces the desktop tech panel with scrollable cards.
+import MobileShowcase from './MobileShowcase.astro';
 ---
 
-<section id="phone-showcase" class="relative z-10" style="height: 300vh;"></section>
+<section id="phone-showcase" class="relative z-10" style="height: 300vh;">
+  <MobileShowcase />
+</section>
