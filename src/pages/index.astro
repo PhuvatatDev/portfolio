@@ -83,6 +83,50 @@ import ContactHero from '../components/sections/ContactHero.astro';
     });
   });
 
+  // Mobile: tap phone → scale up + slide to center (above cards)
+  //         scroll or re-tap → shrink back to original position
+  if (window.matchMedia('(max-width: 1179px)').matches) {
+    const phoneContainer = document.getElementById('phone-container');
+    const phoneWrapper = document.getElementById('phone-panel-wrapper');
+    if (phoneContainer && phoneWrapper) {
+      phoneContainer.style.pointerEvents = 'auto';
+      phoneContainer.style.cursor = 'pointer';
+      let phoneInFront = false;
+
+      const focusPhone = () => {
+        phoneInFront = true;
+        phoneContainer.style.opacity = '0';
+        setTimeout(() => {
+          phoneWrapper.style.zIndex = '30';
+          const rect = phoneContainer.getBoundingClientRect();
+          const offsetX = (window.innerWidth / 2) - (rect.left + rect.width / 2);
+          phoneContainer.style.translate = `${offsetX}px 0`;
+          phoneContainer.classList.add('phone-focused');
+          requestAnimationFrame(() => { phoneContainer.style.opacity = '1'; });
+        }, 250);
+      };
+
+      const unfocusPhone = () => {
+        phoneInFront = false;
+        phoneContainer.style.opacity = '0';
+        setTimeout(() => {
+          phoneWrapper.style.zIndex = '20';
+          phoneContainer.style.translate = '';
+          phoneContainer.classList.remove('phone-focused');
+          requestAnimationFrame(() => { phoneContainer.style.opacity = '1'; });
+        }, 250);
+      };
+
+      phoneContainer.addEventListener('click', () => {
+        phoneInFront ? unfocusPhone() : focusPhone();
+      });
+
+      window.addEventListener('scroll', () => {
+        if (phoneInFront) unfocusPhone();
+      }, { passive: true });
+    }
+  }
+
   // Phone video playlist — cycles through videos with fade transitions
   const video = document.getElementById('phone-video') as HTMLVideoElement;
   if (video) {
