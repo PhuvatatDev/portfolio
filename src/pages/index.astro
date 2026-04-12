@@ -79,6 +79,11 @@ import ContactHero from '../components/sections/ContactHero.astro';
   initScrollController();
   initFeaturePanel();
 
+  // Reload on breakpoint cross — JS init is one-shot, CSS adapts but
+  // handlers (phone tap, modal) need re-init when crossing 1180px.
+  const mql = window.matchMedia('(max-width: 1179px)');
+  mql.addEventListener('change', () => location.reload());
+
   // Smooth scroll navigation — GSAP-compatible (no CSS scroll-behavior)
   document.querySelectorAll('a.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
@@ -155,9 +160,8 @@ import ContactHero from '../components/sections/ContactHero.astro';
       savedScrollY = window.scrollY;
       modalContent.innerHTML = detailDiv.innerHTML;
       modal.style.display = '';
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${savedScrollY}px`;
-      document.body.style.width = '100%';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => modal.classList.add('modal-open'));
     };
 
@@ -167,9 +171,8 @@ import ContactHero from '../components/sections/ContactHero.astro';
       setTimeout(() => {
         modal.style.display = 'none';
         modalContent!.innerHTML = '';
-        document.body.style.position = '';
-        document.body.style.top = '';
-        document.body.style.width = '';
+        document.documentElement.style.overflow = '';
+        document.body.style.overflow = '';
         window.scrollTo(0, savedScrollY);
       }, 300);
     };
