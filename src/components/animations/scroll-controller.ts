@@ -351,7 +351,7 @@ export function initScrollController() {
   // Range: MyWork '55% top' to PhoneShowcase '90% top'
   // Desktop: ~360vh (section 300vh) — entry 0-14%, exit 76-100%
   // Mobile:  ~720vh (section 700vh) — entry 0.02-0.08, shift left 0.10-0.14,
-  //          recenter 0.60-0.66, pause 0.66-0.70, exit up 0.70-0.80
+  //          recenter 0.48-0.54, pause 0.54-0.58, exit up 0.58-0.68
   // All mobile x/y tweens in ONE timeline — no separate ScrollTrigger conflicts
   // ============================================
   if (phoneContainer && techPanelContainer && myWorkSection && phoneShowcase) {
@@ -405,21 +405,21 @@ export function initScrollController() {
       // Card content fills ~465vh from section top (~300vh scroll).
       // Store card exits viewport top at ~705vh scroll = timeline ~0.69.
       //   0.10-0.14  shift left (-15vw) — cards start appearing
-      //   0.14-0.60  stay left — cards scroll through
-      //   0.60-0.66  recenter (x:0, linear) — phone slides back as last cards pass
-      //   0.66-0.70  pause — phone alone, centered
-      //   0.70-0.80  exit upward (y:-100vh) — clears before repo card (0.82)
+      //   0.14-0.48  stay left — cards scroll through
+      //   0.48-0.54  recenter (x:0, linear) — starts before store card reaches center
+      //   0.54-0.58  pause — phone alone, centered
+      //   0.58-0.68  exit upward (y:-100vh) — clears before repo card (0.82)
       phoneTechTl.to(phoneContainer,
         { x: '-15vw', duration: 0.04, ease: 'power1.inOut' },
         0.10
       );
       phoneTechTl.to(phoneContainer,
         { x: 0, duration: 0.06, ease: 'none' },
-        0.60
+        0.48
       );
       phoneTechTl.to(phoneContainer,
         { y: '-100vh', opacity: 0, duration: 0.10 },
-        0.70
+        0.58
       );
     } else {
       // Desktop: phone + tech panel exit together
