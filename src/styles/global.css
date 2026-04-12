@@ -329,7 +329,6 @@ body {
     z-index: 25;
     pointer-events: auto;
     cursor: pointer;
-    overflow: hidden;
     box-shadow:
       0 14px 28px -8px rgba(26, 26, 26, 0.25),
       0 8px 14px -4px rgba(26, 26, 26, 0.14),
@@ -337,37 +336,42 @@ body {
     border: 1px solid rgba(26, 26, 26, 0.1);
   }
 
-  /* Grid pattern on all mobile cards (feature + store) */
-  .mobile-feature-card::before,
-  .mobile-store-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      repeating-linear-gradient(0deg, rgba(26,26,26,0.04) 0px, rgba(26,26,26,0.04) 1px, transparent 1px, transparent 24px),
-      repeating-linear-gradient(90deg, rgba(26,26,26,0.04) 0px, rgba(26,26,26,0.04) 1px, transparent 1px, transparent 24px);
-    pointer-events: none;
-    z-index: 0;
-  }
-  .mobile-feature-card > *,
-  .mobile-store-card > * {
-    position: relative;
-    z-index: 1;
-  }
-  .mobile-store-card {
-    position: relative !important;
-    overflow: hidden !important;
-  }
-
-  /* Solid bg on gray zones so grid pattern doesn't bleed through.
-     #EAE8E4 = cream #F5F3EF composited with charcoal/5 */
-  .mobile-feature-card pre,
-  .mobile-feature-card [class*="bg-charcoal"] {
-    background-color: #EAE8E4 !important;
-  }
-
   .mobile-feature-card:last-child {
     margin-bottom: 5svh;
+  }
+
+  /* Mobile card modal — fullscreen detail view */
+  #mobile-card-modal {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  #mobile-card-modal.modal-open {
+    opacity: 1;
+  }
+  /* Override desktop clamp() values for mobile readability */
+  #modal-content h3 {
+    font-size: 1.4rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  #modal-content > p {
+    font-size: 0.88rem !important;
+    line-height: 1.7 !important;
+  }
+  #modal-content pre {
+    font-size: 0.75rem !important;
+    overflow-x: auto;
+  }
+  #modal-content .grid {
+    grid-template-columns: 1fr !important;
+  }
+  #modal-content .grid.grid-cols-2 {
+    grid-template-columns: 1fr 1fr !important;
+  }
+  #modal-content .font-mono {
+    font-size: max(0.75rem, inherit) !important;
+  }
+  #modal-content .flex-wrap {
+    font-size: 0.75rem !important;
   }
 
   /* Phone tap-to-focus — fade out, reposition, fade back in */

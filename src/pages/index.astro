@@ -62,6 +62,15 @@ import ContactHero from '../components/sections/ContactHero.astro';
       </div>
     </div>
   </div>
+  <!-- Mobile fullscreen card modal — shows desktop detail content on tap -->
+  <div id="mobile-card-modal" class="fixed inset-0 z-50" style="display: none;">
+    <div style="height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background-color: #F5F3EF; padding: 1.5rem;">
+      <button id="modal-close" class="font-mono text-charcoal/50 cursor-pointer mb-6 flex items-center gap-2" style="font-size: 0.9rem;">
+        <span>←</span> [ back ]
+      </button>
+      <div id="modal-content"></div>
+    </div>
+  </div>
 </BaseLayout>
 
 <script>
@@ -125,6 +134,52 @@ import ContactHero from '../components/sections/ContactHero.astro';
         if (phoneInFront) unfocusPhone();
       }, { passive: true });
     }
+  }
+
+  // Mobile card modal — fullscreen detail view on tap
+  if (window.matchMedia('(max-width: 1179px)').matches) {
+    const modal = document.getElementById('mobile-card-modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+    let savedScrollY = 0;
+
+    const openModal = (featureId: string) => {
+      const detailDiv = document.querySelector(`.feature-detail[data-detail="${featureId}"]`);
+      if (!detailDiv || !modal || !modalContent) return;
+
+      savedScrollY = window.scrollY;
+      modalContent.innerHTML = detailDiv.innerHTML;
+      modal.style.display = '';
+      document.body.style.overflow = 'hidden';
+      requestAnimationFrame(() => modal.classList.add('modal-open'));
+    };
+
+    const closeModal = () => {
+      if (!modal) return;
+      modal.classList.remove('modal-open');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modalContent!.innerHTML = '';
+        document.body.style.overflow = '';
+        window.scrollTo(0, savedScrollY);
+      }, 300);
+    };
+
+    // Override MobileShowcase click handlers — open modal instead of expand
+    document.querySelectorAll('.mobile-feature-card[data-mobile-feature]').forEach(card => {
+      card.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        const featureId = (card as HTMLElement).dataset.mobileFeature;
+        if (featureId) openModal(featureId);
+      }, true); // capture phase to override MobileShowcase handler
+    });
+
+    modalClose?.addEventListener('click', closeModal);
+
+    // Close on backdrop tap (outside content)
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
   }
 
   // Phone video playlist — cycles through videos with fade transitions
