@@ -133,7 +133,7 @@ body {
   }
 
   #hero-marquee-text {
-    font-size: clamp(2.5rem, 8vw, 5rem) !important;
+    font-size: clamp(2.8rem, 10vw, 5rem) !important;
     white-space: normal !important;
     padding-right: 8vw !important;
     line-height: 1.05 !important;
@@ -150,14 +150,14 @@ body {
   /* Hero CTAs mobile — clamp padding/font so the 2 buttons stay on
      one row at 390px but grow proportionally up to 1179px */
   #hero-bottom-left .hero-cta {
-    padding: clamp(0.5rem, 0.9vw, 0.75rem) clamp(0.75rem, 1.5vw, 1.25rem) !important;
-    font-size: clamp(0.72rem, 1vw, 0.95rem) !important;
+    padding: clamp(0.5rem, 1.8vw, 0.95rem) clamp(0.6rem, 3vw, 1.75rem) !important;
+    font-size: clamp(0.72rem, 2.3vw, 1.05rem) !important;
     white-space: nowrap !important;
   }
 
   /* Gap between the 2 CTAs scales with viewport */
   #hero-bottom-left > div:last-child {
-    gap: clamp(0.5rem, 1vw, 1rem) !important;
+    gap: clamp(0.6rem, 1.5vw, 1rem) !important;
   }
 
   /* Logos row — clamp gap/font/icon size so "TypeScript" is not
@@ -165,13 +165,15 @@ body {
      and 1179px (preferred values bumped so scaling is visible
      across the whole mobile range, not just 830px+). */
   #hero-bottom-left > div:first-child {
-    gap: clamp(0.5rem, 2vw, 1.25rem) !important;
-    font-size: clamp(0.75rem, 2.2vw, 1.1rem) !important;
+    gap: clamp(0.25rem, 1.5vw, 1.5rem) !important;
+    font-size: clamp(0.7rem, 2.2vw, 1.3rem) !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
   }
 
   #hero-bottom-left > div:first-child img {
-    width: clamp(20px, 4vw, 28px) !important;
-    height: clamp(20px, 4vw, 28px) !important;
+    width: clamp(18px, 4.5vw, 34px) !important;
+    height: clamp(18px, 4.5vw, 34px) !important;
   }
 
   /* Illustrations container → full viewport width, svh for mobile stability */
@@ -188,27 +190,27 @@ body {
      Widths use clamp() so they stay proportional at 390px but do not
      explode at 1179px. Positions in vw are purely proportional. */
   #illus-idea {
-    width: clamp(80px, 22vw, 220px) !important;
-    top: 66svh !important;
-    right: 75vw !important;
+    width: clamp(95px, 25vw, 240px) !important;
+    top: 64svh !important;
+    right: 73vw !important;
   }
 
   #illus-discussion {
-    width: clamp(88px, 24vw, 240px) !important;
-    top: 64svh !important;
-    right: 53vw !important;
+    width: clamp(100px, 27vw, 260px) !important;
+    top: 62svh !important;
+    right: 51vw !important;
   }
 
   #illus-build {
-    width: clamp(105px, 28vw, 280px) !important;
-    top: 62svh !important;
-    right: 29vw !important;
+    width: clamp(120px, 32vw, 300px) !important;
+    top: 60svh !important;
+    right: 27vw !important;
   }
 
   #illus-live {
-    width: clamp(80px, 22vw, 220px) !important;
-    top: 65svh !important;
-    right: 7vw !important;
+    width: clamp(95px, 25vw, 240px) !important;
+    top: 63svh !important;
+    right: 5vw !important;
   }
 
   /* ============================================
