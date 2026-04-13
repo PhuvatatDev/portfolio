@@ -11,22 +11,23 @@
     <span class="section-label-vertical">[ about ]</span>
   </div>
 
-  <div id="about-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
+  <div id="about-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: min(2.5vw, 4vh) min(3vw, 5vh) min(1.5vw, 2.5vh);">
 
-    <div class="flex flex-col lg:flex-row gap-6 items-start">
+    <div class="flex flex-col lg:flex-row items-start" style="gap: min(1.5rem, 3vh);">
 
       <!-- Photo carousel -->
-      <div class="shrink-0" style="width: clamp(160px, 16vw, 220px);">
+      <div class="shrink-0" style="width: clamp(120px, min(16vw, 28vh), 220px);">
         <div id="about-photo-carousel" class="relative overflow-hidden rounded-lg" style="aspect-ratio: 3/4;">
-          <img src="/portfolio/images/photos/office1.webp" alt="Phuvatat — office" class="about-photo absolute inset-0 w-full h-full object-cover" data-index="0" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/photos/office2.webp" alt="Phuvatat — working" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="1" loading="lazy" decoding="async" />
-          <img src="/portfolio/images/photos/casual.webp" alt="Phuvatat — casual" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="2" loading="lazy" decoding="async" />
+          <img src="/portfolio/images/photos/jiujitsu.webp" alt="Phuvatat — jiu-jitsu" class="about-photo absolute inset-0 w-full h-full object-cover" data-index="0" loading="lazy" decoding="async" />
+          <img src="/portfolio/images/photos/office1.webp" alt="Phuvatat — office" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="1" loading="lazy" decoding="async" />
+          <img src="/portfolio/images/photos/office2.webp" alt="Phuvatat — working" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="2" loading="lazy" decoding="async" />
+          <img src="/portfolio/images/photos/casual.webp" alt="Phuvatat — casual" class="about-photo absolute inset-0 w-full h-full object-cover opacity-0" data-index="3" loading="lazy" decoding="async" />
 
           <!-- Navigation arrows -->
-          <button id="photo-prev" class="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, 2vw, 32px); height: clamp(24px, 2vw, 32px); font-size: clamp(0.7rem, 0.8vw, 0.9rem);">
+          <button id="photo-prev" class="absolute left-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, min(2vw, 3.5vh), 32px); height: clamp(24px, min(2vw, 3.5vh), 32px); font-size: clamp(0.7rem, min(0.8vw, 1.4vh), 0.9rem);">
             ‹
           </button>
-          <button id="photo-next" class="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, 2vw, 32px); height: clamp(24px, 2vw, 32px); font-size: clamp(0.7rem, 0.8vw, 0.9rem);">
+          <button id="photo-next" class="absolute right-1 top-1/2 -translate-y-1/2 z-10 bg-charcoal/30 hover:bg-charcoal/50 text-white rounded-full flex items-center justify-center transition-colors" style="width: clamp(24px, min(2vw, 3.5vh), 32px); height: clamp(24px, min(2vw, 3.5vh), 32px); font-size: clamp(0.7rem, min(0.8vw, 1.4vh), 0.9rem);">
             ›
           </button>
 
@@ -35,26 +36,27 @@
             <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 1;"></span>
             <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 0.4;"></span>
             <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 0.4;"></span>
+            <span class="photo-dot bg-white rounded-full" style="width: 6px; height: 6px; opacity: 0.4;"></span>
           </div>
         </div>
       </div>
 
       <!-- Text -->
       <div class="flex-1">
-        <h2 class="font-serif font-bold text-charcoal mb-1" style="font-size: clamp(1.3rem, 1.6vw, 1.8rem);">
+        <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, min(1.6vw, 2.8vh), 1.8rem); margin-bottom: min(0.25rem, 0.5vh);">
           Phuvatat
         </h2>
-        <p class="font-mono text-charcoal/40 mb-5" style="font-size: clamp(0.68rem, 0.76vw, 0.82rem);">
+        <p class="font-mono text-charcoal/40" style="font-size: clamp(0.6rem, min(0.76vw, 1.2vh), 0.82rem); margin-bottom: min(1.25rem, 2vh);">
           Flutter developer · Self-taught
         </p>
 
-        <div class="font-mono text-charcoal/55 space-y-3" style="font-size: clamp(0.68rem, 0.76vw, 0.82rem); line-height: 1.75;">
+        <div class="font-mono text-charcoal/55" style="font-size: clamp(0.6rem, min(0.76vw, 1.2vh), 0.82rem); line-height: min(1.75, calc(1.2 + 0.8vh / 1rem)); display: flex; flex-direction: column; gap: min(0.75rem, 1.3vh);">
           <p>I started building the website for my cleaning business with no-code tools. They didn't let me do what I really wanted. All the no-code and low-code tools, all the courses — they were bad investments that disappointed me. So I decided to learn to code myself, so I could build my own projects.</p>
           <p>It was hard at the beginning. The determination I built from eight years of jiu-jitsu got me through it. I know that learning means producing and moving forward through the failures, layer by layer.</p>
           <p>Over a year later, I have solid experience behind me and an app running in production. Ready for the next project.</p>
         </div>
 
-        <p class="font-mono text-charcoal/30 mt-5" style="font-size: clamp(0.6rem, 0.65vw, 0.7rem);">
+        <p class="font-mono text-charcoal/30" style="font-size: clamp(0.55rem, min(0.65vw, 1vh), 0.7rem); margin-top: min(1.25rem, 2vh);">
           Based in Thailand · Working internationally
         </p>
       </div>
