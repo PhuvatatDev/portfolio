@@ -444,46 +444,27 @@ export function initScrollController() {
   }
 
   // ============================================
-  // 8. Header hide during phone, show at contact
-  // Desktop only — on mobile the header stays visible at all times
-  // (just a logo, no nav, doesn't obstruct content).
-  // fromTo with explicit values (not to()) so the reverse path is
-  // deterministic regardless of scroll speed. immediateRender:false
-  // prevents the fromTo start values from being applied at page load
-  // (otherwise the second tween's {y:-5vw} would hide the header in Hero).
+  // 8. Header hide in featured-project zone, show elsewhere
+  // Desktop only — on mobile the header stays visible at all times.
+  // Symmetric: header hides when entering the phone zone in EITHER
+  // direction (scrolling down past myWork, or scrolling back up from contact).
   // ============================================
   if (!isMobile && siteHeader && myWorkSection) {
-    gsap.fromTo(siteHeader,
-      { y: 0 },
-      {
-        y: '-5vw',
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: myWorkSection,
-          start: '45% top',
-          end: '55% top',
-          scrub: true,
-        },
-      }
-    );
+    ScrollTrigger.create({
+      trigger: myWorkSection,
+      start: '45% top',
+      onEnter: () => gsap.to(siteHeader, { y: '-5vw', duration: 0.3, ease: 'power2.inOut' }),
+      onLeaveBack: () => gsap.to(siteHeader, { y: 0, duration: 0.3, ease: 'power2.inOut' }),
+    });
   }
 
   if (!isMobile && siteHeader && contactSection) {
-    gsap.fromTo(siteHeader,
-      { y: '-10vw' },
-      {
-        y: 0,
-        ease: 'none',
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: contactSection,
-          start: 'top 60%',
-          end: 'top 30%',
-          scrub: true,
-        },
-      }
-    );
+    ScrollTrigger.create({
+      trigger: contactSection,
+      start: 'top 60%',
+      onEnter: () => gsap.to(siteHeader, { y: 0, duration: 0.3, ease: 'power2.inOut' }),
+      onLeaveBack: () => gsap.to(siteHeader, { y: '-5vw', duration: 0.3, ease: 'power2.inOut' }),
+    });
   }
 
   // ============================================
