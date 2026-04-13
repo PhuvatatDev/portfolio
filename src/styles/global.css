@@ -133,31 +133,32 @@ body {
   }
 
   #hero-marquee-text {
-    font-size: clamp(2.8rem, 10vw, 5rem) !important;
+    font-size: clamp(2.8rem, min(10vw, 9svh), 5rem) !important;
     white-space: normal !important;
-    padding-right: 8vw !important;
+    padding-left: 5vw !important;
+    padding-right: 5vw !important;
     line-height: 1.05 !important;
   }
 
-  /* Sub-text logos + CTAs → positioned just below title */
+  /* Sub-text logos + CTAs → positioned just below title, aligned with marquee */
   #hero-bottom-left {
     top: 42svh !important;
     bottom: auto !important;
-    left: 5% !important;
+    left: 5vw !important;
     max-width: 90% !important;
   }
 
   /* Hero CTAs mobile — clamp padding/font so the 2 buttons stay on
      one row at 390px but grow proportionally up to 1179px */
   #hero-bottom-left .hero-cta {
-    padding: clamp(0.5rem, 1.8vw, 0.95rem) clamp(0.6rem, 3vw, 1.75rem) !important;
-    font-size: clamp(0.72rem, 2.3vw, 1.05rem) !important;
+    padding: clamp(0.5rem, min(1.8vw, 2.2svh), 0.95rem) clamp(0.6rem, min(3vw, 3.5svh), 1.75rem) !important;
+    font-size: clamp(0.72rem, min(2.3vw, 2.5svh), 1.05rem) !important;
     white-space: nowrap !important;
   }
 
   /* Gap between the 2 CTAs scales with viewport */
   #hero-bottom-left > div:last-child {
-    gap: clamp(0.6rem, 1.5vw, 1rem) !important;
+    gap: clamp(0.6rem, min(1.5vw, 2svh), 1rem) !important;
   }
 
   /* Logos row — clamp gap/font/icon size so "TypeScript" is not
@@ -165,15 +166,15 @@ body {
      and 1179px (preferred values bumped so scaling is visible
      across the whole mobile range, not just 830px+). */
   #hero-bottom-left > div:first-child {
-    gap: clamp(0.25rem, 1.5vw, 1.5rem) !important;
-    font-size: clamp(0.7rem, 2.2vw, 1.3rem) !important;
+    gap: clamp(0.25rem, min(1.5vw, 2svh), 1.5rem) !important;
+    font-size: clamp(0.7rem, min(2.2vw, 3svh), 1.3rem) !important;
     flex-wrap: nowrap !important;
     white-space: nowrap !important;
   }
 
   #hero-bottom-left > div:first-child img {
-    width: clamp(18px, 4.5vw, 34px) !important;
-    height: clamp(18px, 4.5vw, 34px) !important;
+    width: clamp(18px, min(4.5vw, 5svh), 34px) !important;
+    height: clamp(18px, min(4.5vw, 5svh), 34px) !important;
   }
 
   /* Illustrations container → full viewport width, svh for mobile stability */
@@ -190,25 +191,25 @@ body {
      Widths use clamp() so they stay proportional at 390px but do not
      explode at 1179px. Positions in vw are purely proportional. */
   #illus-idea {
-    width: clamp(95px, 25vw, 240px) !important;
+    width: clamp(95px, min(25vw, 28svh), 240px) !important;
     top: 64svh !important;
     right: 73vw !important;
   }
 
   #illus-discussion {
-    width: clamp(100px, 27vw, 260px) !important;
+    width: clamp(100px, min(27vw, 30svh), 260px) !important;
     top: 62svh !important;
     right: 51vw !important;
   }
 
   #illus-build {
-    width: clamp(120px, 32vw, 300px) !important;
+    width: clamp(120px, min(32vw, 35svh), 300px) !important;
     top: 60svh !important;
     right: 27vw !important;
   }
 
   #illus-live {
-    width: clamp(95px, 25vw, 240px) !important;
+    width: clamp(95px, min(25vw, 28svh), 240px) !important;
     top: 63svh !important;
     right: 5vw !important;
   }
@@ -220,13 +221,15 @@ body {
      so the GSAP convergence lands on a readable target
      ============================================ */
 
-  /* Card width + inner padding */
+  /* Card width + inner padding + height cap so card never overflows viewport */
   #process-card {
     width: 90vw !important;
+    max-height: 82svh !important;
+    overflow: hidden !important;
   }
 
   #process-card > div {
-    padding: clamp(1.25rem, 4vw, 1.75rem) clamp(1rem, 3.5vw, 1.5rem) clamp(1rem, 3vw, 1.25rem) !important;
+    padding: clamp(1.25rem, min(4vw, 3svh), 1.75rem) clamp(1rem, min(3.5vw, 4svh), 1.5rem) clamp(1rem, min(3vw, 2.5svh), 1.25rem) !important;
   }
 
   /* 4 steps container: horizontal row → 2x2 square grid.
@@ -235,8 +238,8 @@ body {
   #process-card > div > .flex.justify-between {
     display: grid !important;
     grid-template-columns: 1fr 1fr !important;
-    column-gap: clamp(1rem, 3.5vw, 2rem) !important;
-    row-gap: clamp(1.25rem, 4vw, 2rem) !important;
+    column-gap: clamp(1rem, min(3.5vw, 4svh), 2rem) !important;
+    row-gap: clamp(0.75rem, min(4vw, 2svh), 2rem) !important;
     align-items: start !important;
     justify-items: center !important;
   }
@@ -252,25 +255,25 @@ body {
   #process-card [id^="process-slot-"] {
     flex: 0 0 auto !important;
     width: 100% !important;
-    max-width: clamp(140px, 38vw, 240px) !important;
+    max-width: clamp(140px, min(38vw, 28svh), 240px) !important;
   }
 
-  /* Illustration slot: significantly bigger on mobile so each square
-     of the 2x2 grid feels filled, not empty. */
+  /* Illustration slot: scales with both width and height so card
+     fits in viewport at short heights (laptop ~590px+). */
   #process-card .process-illus-slot {
-    width: clamp(110px, 32vw, 200px) !important;
-    height: clamp(110px, 32vw, 200px) !important;
+    width: clamp(70px, min(32vw, 14svh), 200px) !important;
+    height: clamp(70px, min(32vw, 14svh), 200px) !important;
     max-width: none !important;
     max-height: none !important;
   }
 
-  /* Step typography — slightly larger so it stays readable */
+  /* Step typography — scales with height too */
   #process-card [id^="process-slot-"] h3 {
-    font-size: clamp(1rem, 2.6vw, 1.2rem) !important;
+    font-size: clamp(1rem, min(2.6vw, 3svh), 1.2rem) !important;
   }
 
   #process-card [id^="process-slot-"] p {
-    font-size: clamp(0.72rem, 2vw, 0.85rem) !important;
+    font-size: clamp(0.72rem, min(2vw, 2.5svh), 0.85rem) !important;
   }
 
   /* ============================================
