@@ -381,7 +381,8 @@ body {
   #phone-container {
     transition: scale 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
                 translate 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-                filter 0.5s ease;
+                filter 0.5s ease,
+                opacity 0.3s ease;
   }
   #phone-container.phone-focused {
     scale: 1.15;

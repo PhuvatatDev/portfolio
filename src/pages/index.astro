@@ -120,7 +120,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
           phoneContainer.style.translate = `${offsetX}px 0`;
           phoneContainer.classList.add('phone-focused');
           requestAnimationFrame(() => { phoneContainer.style.opacity = '1'; });
-        }, 250);
+        }, 300);
       };
 
       const unfocusPhone = () => {
@@ -133,7 +133,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
           phoneContainer.style.translate = '';
           phoneContainer.classList.remove('phone-focused');
           requestAnimationFrame(() => { phoneContainer.style.opacity = '1'; });
-        }, 250);
+        }, 300);
       };
 
       phoneContainer.addEventListener('click', () => {
