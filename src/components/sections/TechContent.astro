@@ -109,17 +109,17 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
         <div class="flex gap-3 items-center">
         <a href="https://play.google.com/store/apps/details?id=com.pvtdev.mindtarot" target="_blank" rel="noopener noreferrer"
            class="store-btn store-btn-primary font-mono no-underline bg-pop-yellow text-charcoal font-bold rounded flex items-center gap-1.5"
-           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.6rem, min(0.8vw, 1.3vh), 0.85rem);">
           <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .609-.92zm10.89 10.893l2.302 2.302-10.937 6.333 8.635-8.635zm3.199-3.199l2.807 1.626a1 1 0 0 1 0 1.732l-2.807 1.626L15.206 12l2.492-2.492zM5.864 2.658L16.8 8.99l-2.302 2.302-8.634-8.634z"/></svg>[ Google Play → ]
         </a>
         <a href="https://apps.apple.com/app/mindtarot/id6757782630" target="_blank" rel="noopener noreferrer"
            class="store-btn store-btn-primary font-mono no-underline bg-pop-yellow text-charcoal font-bold rounded flex items-center gap-1.5"
-           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.6rem, min(0.8vw, 1.3vh), 0.85rem);">
           <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>[ App Store → ]
         </a>
         <a href="https://mindtarotapp.com" target="_blank" rel="noopener noreferrer"
            class="store-btn store-btn-secondary font-mono no-underline border border-charcoal/20 text-charcoal/60 rounded flex items-center gap-1.5"
-           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+           style="padding: clamp(0.3rem, 0.7vh, 0.5rem) clamp(0.5rem, 1vw, 1rem); font-size: clamp(0.6rem, min(0.8vw, 1.3vh), 0.85rem);">
           <svg class="shrink-0" style="width: 1em; height: 1em;" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>[ Website → ]
         </a>
         </div>
@@ -130,32 +130,32 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
     <!-- ========== DETAIL VIEW (hidden, shown on card click) ========== -->
     <div id="feature-detail-view" class="hidden">
 
-      <button id="detail-back" class="font-mono text-charcoal/40 hover:text-charcoal transition-colors mb-4 cursor-pointer" style="font-size: clamp(0.7rem, 0.8vw, 0.85rem);">
+      <button id="detail-back" class="font-mono text-charcoal/40 hover:text-charcoal transition-colors mb-4 cursor-pointer" style="font-size: clamp(0.6rem, min(0.8vw, 1.3vh), 0.85rem);">
         [ ← back ]
       </button>
 
       <!-- Clean Architecture -->
       <div class="feature-detail hidden" data-detail="clean-arch">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Clean Architecture</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">Clean Architecture</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           Three layers per feature: data, domain, presentation. Each one has a clear role. When something breaks, you know exactly where to look. Debugging stays fast because nothing is tangled. The clean separation also makes AI-assisted development efficient — each file has one responsibility, so the AI works with precise, scoped context.
         </p>
         <div class="grid grid-cols-3 gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">data/</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Repositories, datasources, models. Handles API calls, local storage, data mapping.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">data/</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Repositories, datasources, models. Handles API calls, local storage, data mapping.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">domain/</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Entities, use cases, repository interfaces. Pure business logic, zero framework dependency.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">domain/</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Entities, use cases, repository interfaces. Pure business logic, zero framework dependency.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">presentation/</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Cubits, pages, widgets. State management and UI. Depends only on domain.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">presentation/</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Cubits, pages, widgets. State management and UI. Depends only on domain.</p>
           </div>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">domain/ — interface (contract)</p>
-        <pre class="font-mono bg-charcoal/5 rounded p-3 mb-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">abstract class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepository</span> {
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">domain/ — interface (contract)</p>
+        <pre class="font-mono bg-charcoal/5 rounded p-3 mb-3" style="font-size: clamp(0.5rem, min(0.6vw, 1vh), 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">abstract class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepository</span> {
   <span style="color:#C4841D">Future</span>&lt;<span style="color:#C4841D">Either</span>&lt;<span style="color:#C4841D">AppException</span>, <span style="color:#C4841D">AIInterpretation</span>&gt;&gt;
       <span style="color:#1A1A1A">requestAIInterpretation</span>({
     <span style="color:#5C7A3A">required</span> String contextPrompt,
@@ -163,8 +163,8 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
     <span style="color:#5C7A3A">required</span> String tier,
   });
 }`} />
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">data/ — implementation</p>
-        <pre class="font-mono bg-charcoal/5 rounded p-3" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepositoryImpl</span>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">data/ — implementation</p>
+        <pre class="font-mono bg-charcoal/5 rounded p-3" style="font-size: clamp(0.5rem, min(0.6vw, 1vh), 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawRepositoryImpl</span>
     <span style="color:#5C7A3A">implements</span> <span style="color:#C4841D">DrawRepository</span> {
   <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawRemoteDataSource</span> dataSource;
 
@@ -181,30 +181,30 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
       <!-- AI Integration -->
       <div class="feature-detail hidden" data-detail="ai">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">AI Integration</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">AI Integration</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           Every AI feature runs through Cloud Functions — the app never talks to Gemini directly. A 300-line custom system prompt defines the interpretation method. Responses use Gemini's structured JSON output, enforced at the API level. Retry with exponential backoff on failures.
         </p>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">4 Cloud Functions × Gemini AI</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">4 Cloud Functions × Gemini AI</p>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Interpretation</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Main draw (1-7 cards). Structured JSON response with card-by-card analysis.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Interpretation</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Main draw (1-7 cards). Structured JSON response with card-by-card analysis.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Draw Chat</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Post-reading conversation. AI knows the cards, intention, and history. Can draw a "precision card".</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Draw Chat</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Post-reading conversation. AI knows the cards, intention, and history. Can draw a "precision card".</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Quick Chat</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Fast mode — 1 subject, 1 card drawn server-side, instant conversation.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Quick Chat</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Fast mode — 1 subject, 1 card drawn server-side, instant conversation.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Guided Paths</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Multi-step introspection. QCM + card per step, AI connects answers across the journey.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Guided Paths</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Multi-step introspection. QCM + card per step, AI connects answers across the journey.</p>
           </div>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Context sent to AI</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Context sent to AI</p>
         <div class="flex flex-wrap gap-1.5 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">user profile</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">emotions</span>
@@ -217,51 +217,51 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
       <!-- Security -->
       <div class="feature-detail hidden" data-detail="security">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Security</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">Security</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           Your personal data never leaves a secure environment. The app only displays information — all processing happens on protected servers. Under the hood: the Flutter client is read-only. All business logic runs in Cloud Functions and Firebase triggers. User documents are created server-side (onCreate trigger), subscriptions can only be written by the backend, and sensitive fields are locked in Firestore rules.
         </p>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Device Attestation</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">App Check verifies genuine app instances before any Cloud Function call.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Device Attestation</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">App Check verifies genuine app instances before any Cloud Function call.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Auth + Validation</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Every CF checks auth token, validates inputs, and verifies the claimed subscription tier server-side.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Auth + Validation</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Every CF checks auth token, validates inputs, and verifies the claimed subscription tier server-side.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Firestore Rules</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Default deny-all. Owner-only reads. Writes blocked on sensitive collections — only Admin SDK can write.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Firestore Rules</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Default deny-all. Owner-only reads. Writes blocked on sensitive collections — only Admin SDK can write.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Rate Limiting</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Per-user rate limits on AI calls, chat, and sensitive operations like account deletion.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Rate Limiting</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Per-user rate limits on AI calls, chat, and sensitive operations like account deletion.</p>
           </div>
         </div>
       </div>
 
       <!-- Authentication -->
       <div class="feature-detail hidden" data-detail="auth">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Authentication</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">Authentication</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           Create your account in seconds with the method you prefer. Three providers, one unified flow. Your user profile is created server-side by a Firebase onCreate trigger — the client never writes sensitive account data. Every route is protected by a GoRouter auth guard with automatic redirects.
         </p>
         <div class="flex flex-col gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Email / Password</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">With email verification (client-side quick check + server-side Cloud Function sync).</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Email / Password</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">With email verification (client-side quick check + server-side Cloud Function sync).</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Google Sign-In</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">OAuth 2.0 via google_sign_in v7. Pre-verified email.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Google Sign-In</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">OAuth 2.0 via google_sign_in v7. Pre-verified email.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Apple Sign-In</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">iOS only. Apple review compliant. Pre-verified email.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Apple Sign-In</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">iOS only. Apple review compliant. Pre-verified email.</p>
           </div>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Account deletion — 3-step flow</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Account deletion — 3-step flow</p>
         <div class="flex items-center gap-1.5 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Warnings</span>
           <span class="text-charcoal/20">→</span>
@@ -275,11 +275,11 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
       <!-- Payments -->
       <div class="feature-detail hidden" data-detail="payments">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Payments</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">Payments</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           Subscriptions are managed entirely server-side. The app handles the purchase UI — everything else (verification, tier changes, quota resets) happens through RevenueCat webhooks and Cloud Functions. The Flutter client never writes subscription data. Every tier change comes from a webhook.
         </p>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Flow — zero client-side trust</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Flow — zero client-side trust</p>
         <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">User purchases</span>
           <span class="text-charcoal/20">→</span>
@@ -293,27 +293,27 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           <span class="text-charcoal/20">→</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Firestore updated</span>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">7 webhook events handled</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">7 webhook events handled</p>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Purchase & Renewal</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Upgrade to Premium, reset quotas, clear cancellation flags.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Purchase & Renewal</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Upgrade to Premium, reset quotas, clear cancellation flags.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Cancellation</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Auto-renew disabled. Access stays until expiration date.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Cancellation</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Auto-renew disabled. Access stays until expiration date.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Expiration & Refund</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Subscription ended or store refunded. Downgrade to Free, quotas reset.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Expiration & Refund</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Subscription ended or store refunded. Downgrade to Free, quotas reset.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Plan Change & Transfer</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Monthly ↔ annual switch. Entitlement transfer between accounts.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Plan Change & Transfer</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Monthly ↔ annual switch. Entitlement transfer between accounts.</p>
           </div>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Why RevenueCat</p>
-        <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Why RevenueCat</p>
+        <div class="font-mono text-charcoal/50" style="font-size: clamp(0.45rem, 1.05vh, 0.65rem); line-height: 1.6;">
           <p>• One SDK for both iOS and Android stores</p>
           <p>• Server-side receipt verification — no client-side trust</p>
           <p>• Webhooks for every lifecycle event (no polling)</p>
@@ -323,11 +323,11 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
       <!-- State Management -->
       <div class="feature-detail hidden" data-detail="state">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">State Management</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">State Management</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           The app stays fast and responsive. Every action — drawing cards, saving, loading — shows clear feedback: loading, success, or error. No frozen screens, no lost data. Under the hood: Cubit pattern with immutable states. Each feature has its own Cubit. Use cases are injected, keeping everything testable and independent.
         </p>
-        <pre class="font-mono bg-charcoal/5 rounded p-3 mb-4" style="font-size: clamp(0.55rem, 0.6vw, 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawCubit</span> <span style="color:#5C7A3A">extends</span> <span style="color:#C4841D">Cubit</span>&lt;<span style="color:#C4841D">DrawState</span>&gt; {
+        <pre class="font-mono bg-charcoal/5 rounded p-3 mb-4" style="font-size: clamp(0.5rem, min(0.6vw, 1vh), 0.65rem); line-height: 1.5; color: #6B6B5A;" set:html={`<span style="color:#5C7A3A">class</span> <span style="color:#1A1A1A;font-weight:600">DrawCubit</span> <span style="color:#5C7A3A">extends</span> <span style="color:#C4841D">Cubit</span>&lt;<span style="color:#C4841D">DrawState</span>&gt; {
   <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">DrawCardsUseCase</span> _drawCards;
   <span style="color:#5C7A3A">final</span> <span style="color:#C4841D">SaveDrawUseCase</span> _saveDraw;
   <span style="color:#8A8A7A">// ... 7 more injected use cases</span>
@@ -350,36 +350,36 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
 
       <!-- Multilingual -->
       <div class="feature-detail hidden" data-detail="i18n">
-        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1.2rem, 1.4vw, 1.6rem);">Multilingual</h3>
-        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.75rem, 0.85vw, 0.9rem); line-height: 1.7;">
+        <h3 class="font-serif font-bold text-charcoal mb-2" style="font-size: clamp(1rem, min(1.4vw, 2.3vh), 1.6rem);">Multilingual</h3>
+        <p class="font-mono text-charcoal/60 mb-4" style="font-size: clamp(0.65rem, min(0.85vw, 1.4vh), 0.9rem); line-height: 1.7;">
           The app runs in 3 languages — English, French, Russian. The backend supports 11. Language detection is automatic: the app reads the device locale, checks for a stored preference, and falls back to English. The choice persists even after logout. When a user switches language, everything reloads instantly — UI, card meanings, AI prompts.
         </p>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">3 languages</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">3 languages</p>
         <div class="flex gap-3 mb-4">
-          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60 border border-charcoal/15" style="font-size: 0.7rem;">English</span>
-          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Français</span>
-          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: 0.7rem;">Русский</span>
+          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60 border border-charcoal/15" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">English</span>
+          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Français</span>
+          <span class="font-mono bg-charcoal/5 rounded px-3 py-2 text-charcoal/60" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Русский</span>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">What adapts per language</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">What adapts per language</p>
         <div class="grid grid-cols-2 gap-2 mb-4">
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">UI</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Every button, label, error message. Flutter's official l10n with .arb files.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">UI</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Every button, label, error message. Flutter's official l10n with .arb files.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">AI Responses</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">languageCode sent to Cloud Function. Gemini receives a language-specific system instruction.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">AI Responses</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">languageCode sent to Cloud Function. Gemini receives a language-specific system instruction.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Card Data</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Keywords and meanings loaded from localized JSON files per language.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Card Data</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Keywords and meanings loaded from localized JSON files per language.</p>
           </div>
           <div class="bg-charcoal/5 rounded p-3">
-            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: 0.7rem;">Error Messages</p>
-            <p class="font-mono text-charcoal/40" style="font-size: 0.6rem; line-height: 1.5;">Localized error handling — Cubits access translations via a global L10nService, no BuildContext needed.</p>
+            <p class="font-mono font-bold text-charcoal/70 mb-1" style="font-size: clamp(0.5rem, 1.1vh, 0.7rem);">Error Messages</p>
+            <p class="font-mono text-charcoal/40" style="font-size: clamp(0.4rem, 1vh, 0.6rem); line-height: 1.5;">Localized error handling — Cubits access translations via a global L10nService, no BuildContext needed.</p>
           </div>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Language detection — smart fallback</p>
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Language detection — smart fallback</p>
         <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Stored preference</span>
           <span class="text-charcoal/20">→</span>
@@ -387,8 +387,8 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           <span class="text-charcoal/20">→</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Fallback: English</span>
         </div>
-        <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Persists across sessions</p>
-        <div class="font-mono text-charcoal/50" style="font-size: 0.65rem; line-height: 1.6;">
+        <p class="font-mono text-charcoal/40 mb-2" style="font-size: clamp(0.4rem, 1vh, 0.6rem);">Persists across sessions</p>
+        <div class="font-mono text-charcoal/50" style="font-size: clamp(0.45rem, 1.05vh, 0.65rem); line-height: 1.6;">
           <p>• Language choice saved locally — survives logout</p>
           <p>• Synced to user profile in Firestore on login</p>
           <p>• Runtime switch — instant reload, no app restart</p>

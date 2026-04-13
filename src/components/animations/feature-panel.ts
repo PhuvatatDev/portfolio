@@ -28,7 +28,15 @@ export function initFeaturePanel() {
   // --- Back button: return to grid ---
   backBtn.addEventListener('click', closeDetail);
 
+  const panelContainer = document.getElementById('tech-panel-container');
+
   function openDetail(id: string) {
+    // Lock the container height at its current (grid-view) size so all
+    // detail views share the same card dimensions regardless of content length.
+    if (panelContainer) {
+      panelContainer.style.height = panelContainer.offsetHeight + 'px';
+    }
+
     // Hide all detail sections, show the right one
     detailView.querySelectorAll('.feature-detail').forEach(el => {
       el.classList.add('hidden');
@@ -60,6 +68,11 @@ export function initFeaturePanel() {
   }
 
   function closeDetail() {
+    // Unlock the container height — let fit-content size the card naturally
+    if (panelContainer) {
+      panelContainer.style.height = '';
+    }
+
     // Scroll container to top, then disable scroll (grid fits without it).
     // Reset overscroll-behavior so wheel events can bubble to window scroll
     scrollContainer.scrollTop = 0;
