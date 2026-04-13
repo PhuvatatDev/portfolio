@@ -11,16 +11,16 @@ import FeatureCard from '../ui/FeatureCard.astro';
 ---
 
 <div id="panel-tech" style="height: 100%; overflow: hidden;">
-  <div id="panel-tech-scroll" style="height: 100%; overflow: hidden; padding: clamp(0.6rem, 1.5vh, 1.5rem);">
+  <div id="panel-tech-scroll" style="height: 100%; overflow-y: auto; padding: clamp(0.6rem, 1.5vh, 1.5rem);">
 
     <!-- ========== GRID VIEW (default) ========== -->
     <div id="feature-grid-view" class="flex flex-col h-full">
 
       <!-- Header -->
-      <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1.3rem, 1.7vw, 1.9rem); line-height: 1.1;">
+      <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1.3rem, min(1.7vw, 2.8vh), 1.9rem); line-height: 1.1;">
         MindTarot
       </h2>
-      <p class="font-mono text-charcoal/50" style="font-size: clamp(0.68rem, 0.78vw, 0.82rem); margin-bottom: clamp(0.4rem, 1vh, 0.75rem);">
+      <p class="font-mono text-charcoal/50" style="font-size: clamp(0.68rem, min(0.78vw, 1.3vh), 0.82rem); margin-bottom: clamp(0.4rem, 1vh, 0.75rem);">
         Built from scratch to store, live in production.
       </p>
 
@@ -29,7 +29,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
 
         <!-- Row 1 -->
         <FeatureCard title="Clean Architecture" description="Each feature is independent. Easy to maintain, easy to test, easy to scale." featureId="clean-arch" colSpan={2}>
-          <pre class="font-mono bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5; color: #8A8A7A;" set:html={`lib/features/draw/
+          <pre class="font-mono bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem); line-height: min(1.5, 0.25vh); color: #8A8A7A; max-height: clamp(50px, 14vh, 150px);" set:html={`lib/features/draw/
 ├── <span style="color:#5C7A3A;font-weight:600">data/</span>
 │   ├── datasources/
 │   └── repositories/
@@ -42,7 +42,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
         </FeatureCard>
 
         <FeatureCard title="AI Integration" description="Smart AI readings. Built with Gemini, secured server-side." featureId="ai">
-          <div class="flex flex-wrap items-center gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+          <div class="flex flex-wrap items-center gap-1 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1"><img src="/portfolio/images/logos/flutter-icon.svg" alt="Flutter" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />Client</span>
             <span class="text-charcoal/20">→</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60 flex items-center gap-1"><img src="/portfolio/images/logos/firebase.svg" alt="Firebase" style="width: 11px; height: 11px;" width="11" height="11" loading="lazy" decoding="async" />CF</span>
@@ -55,7 +55,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
 
         <!-- Row 2 -->
         <FeatureCard title="Security" description="Read-only client. All business logic runs server-side." featureId="security">
-          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">App Check</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Auth</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Server logic</span>
@@ -65,7 +65,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
         </FeatureCard>
 
         <FeatureCard title="Authentication" description="Quick sign-in with email, Google, or Apple." featureId="auth">
-          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Email</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Google</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">Apple</span>
@@ -73,7 +73,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
         </FeatureCard>
 
         <FeatureCard title="Payments" description="Freemium model. Users pay, upgrade, cancel — everything handled automatically." featureId="payments">
-          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+          <div class="flex flex-wrap gap-1 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">RevenueCat</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">3 CFs</span>
             <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/60">7 Webhooks</span>
@@ -83,7 +83,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
 
         <!-- Row 3 -->
         <FeatureCard title="Multilingual" description="3 languages. UI, AI responses, card data — everything adapts to the user's language." featureId="i18n">
-          <div class="flex gap-2 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+          <div class="flex gap-2 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
             <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60 border border-charcoal/15">EN</span>
             <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">FR</span>
             <span class="bg-charcoal/5 rounded px-2 py-1.5 text-charcoal/60">RU</span>
@@ -91,7 +91,7 @@ import FeatureCard from '../ui/FeatureCard.astro';
         </FeatureCard>
 
         <FeatureCard title="State Management" description="Fast, responsive UI. Every action gives instant feedback." featureId="state" colSpan={2}>
-          <pre class="font-mono bg-charcoal/5 rounded p-2" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem); line-height: 1.5; color: #6B6B5A;" set:html={`emit(<span style="color:#C4841D">DrawLoading</span>());
+          <pre class="font-mono bg-charcoal/5 rounded p-2 overflow-hidden" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem); line-height: min(1.5, 0.25vh); color: #6B6B5A; max-height: clamp(40px, 12vh, 120px);" set:html={`emit(<span style="color:#C4841D">DrawLoading</span>());
 
 <span style="color:#5C7A3A">final</span> result = <span style="color:#5C7A3A">await</span>
   drawUseCase(params);
@@ -205,7 +205,7 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           </div>
         </div>
         <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Context sent to AI</p>
-        <div class="flex flex-wrap gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+        <div class="flex flex-wrap gap-1.5 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">user profile</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">emotions</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">intention</span>
@@ -262,7 +262,7 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           </div>
         </div>
         <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Account deletion — 3-step flow</p>
-        <div class="flex items-center gap-1.5 font-mono" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+        <div class="flex items-center gap-1.5 font-mono" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Warnings</span>
           <span class="text-charcoal/20">→</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Reason</span>
@@ -280,7 +280,7 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           Subscriptions are managed entirely server-side. The app handles the purchase UI — everything else (verification, tier changes, quota resets) happens through RevenueCat webhooks and Cloud Functions. The Flutter client never writes subscription data. Every tier change comes from a webhook.
         </p>
         <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Flow — zero client-side trust</p>
-        <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+        <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">User purchases</span>
           <span class="text-charcoal/20">→</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">App Store / Play Store</span>
@@ -380,7 +380,7 @@ emit(<span style="color:#C4841D">DrawComplete</span>(result));`} />
           </div>
         </div>
         <p class="font-mono text-charcoal/40 mb-2" style="font-size: 0.6rem;">Language detection — smart fallback</p>
-        <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.5rem, 0.55vw, 0.6rem);">
+        <div class="flex flex-wrap items-center gap-1.5 font-mono mb-4" style="font-size: clamp(0.45rem, min(0.55vw, 0.9vh), 0.6rem);">
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Stored preference</span>
           <span class="text-charcoal/20">→</span>
           <span class="bg-charcoal/5 rounded px-2 py-1 text-charcoal/50">Device locale</span>
