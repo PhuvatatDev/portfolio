@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background-color: #B8F0C8;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    /* Subtle grid lines like the site */
+    .grid-lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+    .grid-line {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background-color: rgba(255, 217, 106, 0.25);
+    }
+    .content {
+      text-align: center;
+      z-index: 1;
+    }
+    .name {
+      font-family: 'DM Serif Display', serif;
+      font-size: 96px;
+      color: #1A1A1A;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+    }
+    .dot {
+      color: #FFD96A;
+    }
+    .tagline {
+      font-family: 'Chivo Mono', monospace;
+      font-size: 24px;
+      color: rgba(26, 26, 26, 0.5);
+      margin-top: 24px;
+      letter-spacing: 0.05em;
+    }
+    .stack {
+      font-family: 'Chivo Mono', monospace;
+      font-size: 18px;
+      color: rgba(26, 26, 26, 0.35);
+      margin-top: 40px;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Subtle vertical lines like the CodeGrid -->
+  <div class="grid-lines">
+    <div class="grid-line" style="left: 8%;"></div>
+    <div class="grid-line" style="left: 28%;"></div>
+    <div class="grid-line" style="left: 48%;"></div>
+    <div class="grid-line" style="left: 68%;"></div>
+    <div class="grid-line" style="left: 85%;"></div>
+  </div>
+  <div class="content">
+    <div class="name">PhuvatatDev<span class="dot">.</span></div>
+    <div class="tagline">I build apps from idea to deployment</div>
+    <div class="stack">Flutter · Firebase · TypeScript</div>
+  </div>
+</body>
+</html>
