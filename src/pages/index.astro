@@ -23,12 +23,6 @@ import ContactHero from '../components/sections/ContactHero.astro';
 
   <!-- Phone + Tech panel — centered flex wrapper, phone and panel as a unified block -->
   <div id="phone-panel-wrapper" class="fixed z-20" style="inset: 0; padding-top: clamp(75px, 10vh, 110px); display: flex; align-items: center; justify-content: center; pointer-events: none;">
-    <!-- Mobile title — fixed in wrapper, independent from phone shift.
-         Positioned above center via absolute, stays still when phone moves left. -->
-    <div id="phone-mobile-title" style="position: absolute; left: 8%; top: 16%; opacity: 0; background-color: #F5F3EF; border-radius: 0.75rem; padding: clamp(0.75rem, 2.5vw, 1rem); border: 1px solid rgba(26,26,26,0.1); box-shadow: 0 14px 28px -8px rgba(26,26,26,0.25), 0 8px 14px -4px rgba(26,26,26,0.14), 0 3px 6px -1px rgba(26,26,26,0.08);">
-      <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1.2rem, 5vw, 1.6rem); line-height: 1.1;">MindTarot</h2>
-      <p class="font-mono text-charcoal/50" style="font-size: clamp(0.75rem, 2.5vw, 0.9rem); margin-top: 0.25rem;">Built from scratch to store, live in production.</p>
-    </div>
     <!-- Inner wrapper — sized to content so tech-label's right:calc(100%+…) works -->
     <div style="position: relative; display: flex; align-items: center; gap: clamp(30px, 3.5vw, 70px);">
       <!-- Vertical section label — absolute, positioned to the left of the phone.
@@ -46,7 +40,7 @@ import ContactHero from '../components/sections/ContactHero.astro';
               autoplay
               muted
               playsinline
-              preload="auto"
+              preload="metadata"
               data-playlist="/portfolio/video/login.mp4,/portfolio/video/payment.mp4,/portfolio/video/navigation.mp4"
             >
               <source src="/portfolio/video/login.mp4" type="video/mp4" />

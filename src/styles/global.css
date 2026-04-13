@@ -302,11 +302,6 @@ body {
     display: block !important;
   }
 
-  /* Mobile title — handled as first card in MobileShowcase, not fixed */
-  #phone-mobile-title {
-    display: none !important;
-  }
-
   /* Phone position on mobile — higher since title is a scrollable card now */
   #phone-panel-wrapper {
     padding-top: 10vh !important;
@@ -389,10 +384,6 @@ body {
     filter: drop-shadow(0 25px 50px rgba(26, 26, 26, 0.3));
   }
 
-  /* Mobile card detail — expand section */
-  .mobile-card-detail {
-    overflow: hidden;
-  }
 
   /* ============================================
      REPO SECTION — mobile layout
@@ -527,7 +518,3 @@ body {
   display: none;
 }
 
-/* Mobile phone title: hidden on desktop */
-#phone-mobile-title {
-  display: none;
-}
