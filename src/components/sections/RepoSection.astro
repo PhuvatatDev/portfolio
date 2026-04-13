@@ -2,6 +2,7 @@
 // RepoSection — Standalone cream card with projects table
 // Own section with scroll height, own fixed card
 // Enters from below, stays fixed, exits upward
+// All sizing uses min(vw, vh) so the card scales on short viewports
 ---
 
 <section id="repo-section" class="relative z-10" style="height: 250vh;">
@@ -11,15 +12,15 @@
     <span class="section-label-vertical">[ repositories ]</span>
   </div>
 
-  <div id="repo-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: 2.5vw 3vw 1.5vw;">
+  <div id="repo-card" class="fixed opacity-0 z-20" style="top: 55%; left: 50%; width: 85vw; max-width: 1100px; background-color: #F5F3EF; border-radius: 1rem; overflow: hidden; padding: min(2.5vw, 4vh) min(3vw, 5vh) min(1.5vw, 2.5vh);">
 
-    <h2 class="font-serif font-bold text-charcoal mb-5" style="font-size: clamp(1.3rem, 1.6vw, 1.8rem);">
+    <h2 class="font-serif font-bold text-charcoal" style="font-size: clamp(1rem, min(1.6vw, 2.8vh), 1.8rem); margin-bottom: min(1.25rem, 2.5vh);">
       What I've built
     </h2>
 
     <!-- Projects table — grouped by status: live / practice / client work -->
     <div class="overflow-hidden rounded-lg border border-charcoal/10">
-      <table class="w-full font-mono" style="font-size: clamp(0.6rem, 0.68vw, 0.73rem);">
+      <table class="w-full font-mono" style="font-size: clamp(0.55rem, min(0.68vw, 1.15vh), 0.73rem);">
         <colgroup>
           <col style="width: 20%;" />
           <col style="width: 55%;" />
@@ -29,14 +30,14 @@
 
           <!-- ============ LIVE ============ -->
           <tr class="bg-charcoal/5">
-            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+            <td colspan="3" class="repo-cat text-charcoal/45 tracking-wider">
               [ live ]
             </td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5 font-bold text-charcoal/80">MindTarot</td>
-            <td class="px-3 py-2.5">Tarot app with AI interpretations — live on stores</td>
-            <td class="px-3 py-2.5 text-right whitespace-nowrap">
+            <td class="repo-cell font-bold text-charcoal/80">MindTarot</td>
+            <td class="repo-cell">Tarot app with AI interpretations — live on stores</td>
+            <td class="repo-cell text-right whitespace-nowrap">
               <a href="https://mindtarotapp.com" target="_blank" rel="noopener noreferrer" class="repo-link">website</a>
               <a href="https://play.google.com/store/apps/details?id=com.pvtdev.mindtarot" target="_blank" rel="noopener noreferrer" class="repo-link">play</a>
               <a href="https://apps.apple.com/app/mindtarot/id6757782630" target="_blank" rel="noopener noreferrer" class="repo-link">ios</a>
@@ -45,37 +46,37 @@
 
           <!-- ============ PRACTICE ============ -->
           <tr class="bg-charcoal/5 border-t border-charcoal/8">
-            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+            <td colspan="3" class="repo-cat text-charcoal/45 tracking-wider">
               [ practice ]
             </td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">study_flutter</a></td>
-            <td class="px-3 py-2.5">Hands-on Flutter practice — everything coded by hand, no AI</td>
-            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
+            <td class="repo-cell"><a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">study_flutter</a></td>
+            <td class="repo-cell">Hands-on Flutter practice — everything coded by hand, no AI</td>
+            <td class="repo-cell text-right"><a href="https://github.com/PhuvatatDev/study_flutter" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">dart_algos</a></td>
-            <td class="px-3 py-2.5">Algorithmic logic practice in Dart</td>
-            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
+            <td class="repo-cell"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">dart_algos</a></td>
+            <td class="repo-cell">Algorithmic logic practice in Dart</td>
+            <td class="repo-cell text-right"><a href="https://github.com/PhuvatatDev/dart_algos" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">chat_app</a></td>
-            <td class="px-3 py-2.5">Tutorial project — real-time chat with Firebase Auth & Firestore</td>
-            <td class="px-3 py-2.5 text-right"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
+            <td class="repo-cell"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">chat_app</a></td>
+            <td class="repo-cell">Tutorial project — real-time chat with Firebase Auth & Firestore</td>
+            <td class="repo-cell text-right"><a href="https://github.com/PhuvatatDev/chat_app" target="_blank" rel="noopener noreferrer" class="repo-link">github</a></td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/la_tarot_academie" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">la_tarot_academie</a></td>
-            <td class="px-3 py-2.5">Interactive tarot draw tool used in live webinars</td>
-            <td class="px-3 py-2.5 text-right whitespace-nowrap">
+            <td class="repo-cell"><a href="https://github.com/PhuvatatDev/la_tarot_academie" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">la_tarot_academie</a></td>
+            <td class="repo-cell">Interactive tarot draw tool used in live webinars</td>
+            <td class="repo-cell text-right whitespace-nowrap">
               <a href="https://phuvatatdev.github.io/la_tarot_academie/" target="_blank" rel="noopener noreferrer" class="repo-link">demo</a>
               <a href="https://github.com/PhuvatatDev/la_tarot_academie" target="_blank" rel="noopener noreferrer" class="repo-link">github</a>
             </td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5"><a href="https://github.com/PhuvatatDev/leadmagnet_audio" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">leadmagnet_audio</a></td>
-            <td class="px-3 py-2.5">Audio lead-magnet landing page for a tarot masterclass</td>
-            <td class="px-3 py-2.5 text-right whitespace-nowrap">
+            <td class="repo-cell"><a href="https://github.com/PhuvatatDev/leadmagnet_audio" target="_blank" rel="noopener noreferrer" class="font-bold text-charcoal/80 hover:text-pop-yellow transition-colors no-underline">leadmagnet_audio</a></td>
+            <td class="repo-cell">Audio lead-magnet landing page for a tarot masterclass</td>
+            <td class="repo-cell text-right whitespace-nowrap">
               <a href="https://la-tarot-academie.vercel.app/listen" target="_blank" rel="noopener noreferrer" class="repo-link">live</a>
               <a href="https://github.com/PhuvatatDev/leadmagnet_audio" target="_blank" rel="noopener noreferrer" class="repo-link">github</a>
             </td>
@@ -83,14 +84,14 @@
 
           <!-- ============ CLIENT WORK ============ -->
           <tr class="bg-charcoal/5 border-t border-charcoal/8">
-            <td colspan="3" class="px-3 py-2 text-charcoal/45 tracking-wider" style="font-size: clamp(0.55rem, 0.62vw, 0.68rem);">
+            <td colspan="3" class="repo-cat text-charcoal/45 tracking-wider">
               [ client work ]
             </td>
           </tr>
           <tr class="border-t border-charcoal/8">
-            <td class="px-3 py-2.5 font-bold text-charcoal/80">la-tarot-academy-website</td>
-            <td class="px-3 py-2.5">Full website for a tarot academy</td>
-            <td class="px-3 py-2.5 text-right"><span class="text-charcoal/25" style="font-size: 0.6rem;">in progress</span></td>
+            <td class="repo-cell font-bold text-charcoal/80">la-tarot-academy-website</td>
+            <td class="repo-cell">Full website for a tarot academy</td>
+            <td class="repo-cell text-right"><span class="text-charcoal/25 repo-status">in progress</span></td>
           </tr>
 
         </tbody>
@@ -101,12 +102,28 @@
 </section>
 
 <style>
+  /* Table cell padding — scales with viewport height on short screens */
+  .repo-cell {
+    padding: min(0.625rem, 1.3vh) min(0.75rem, 1.3vw);
+  }
+
+  /* Category header rows — slightly tighter */
+  .repo-cat {
+    font-size: clamp(0.5rem, min(0.62vw, 1vh), 0.68rem);
+    padding: min(0.5rem, 1vh) min(0.75rem, 1.3vw);
+  }
+
+  /* "in progress" status label */
+  .repo-status {
+    font-size: clamp(0.45rem, min(0.6vw, 1vh), 0.6rem);
+  }
+
   /* Repo links — permanent soft-yellow pill, 3D lift + saturated yellow on hover.
      Matches the store-btn language used elsewhere, scaled down for table links. */
   .repo-link {
     font-family: 'Chivo Mono', monospace;
     display: inline-block;
-    padding: 0.2rem 0.55rem;
+    padding: min(0.2rem, 0.4vh) min(0.55rem, 1vh);
     border-radius: 0.35rem;
     background-color: rgba(255, 217, 106, 0.22);
     color: rgba(26, 26, 26, 0.7);
@@ -124,7 +141,7 @@
 
   /* Gap between adjacent repo-link badges (replaces the old · separators) */
   .repo-link + .repo-link {
-    margin-left: 0.3rem;
+    margin-left: min(0.3rem, 0.5vh);
   }
 
   .repo-link:hover {
