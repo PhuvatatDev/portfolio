@@ -30,10 +30,10 @@ import { CONTACT_EMAIL } from '../../data/contact';
   <!-- Marquee band — enters from the left (inverse of Hero marquee) -->
   <!-- Positioned by bottom so it stays anchored relative to the CTA center -->
   <div id="contact-marquee-band" class="fixed left-0 z-20 overflow-hidden pointer-events-none opacity-0"
-       style="bottom: calc(50% + 7rem); width: 100vw;">
+       style="bottom: calc(50% + min(7rem, 12vh)); width: 100vw;">
     <h2 id="contact-marquee-text"
         class="font-serif font-bold text-charcoal whitespace-nowrap text-center"
-        style="font-size: clamp(2rem, 5vw, 6rem); line-height: 1.15; will-change: transform; padding: 0.1em 8vw 0.2em;">
+        style="font-size: clamp(2rem, min(5vw, 8vh), 6rem); line-height: 1.15; will-change: transform; padding: 0.1em 8vw 0.2em;">
       What are we building next?
     </h2>
   </div>
@@ -44,14 +44,14 @@ import { CONTACT_EMAIL } from '../../data/contact';
        style="top: 50%; left: 50%; transform: translate(-50%, -50%); width: min(90vw, 700px);">
 
     <!-- Tagline -->
-    <p class="font-mono text-charcoal/55 text-center mb-7"
-       style="font-size: clamp(0.85rem, 0.95vw, 1rem);">
+    <p class="font-mono text-charcoal/55 text-center"
+       style="font-size: clamp(0.75rem, min(0.95vw, 1.6vh), 1rem); margin-bottom: min(1.75rem, 3vh);">
       Available for freelance projects and full-time roles.
     </p>
 
     <!-- Contact rows — grid: icon | label | arrow | value -->
     <div class="font-mono text-charcoal/60"
-         style="display: grid; grid-template-columns: auto auto auto auto; column-gap: 1rem; row-gap: 1rem; align-items: center; font-size: clamp(1rem, 1.2vw, 1.25rem);">
+         style="display: grid; grid-template-columns: auto auto auto auto; column-gap: min(1rem, 1.8vh); row-gap: min(1rem, 1.8vh); align-items: center; font-size: clamp(0.85rem, min(1.2vw, 2vh), 1.25rem);">
 
       <!-- Email row (click to copy) -->
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-charcoal/45">
@@ -90,9 +90,9 @@ import { CONTACT_EMAIL } from '../../data/contact';
 
   <!-- Tech stack marquee — continuous CSS scroll, above footer -->
   <div id="contact-tech-marquee" class="fixed left-0 z-20 opacity-0 pointer-events-none"
-       style="bottom: calc(6% + 2.5rem); width: 100vw;">
-    <p class="font-mono text-charcoal/30 text-center mb-3"
-       style="font-size: clamp(0.6rem, 0.7vw, 0.7rem); letter-spacing: 0.08em;">[ what I use ]</p>
+       style="bottom: calc(6% + min(2.5rem, 4vh)); width: 100vw;">
+    <p class="font-mono text-charcoal/30 text-center"
+       style="font-size: clamp(0.55rem, min(0.7vw, 1.1vh), 0.7rem); letter-spacing: 0.08em; margin-bottom: min(0.75rem, 1.3vh);">[ what I use ]</p>
     <Marquee logos={techLogos} speed="90s" repeat={4} />
   </div>
 
@@ -100,7 +100,7 @@ import { CONTACT_EMAIL } from '../../data/contact';
   <div id="contact-footer" class="fixed z-30 opacity-0 pointer-events-none"
        style="bottom: 6%; left: 50%; transform: translateX(-50%);">
     <p class="font-mono text-charcoal/25 text-center"
-       style="font-size: clamp(0.55rem, 0.6vw, 0.65rem);">
+       style="font-size: clamp(0.5rem, min(0.6vw, 1vh), 0.65rem);">
       © 2026 Phuvatat · Illustrations by <a href="https://storyset.com" target="_blank" rel="noopener noreferrer" class="hover:text-pop-yellow transition-colors no-underline" style="pointer-events: auto;">Storyset</a>
     </p>
   </div>
