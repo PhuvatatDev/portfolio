@@ -168,10 +168,13 @@ import ContactHero from '../components/sections/ContactHero.astro';
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
         window.scrollTo(0, savedScrollY);
-        // iOS Safari kills video playback when overflow is locked —
-        // resume after modal closes
+        // iOS Safari can unload the video source when body overflow is locked —
+        // reload + resume after modal closes
         const vid = document.getElementById('phone-video') as HTMLVideoElement;
-        if (vid && vid.paused) vid.play().catch(() => {});
+        if (vid) {
+          vid.load();
+          vid.play().catch(() => {});
+        }
       }, 300);
     };
 
